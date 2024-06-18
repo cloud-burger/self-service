@@ -1,10 +1,7 @@
-FROM node:lts
+FROM node:20.14-slim
 WORKDIR /app
 
 # COPY package.json ./
-# COPY yarn.lock ./
-# COPY .yarnrc ./
-
 # RUN yarn install --ignore-scripts --prefer-offline && yarn cache clean
 # COPY --chown=node . .
 # COPY ./node_modules ./node_modules
