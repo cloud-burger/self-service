@@ -1,0 +1,29 @@
+{
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modulest", "test", "dist"],
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
+    "paths": {
+      "~/app/*": ["./app/*"],
+      "~/driven/*": ["./adapters/driven/*"],
+      "~/driver/*": ["./adapters/driver/*"],
+      "~/domain/*": ["./domain/*"]
+    },
+    "types": ["jest", "node"]
+  }
+}
