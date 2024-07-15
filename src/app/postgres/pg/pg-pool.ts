@@ -1,5 +1,5 @@
-import { env } from 'app/env';
 import { PoolConfig, Pool as PostgresPool } from 'pg';
+import { env } from '~/app/env';
 import Connection from '../connection';
 import Pool from '../pool';
 import { PgConnection } from './pg-connection';
