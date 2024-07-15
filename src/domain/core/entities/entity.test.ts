@@ -1,12 +1,17 @@
+import { randomUUID } from 'crypto';
 import { Entity } from './entity';
+
+jest.mock('crypto');
 
 class Test extends Entity {}
 
 describe('entity', () => {
+  const uuidMock = jest.mocked(randomUUID);
   it('should create an id when not inserted in contructor', () => {
+    uuidMock.mockReturnValue('1234' as any);
     const test = new Test();
 
-    expect(test.id).toEqual(expect.any(String));
+    expect(test.id).toEqual('1234');
   });
 
   it('should not create id when is inserted in constructor', () => {
