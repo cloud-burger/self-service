@@ -1,0 +1,27 @@
+services:
+  self-service:
+    container_name: self-service
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: postgres:5432
+      DB_USER: supersecret
+      DB_PASSWORD: supersecret
+
+  postgres:
+    container_name: postgres
+    image: postgres:16
+    shm_size: 128mb
+    volumes:
+     - type: tmpfs
+       target: /dev/shm
+       tmpfs:
+         size: 134217728 # 128*2^20 bytes = 128Mb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: supersecret
+      POSTGRES_PASSWORD: supersecret
