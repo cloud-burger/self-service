@@ -23,7 +23,7 @@ describe('customer repository', () => {
     expect(customer).toBeNull();
     expect(connection.query).toHaveBeenNthCalledWith(1, {
       parameters: { document_number: '53523992060' },
-      sql: 'SELECT * FROM public.customer WHERE document_number = :document_number',
+      sql: 'SELECT * FROM public.customers WHERE document_number = :document_number',
     });
   });
 
@@ -56,7 +56,7 @@ describe('customer repository', () => {
     });
     expect(connection.query).toHaveBeenNthCalledWith(1, {
       parameters: { document_number: '53523992060' },
-      sql: 'SELECT * FROM public.customer WHERE document_number = :document_number',
+      sql: 'SELECT * FROM public.customers WHERE document_number = :document_number',
     });
   });
 
@@ -77,7 +77,7 @@ describe('customer repository', () => {
         status: 'ACTIVE',
         updated_at: '2024-07-12T22:18:26.351Z',
       },
-      sql: 'INSERT INTO public.customer (id,name,document_number,status,email,created_at,updated_at) VALUES (:id,:name,:document_number,:status,:email,:created_at,:updated_at)',
+      sql: 'INSERT INTO public.customers (id,name,document_number,status,email,created_at,updated_at) VALUES (:id,:name,:document_number,:status,:email,:created_at,:updated_at)',
     });
   });
 });
