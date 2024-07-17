@@ -1,0 +1,26 @@
+name: On Push
+
+on:
+  pull_request:
+    types: [opened, synchronize, edited]
+
+jobs:
+  test:
+    name: Lint and Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate lint
+        run: npm run lint
+
+      - name: Running tests
+        run: npm run test
