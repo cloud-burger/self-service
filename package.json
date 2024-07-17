@@ -2,8 +2,6 @@
   "name": "self-service",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": ".eslintrc.js",
   "directories": {
     "doc": "docs"
   },
@@ -11,7 +9,7 @@
     "test": "jest --collect-coverage",
     "validate": "npx tsc -noEmit --skipLibCheck",
     "start": "node dist/app/server.js",
-    "lint": "eslint --fix .",
+    "lint": "eslint --fix",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "dev": "ts-node-dev -r --respawn --transpile-only --ignore-watch node_modules --no-notify src/app/server.ts"
   },

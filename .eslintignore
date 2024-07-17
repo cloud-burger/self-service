@@ -5,3 +5,4 @@ dist/
 babel.config.js
 .dockerfileignore
 jest.config.ts
+coverage/

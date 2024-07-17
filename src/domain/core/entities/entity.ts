@@ -8,7 +8,7 @@ export abstract class Entity {
   id?: string;
 
   constructor(id?: string) {
-    this.id = id || randomUUID();
+    this.id = id ?? randomUUID();
   }
 
   equals(entity: Entity) {
