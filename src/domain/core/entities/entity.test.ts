@@ -8,10 +8,10 @@ class Test extends Entity {}
 describe('entity', () => {
   const uuidMock = jest.mocked(randomUUID);
   it('should create an id when not inserted in contructor', () => {
-    uuidMock.mockReturnValue('1234' as any);
+    uuidMock.mockReturnValue('232baa95-8a4c-4524-8d7f-b41905c886a4');
     const test = new Test();
 
-    expect(test.id).toEqual('1234');
+    expect(test.id).toEqual('232baa95-8a4c-4524-8d7f-b41905c886a4');
   });
 
   it('should not create id when is inserted in constructor', () => {
