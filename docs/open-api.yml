@@ -1,0 +1,178 @@
+openapi: 3.0.3
+info:
+  description: Api responsible for managing customer orders from the Cloud Burger restaurant
+  version: 1.0.0
+  title: Self Service
+  contact:
+    name: Cloud Burger Support
+    email: support@cloud-burger.com
+
+servers:
+  - url: http://localhost:8080
+    description: Local running
+paths:
+  /app/customer:
+    post:
+      tags:
+        - Customer
+      description: 'Create customer'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateCustomer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /app/customer/{documentNumber}:
+    get:
+      tags:
+        - Customer
+      description: 'Find customer by document number'
+      parameters:
+        - $ref: '#/components/parameters/DocumentNumber'
+      responses:
+        '201':
+          $ref: '#/components/responses/FindCustomerByDocumentNumber'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  parameters:
+    DocumentNumber:
+      in: path
+      name: documentNumber
+      schema:
+        $ref: '#/components/schemas/DocumentNumber'
+      required: true
+  responses:
+    CreateCustomer:
+      description: Customer created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerResponse'
+    FindCustomerByDocumentNumber:
+      description: Customer found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CustomerResponse'
+    NoContent:
+      description: No Content
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequestErrorResponse'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NotFoundErrorResponse'
+    InternalServerError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InternalServerErrorResponse'
+  schemas:
+    Id:
+      type: string
+      example: 297d3ea7-610d-4c46-85f8-e3cb2fa4dd83
+      description: Identifier
+    DocumentNumber:
+      type: string
+      example: '53523992060'
+      description: Customer document number
+    CustomerStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+      example: ACTIVE
+      description: Customer status
+    CustomerName:
+      type: string
+      example: John Due
+      description: Customer name
+    CustomerEmail:
+      type: string
+      example: johndue@gmail.com
+      description: Customer email
+    Date:
+      type: string
+      example: '2024-01-01 23:59:59'
+    Reason:
+      type: string
+      example: Error reason
+    CustomerResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        documentNumber:
+          $ref: '#/components/schemas/DocumentNumber'
+        name:
+          $ref: '#/components/schemas/CustomerName'
+        status:
+          $ref: '#/components/schemas/CustomerStatus'
+        email:
+          $ref: '#/components/schemas/CustomerEmail'
+        createdAt:
+          $ref: '#/components/schemas/Date'
+        updatedAt:
+          $ref: '#/components/schemas/Date'
+    NotFoundErrorResponse:
+      type: object
+      properties:
+        reason:
+          $ref: '#/components/schemas/Reason'
+    InternalServerErrorResponse:
+      type: object
+      properties:
+        reason:
+          $ref: '#/components/schemas/Reason'
+    BadRequestErrorResponse:
+      type: object
+      properties:
+        reason:
+          $ref: '#/components/schemas/Reason'
+        invalidParams:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Field name
+                example: amount
+              value:
+                type: string
+                description: Field value
+                example: '1'
+              reason:
+                type: string
+                description: Invalid param reason
+                example: Customer document number failed custom validation because invalid
+                  document
+    CreateCustomerRequest:
+      type: object
+      properties:
+        documentNumber:
+          $ref: '#/components/schemas/DocumentNumber'
+          required: true
+        name:
+          $ref: '#/components/schemas/CustomerName'
+          required: true
+        email:
+          $ref: '#/components/schemas/CustomerEmail'
+          required: false
