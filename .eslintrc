@@ -1,0 +1,97 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": false,
+    },
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "commonjs": true,
+    "es6": true,
+  },
+  "rules": {
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline",
+      },
+    ],
+    "camelcase": [
+      "off",
+      {
+        "properties": "never",
+      },
+    ],
+    "max-statements-per-line": [
+      "error",
+      {
+        "max": 1,
+      },
+    ],
+    "object-property-newline": [
+      "error",
+      {
+        "allowAllPropertiesOnSameLine": false,
+      },
+    ],
+    "operator-linebreak": ["off", "before"],
+    "brace-style": [
+      "error",
+      "1tbs",
+      {
+        "allowSingleLine": false,
+      },
+    ],
+    "no-unused-vars": "off",
+    "key-spacing": [
+      "error",
+      {
+        "afterColon": true,
+      },
+    ],
+    "switch-colon-spacing": "error",
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "semi",
+          "requireLast": true,
+        },
+        "singleline": {
+          "delimiter": "semi",
+          "requireLast": false,
+        },
+      },
+    ],
+    "@typescript-eslint/type-annotation-spacing": [
+      "error",
+      {
+        "before": false,
+        "after": true,
+        "overrides": {
+          "arrow": {
+            "before": true,
+            "after": true,
+          },
+        },
+      },
+    ],
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/prefer-as-const": "error",
+    "@typescript-eslint/triple-slash-reference": "error",
+    "no-console": "error",
+  },
+}

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.github
+.eslintrc.js
+babel.config.js
+.dockerfileignore
+jest.config.ts
+coverage/
