@@ -1,6 +1,5 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeCustomer } from 'tests/factories/make-customer';
-import { CustomerStatus } from '../entities/value-objects/enum/customer-status';
 import { CustomerRepository } from '../repositories/customer';
 import { CreateCustomerUseCase } from './create';
 
@@ -29,7 +28,6 @@ describe('create customer use case', () => {
       email: 'johndue@gmail.com',
       id: expect.any(String),
       name: 'John Due',
-      status: 'ACTIVE',
       updatedAt: expect.any(Date),
     });
     expect(customerRepository.findByDocumentNumber).toHaveBeenNthCalledWith(
@@ -42,7 +40,6 @@ describe('create customer use case', () => {
       email: 'johndue@gmail.com',
       id: expect.any(String),
       name: 'John Due',
-      status: 'ACTIVE',
       updatedAt: expect.any(Date),
     });
   });
@@ -62,7 +59,6 @@ describe('create customer use case', () => {
       email: 'johndue@gmail.com',
       id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
       name: 'John Due',
-      status: CustomerStatus.ACTIVE,
       updatedAt: new Date('2024-07-12T22:18:26.351Z'),
     });
     expect(customerRepository.findByDocumentNumber).toHaveBeenNthCalledWith(

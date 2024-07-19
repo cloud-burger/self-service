@@ -36,7 +36,6 @@ describe('customer repository', () => {
           document_number: '1234567890',
           id: '123',
           name: 'John',
-          status: 'ACTIVE',
           email: 'john@gmail.com',
         },
       ],
@@ -51,7 +50,6 @@ describe('customer repository', () => {
       email: 'john@gmail.com',
       id: '123',
       name: 'John',
-      status: 'ACTIVE',
       updatedAt: new Date('2023-01-01T00:00:00.000Z'),
     });
     expect(connection.query).toHaveBeenNthCalledWith(1, {
@@ -74,10 +72,9 @@ describe('customer repository', () => {
         email: 'johndue@gmail.com',
         id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
         name: 'John Due',
-        status: 'ACTIVE',
         updated_at: '2024-07-12T22:18:26.351Z',
       },
-      sql: 'INSERT INTO public.customers (id,name,document_number,status,email,created_at,updated_at) VALUES (:id,:name,:document_number,:status,:email,:created_at,:updated_at)',
+      sql: 'INSERT INTO public.customers (id,name,document_number,email,created_at,updated_at) VALUES (:id,:name,:document_number,:email,:created_at,:updated_at)',
     });
   });
 });
