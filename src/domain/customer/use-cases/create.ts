@@ -1,6 +1,5 @@
 import logger from '@cloud-burger/logger';
 import { Customer } from '../entities/customer';
-import { CustomerStatus } from '../entities/value-objects/enum/customer-status';
 import { CustomerRepository } from '../repositories/customer';
 
 interface Input {
@@ -31,7 +30,6 @@ export class CreateCustomerUseCase {
       documentNumber,
       email,
       name,
-      status: CustomerStatus.ACTIVE,
       createdAt: now,
       updatedAt: now,
     });

@@ -34,7 +34,6 @@ describe('find customer by document number controller', () => {
         email: 'johndue@gmail.com',
         id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
         name: 'John Due',
-        status: 'ACTIVE',
         updatedAt: expect.any(Date),
       },
       statusCode: 200,
