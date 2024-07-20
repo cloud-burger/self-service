@@ -1,7 +1,52 @@
+import { ConflictError } from '@cloud-burger/handlers';
+import logger from '@cloud-burger/logger';
+import { Product } from '../entities/product';
+import { ProductCategory } from '../entities/value-objects/enums/product-category';
 import { ProductRepository } from '../repositories/product';
+
+interface Input {
+  name: string;
+  category: ProductCategory;
+  description: string;
+  amount: number;
+  image?: any;
+}
 
 export class CreateProductUseCase {
   constructor(private productRepository: ProductRepository) {}
 
-  execute = () => {};
+  async execute({ name, category, ...rest }: Input): Promise<Product> {
+    const product = await this.productRepository.findByCategoryAndName(
+      category,
+      name,
+    );
+
+    if (product) {
+      logger.warn({
+        message: 'Product already exists',
+        data: product,
+      });
+
+      throw new ConflictError('Product already exists');
+    }
+
+    const now = new Date();
+
+    const newProduct = new Product({
+      name,
+      category,
+      createdAt: now,
+      updatedAt: now,
+      ...rest,
+    });
+
+    logger.debug({
+      message: 'Creating product',
+      data: product,
+    });
+
+    await this.productRepository.create(newProduct);
+
+    return newProduct;
+  }
 }
