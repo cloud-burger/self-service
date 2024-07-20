@@ -33,7 +33,7 @@ export class CreateCustomerController {
         data: errors,
       });
 
-      throw new ValidationError('Dados inválidos na requisição', errors);
+      throw new ValidationError('Invalid request data', errors);
     }
 
     const customer = await this.createCustomerUseCase.execute(data);

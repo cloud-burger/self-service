@@ -4,7 +4,7 @@ describe('validation helpers - document number', () => {
   it('should throw error when document number is invalid', () => {
     expect(() => {
       validateDocumentNumber('1234');
-    }).toThrow('Documento inválido');
+    }).toThrow('Invalid document number');
   });
 
   it('should return document number', () => {

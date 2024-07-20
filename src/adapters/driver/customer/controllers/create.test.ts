@@ -30,16 +30,16 @@ describe('create customer controller', () => {
           {
             name: 'documentNumber',
             reason:
-              'Documento do cliente failed custom validation because Documento inválido',
+              'Customer document number failed custom validation because Invalid document number',
             value: '12345',
           },
           {
             name: 'name',
-            reason: 'Nome do cliente must be a string',
+            reason: 'Customer name must be a string',
             value: null,
           },
         ],
-        reason: 'Dados inválidos na requisição',
+        reason: 'Invalid request data',
       });
     }
 
