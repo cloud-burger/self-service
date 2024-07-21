@@ -4,8 +4,8 @@ import { validateDocumentNumber } from '~/driver/validation-helpers/document-num
 export const createCustomerSchema = Joi.object({
   documentNumber: Joi.string()
     .required()
-    .custom(validateDocumentNumber, 'custom validation')
-    .label('Documento do cliente'),
-  name: Joi.string().required().label('Nome do cliente'),
-  email: Joi.string().label('Email do cliente'),
+    .custom(validateDocumentNumber)
+    .label('Customer document number'),
+  name: Joi.string().required().label('Customer name'),
+  email: Joi.string().label('Customer email'),
 }).required();

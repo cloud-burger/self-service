@@ -5,6 +5,7 @@ import { env } from './env';
 
 import { createCustomer } from './handlers/customer/create';
 import { findCustomerByDocumentNumber } from './handlers/customer/find-by-document-number';
+import { createProduct } from './handlers/order/create-product';
 
 const app = express();
 const PORT = +env.PORT;
@@ -13,8 +14,12 @@ const BASE_PATH = '/app';
 
 const router = Router();
 
+// Customer
 router.post('/customer', createCustomer);
 router.get('/customer/:documentNumber', findCustomerByDocumentNumber);
+
+// Product
+router.post('/product', createProduct);
 
 app.use(cors());
 app.use(express.json());
