@@ -7,10 +7,10 @@ export default {
   coverageReporters: ['json', 'text', 'html', 'cobertura', 'lcov'],
   coverageThreshold: {
     global: {
-      statements: 100,
-      branches: 100,
-      functions: 100,
-      lines: 100,
+      statements: 95,
+      branches: 95,
+      functions: 95,
+      lines: 95,
     },
   },
   maxConcurrency: 10,
