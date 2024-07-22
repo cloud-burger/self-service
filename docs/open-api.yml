@@ -11,11 +11,11 @@ servers:
   - url: http://localhost:8080
     description: Local running
 paths:
-  /app/customer:
+  /customer:
     post:
       tags:
         - Customer
-      description: 'Create customer'
+      description: Create customer
       requestBody:
         required: true
         content:
@@ -29,16 +29,55 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /app/customer/{documentNumber}:
+  /customer/{documentNumber}:
     get:
       tags:
         - Customer
-      description: 'Find customer by document number'
+      description: Find customer by document number
       parameters:
         - $ref: '#/components/parameters/DocumentNumber'
       responses:
         '201':
           $ref: '#/components/responses/FindCustomerByDocumentNumber'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /product:
+    post:
+      tags:
+        - Product
+      description: Create product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateProduct'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/ConflictError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags:
+        - Product
+      description: Update product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateProduct'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -64,6 +103,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CustomerResponse'
+    CreateProduct:
+      description: Product created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductResponse'
+    UpdateProduct:
+      description: Product updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductResponse'
     NoContent:
       description: No Content
     BadRequest:
@@ -72,6 +123,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BadRequestErrorResponse'
+    ConflictError:
+      description: Conflic Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConflictErrorResponse'
     NotFound:
       description: Not Found
       content:
@@ -108,6 +165,31 @@ components:
       type: string
       example: johndue@gmail.com
       description: Customer email
+    ProductName:
+      type: string
+      example: X Burger
+      description: Product name
+    ProductCategory:
+      type: string
+      enum:
+        - BURGER
+        - SIDE
+        - DRINK
+        - DESSERT
+      description: Product category
+      example: BURGER
+    ProductDescription:
+      type: string
+      example: Pão carne e queijo
+      description: Product description
+    ProductAmount:
+      type: number
+      example: 19.99
+      description: Product amount
+    ProductImage:
+      type: string
+      format: binary
+      description: Product image
     Date:
       type: string
       example: '2024-01-01 23:59:59'
@@ -131,12 +213,36 @@ components:
           $ref: '#/components/schemas/Date'
         updatedAt:
           $ref: '#/components/schemas/Date'
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        name:
+          $ref: '#/components/schemas/ProductName'
+        category:
+          $ref: '#/components/schemas/ProductCategory'
+        description:
+          $ref: '#/components/schemas/ProductDescription'
+        amount:
+          $ref: '#/components/schemas/ProductAmount'
+        image:
+          $ref: '#/components/schemas/ProductImage'
+        createdAt:
+          $ref: '#/components/schemas/Date'
+        updatedAt:
+          $ref: '#/components/schemas/Date'
     NotFoundErrorResponse:
       type: object
       properties:
         reason:
           $ref: '#/components/schemas/Reason'
     InternalServerErrorResponse:
+      type: object
+      properties:
+        reason:
+          $ref: '#/components/schemas/Reason'
+    ConflictErrorResponse:
       type: object
       properties:
         reason:
@@ -176,3 +282,39 @@ components:
         email:
           $ref: '#/components/schemas/CustomerEmail'
           required: false
+    CreateProductRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ProductName'
+          required: true
+        category:
+          $ref: '#/components/schemas/ProductCategory'
+          required: true
+        description:
+          $ref: '#/components/schemas/ProductDescription'
+          required: true
+        amount:
+          $ref: '#/components/schemas/ProductAmount'
+          required: true
+        image:
+          $ref: '#/components/schemas/ProductImage'
+          required: true
+    UpdateProductRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ProductName'
+          required: true
+        category:
+          $ref: '#/components/schemas/ProductCategory'
+          required: true
+        description:
+          $ref: '#/components/schemas/ProductDescription'
+          required: true
+        amount:
+          $ref: '#/components/schemas/ProductAmount'
+          required: true
+        image:
+          $ref: '#/components/schemas/ProductImage'
+          required: true

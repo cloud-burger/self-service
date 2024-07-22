@@ -6,11 +6,10 @@ import { env } from './env';
 import { createCustomer } from './handlers/customer/create';
 import { findCustomerByDocumentNumber } from './handlers/customer/find-by-document-number';
 import { createProduct } from './handlers/order/create-product';
+import { updateProduct } from './handlers/order/update-product';
 
 const app = express();
 const PORT = +env.PORT;
-
-const BASE_PATH = '/app';
 
 const router = Router();
 
@@ -20,10 +19,11 @@ router.get('/customer/:documentNumber', findCustomerByDocumentNumber);
 
 // Product
 router.post('/product', createProduct);
+router.put('/product', updateProduct);
 
 app.use(cors());
 app.use(express.json());
-app.use(BASE_PATH, router);
+app.use('', router);
 
 app.listen(PORT, () => {
   logger.info({

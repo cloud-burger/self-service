@@ -5,19 +5,20 @@ import { ProductCategory } from '~/domain/order/entities/value-objects/enums/pro
 import { ProductRepository as IProductRepository } from '~/domain/order/repositories/product';
 import { ProductDbSchema } from './dtos/product-db-schema';
 import { DatabaseProductMapper } from './mappers/database-product';
-import { FIND_PRODUCT_BY_CATEGORY_AND_NAME } from './queries/find-by-category-and-name';
+import { FIND_PRODUCT_BY_CATEGORY_AND_NAME } from './queries/find-product-by-category-and-name';
+import { FIND_PRODUCT_BY_ID } from './queries/find-product-by-id';
 import { INSERT_PRODUCT } from './queries/insert-product';
+import { UPDATE_PRODUCT } from './queries/update-product';
 
 export class ProductRepository implements IProductRepository {
   constructor(private connection: Connection) {}
 
   async create(product: Product): Promise<void> {
-    const recordsToSave = DatabaseProductMapper.toDatabase(product);
+    const recordToSave = DatabaseProductMapper.toDatabase(product);
 
-    const columns = Object.keys(recordsToSave)
+    const columns = Object.keys(recordToSave)
       .filter(
-        (key) =>
-          recordsToSave[key] !== undefined && recordsToSave[key] !== null,
+        (key) => recordToSave[key] !== undefined && recordToSave[key] !== null,
       )
       .map((key) => {
         return key;
@@ -29,7 +30,16 @@ export class ProductRepository implements IProductRepository {
 
     await this.connection.query({
       sql: INSERT_PRODUCT(columns.join(), parameters.join()),
-      parameters: recordsToSave,
+      parameters: recordToSave,
+    });
+  }
+
+  async update(product: Product): Promise<void> {
+    const recordToSave = DatabaseProductMapper.toDatabase(product);
+
+    await this.connection.query({
+      sql: UPDATE_PRODUCT,
+      parameters: recordToSave,
     });
   }
 
@@ -51,6 +61,31 @@ export class ProductRepository implements IProductRepository {
         data: {
           category,
           name,
+          records,
+        },
+      });
+
+      return null;
+    }
+
+    const [product] = records;
+
+    return DatabaseProductMapper.toDomain(product as ProductDbSchema);
+  }
+
+  async findById(id: string): Promise<Product | null> {
+    const { records } = await this.connection.query({
+      sql: FIND_PRODUCT_BY_ID,
+      parameters: {
+        id,
+      },
+    });
+
+    if (!records.length) {
+      logger.debug({
+        message: 'Product does not exists',
+        data: {
+          id,
           records,
         },
       });
