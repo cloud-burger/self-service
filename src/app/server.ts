@@ -19,7 +19,7 @@ router.get('/customer/:documentNumber', findCustomerByDocumentNumber);
 
 // Product
 router.post('/product', createProduct);
-router.put('/product', updateProduct);
+router.put('/product/:id', updateProduct);
 
 app.use(cors());
 app.use(express.json());

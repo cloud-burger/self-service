@@ -22,7 +22,7 @@ export class FindCustomerByDocumentNumberUseCase {
         },
       });
 
-      throw new NotFoundError('Cliente não encontrado');
+      throw new NotFoundError('Customer not found');
     }
 
     logger.debug({
