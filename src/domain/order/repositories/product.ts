@@ -3,8 +3,10 @@ import { ProductCategory } from '../entities/value-objects/enums/product-categor
 
 export interface ProductRepository {
   create(product: Product): Promise<void>;
+  update(product: Product): Promise<void>;
   findByCategoryAndName(
     category: ProductCategory,
     name: string,
   ): Promise<Product | null>;
+  findById(id: string): Promise<Product | null>;
 }
