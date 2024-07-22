@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
 
-export const createProductSchema = Joi.object({
+export const productSchema = Joi.object({
   name: Joi.string().required().label('Product name'),
   category: Joi.string()
     .required()

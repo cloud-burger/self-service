@@ -7,21 +7,17 @@ import {
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
 import { Product } from '~/domain/order/entities/product';
-import { CreateProductUseCase } from '~/domain/order/use-cases/create-product';
+import { UpdateProductUseCase } from '~/domain/order/use-cases/update-product';
 import { productSchema } from './validations/product-schema';
 
-export class CreateProductController {
-  constructor(private createProductUseCase: CreateProductUseCase) {}
+export class UpdateProductController {
+  constructor(private updateProductUseCase: UpdateProductUseCase) {}
 
   handler: Controller = async (
     request: Request,
   ): Promise<Response<Product>> => {
-    const { body } = request;
-
-    logger.info({
-      message: 'Create product request',
-      data: request,
-    });
+    const { body, pathParameters } = request;
+    const { id } = pathParameters;
 
     const { data, errors } = validateSchema(productSchema, body);
 
@@ -29,17 +25,20 @@ export class CreateProductController {
 
     if (hasValidationErrors) {
       logger.warn({
-        message: 'Create product validation error',
+        message: 'Update product validation error',
         data: errors,
       });
 
       throw new ValidationError('Invalid request data', errors);
     }
 
-    const product = await this.createProductUseCase.execute(data);
+    const product = await this.updateProductUseCase.execute({
+      id,
+      ...data,
+    });
 
     return {
-      statusCode: 201,
+      statusCode: 200,
       body: product,
     };
   };
