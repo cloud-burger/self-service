@@ -18,7 +18,7 @@ describe('find customer by document number use case', () => {
 
     await expect(
       findCustomerByDocumentNumberUseCase.execute({ documentNumber: '1234' }),
-    ).rejects.toThrow('Cliente não encontrado');
+    ).rejects.toThrow('Customer not found');
 
     expect(customerRepository.findByDocumentNumber).toHaveBeenNthCalledWith(
       1,
