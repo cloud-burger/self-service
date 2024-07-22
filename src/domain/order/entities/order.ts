@@ -8,6 +8,7 @@ export interface OrderProps extends EntityProps {
   products: Product[];
   customer?: Customer;
   status: OrderStatus;
+  notes: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,6 +18,7 @@ export class Order extends Entity {
   products: Product[];
   customer?: Customer;
   status: OrderStatus;
+  notes: string;
   createdAt: Date;
   updatedAt: Date;
 
