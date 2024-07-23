@@ -7,6 +7,8 @@ export interface ProductProps extends EntityProps {
   description: string;
   amount: number;
   image?: any;
+  quantity?: number;
+  notes?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,6 +19,8 @@ export class Product extends Entity {
   description: string;
   amount: number;
   image?: any;
+  quantity?: number;
+  notes?: string;
   createdAt: Date;
   updatedAt: Date;
 

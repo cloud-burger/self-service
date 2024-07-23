@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS orders_products (
     order_id VARCHAR(100),
     product_id VARCHAR(100),
     quantity NUMERIC NOT NULL,
+    notes VARCHAR(100),
     PRIMARY KEY (order_id, product_id),
     FOREIGN KEY (order_id) REFERENCES public.orders(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES public.products(id) ON DELETE CASCADE
@@ -104,26 +105,26 @@ INSERT INTO orders VALUES('1deda162-6c13-407d-bbff-68e4ee7ea401', 64.99, 'acb1c2
 INSERT INTO orders VALUES('849df40b-877c-4f80-9083-cd02d5f04605', 40.98, '23ecc2e3-45fd-48ba-8369-9ca94ea8ec71', 'DONE', now(), now());
 
 -- order products
-INSERT INTO orders_products VALUES('1376c2b4-74bd-477c-8f44-7cc593e8c734', 'bee3e0c8-be36-4f7d-bc6f-2440dccd0d89', 2);
-INSERT INTO orders_products VALUES('1376c2b4-74bd-477c-8f44-7cc593e8c734', 'c3dd096a-485a-46f6-9243-11501733a36f', 1);
-INSERT INTO orders_products VALUES('a0aad9ce-35ea-43a6-b3e8-ac8d63943fd7', '69fff21c-972e-4d59-8395-252f83b9a534', 3);
-INSERT INTO orders_products VALUES('a0aad9ce-35ea-43a6-b3e8-ac8d63943fd7', '3109a581-9967-4f6a-84cb-23335edf8cc1', 2);
-INSERT INTO orders_products VALUES('52541b29-b267-4ec7-a311-a4ed5cd087af', '5c6d0d64-b3f0-4513-88dc-ef9bf24e4cd8', 1);
-INSERT INTO orders_products VALUES('52541b29-b267-4ec7-a311-a4ed5cd087af', '8d4e85d3-0176-40b5-a4c1-0b2783d87acd', 2);
-INSERT INTO orders_products VALUES('52541b29-b267-4ec7-a311-a4ed5cd087af', '372cd3a3-0897-4fc5-aced-213fec203ee4', 1);
-INSERT INTO orders_products VALUES('7aa7bc1a-5e31-420f-867c-72f5ba460e35', '5500c5df-a754-44a7-82d6-ca7fe3803733', 2);
-INSERT INTO orders_products VALUES('7aa7bc1a-5e31-420f-867c-72f5ba460e35', '5af4ccb8-dda3-4228-b703-6a2386ad9559', 1);
-INSERT INTO orders_products VALUES('c53c89b6-2459-421d-9a91-9e9e89aee932', '4d4cd844-eb18-4e39-b57a-9ab7951a4548', 2);
-INSERT INTO orders_products VALUES('c53c89b6-2459-421d-9a91-9e9e89aee932', '7077641f-036b-4fa7-9dd2-cd4f4985dc60', 2);
-INSERT INTO orders_products VALUES('6489d886-987f-406b-be43-204bf79e5de2', 'bee3e0c8-be36-4f7d-bc6f-2440dccd0d89', 2);
-INSERT INTO orders_products VALUES('6489d886-987f-406b-be43-204bf79e5de2', 'cc6eb804-bf6e-421c-87ac-8da5e03b6e5f', 3);
-INSERT INTO orders_products VALUES('063289a6-cd2f-4be0-baaa-7f2132a5a9bf', '69fff21c-972e-4d59-8395-252f83b9a534', 1);
-INSERT INTO orders_products VALUES('063289a6-cd2f-4be0-baaa-7f2132a5a9bf', '3109a581-9967-4f6a-84cb-23335edf8cc1', 2);
-INSERT INTO orders_products VALUES('063289a6-cd2f-4be0-baaa-7f2132a5a9bf', '9de2e56e-103f-4795-b698-b616d5f5f13c', 1);
-INSERT INTO orders_products VALUES('9cdb3b16-f115-43aa-9b4b-05c0de1007eb', '5c6d0d64-b3f0-4513-88dc-ef9bf24e4cd8', 2);
-INSERT INTO orders_products VALUES('9cdb3b16-f115-43aa-9b4b-05c0de1007eb', '8d4e85d3-0176-40b5-a4c1-0b2783d87acd', 2);
-INSERT INTO orders_products VALUES('1deda162-6c13-407d-bbff-68e4ee7ea401', 'bee3e0c8-be36-4f7d-bc6f-2440dccd0d89', 1);
-INSERT INTO orders_products VALUES('1deda162-6c13-407d-bbff-68e4ee7ea401', '847f8247-32e4-473b-8dc8-afec9b93ae22', 1);
-INSERT INTO orders_products VALUES('1deda162-6c13-407d-bbff-68e4ee7ea401', 'cc6eb804-bf6e-421c-87ac-8da5e03b6e5f', 2);
-INSERT INTO orders_products VALUES('849df40b-877c-4f80-9083-cd02d5f04605', 'ac8f589b-ba83-4207-912a-88eec233614e', 2);
-INSERT INTO orders_products VALUES('849df40b-877c-4f80-9083-cd02d5f04605', '69fff21c-972e-4d59-8395-252f83b9a534', 3);
+INSERT INTO orders_products VALUES('1376c2b4-74bd-477c-8f44-7cc593e8c734', 'c3dd096a-485a-46f6-9243-11501733a36f', 1, null);
+INSERT INTO orders_products VALUES('1376c2b4-74bd-477c-8f44-7cc593e8c734', 'bee3e0c8-be36-4f7d-bc6f-2440dccd0d89', 2, null);
+INSERT INTO orders_products VALUES('a0aad9ce-35ea-43a6-b3e8-ac8d63943fd7', '69fff21c-972e-4d59-8395-252f83b9a534', 3, null);
+INSERT INTO orders_products VALUES('a0aad9ce-35ea-43a6-b3e8-ac8d63943fd7', '3109a581-9967-4f6a-84cb-23335edf8cc1', 2, null);
+INSERT INTO orders_products VALUES('52541b29-b267-4ec7-a311-a4ed5cd087af', '5c6d0d64-b3f0-4513-88dc-ef9bf24e4cd8', 1, null);
+INSERT INTO orders_products VALUES('52541b29-b267-4ec7-a311-a4ed5cd087af', '8d4e85d3-0176-40b5-a4c1-0b2783d87acd', 2, null);
+INSERT INTO orders_products VALUES('52541b29-b267-4ec7-a311-a4ed5cd087af', '372cd3a3-0897-4fc5-aced-213fec203ee4', 1, null);
+INSERT INTO orders_products VALUES('7aa7bc1a-5e31-420f-867c-72f5ba460e35', '5500c5df-a754-44a7-82d6-ca7fe3803733', 2, null);
+INSERT INTO orders_products VALUES('7aa7bc1a-5e31-420f-867c-72f5ba460e35', '5af4ccb8-dda3-4228-b703-6a2386ad9559', 1, null);
+INSERT INTO orders_products VALUES('c53c89b6-2459-421d-9a91-9e9e89aee932', '4d4cd844-eb18-4e39-b57a-9ab7951a4548', 2, null);
+INSERT INTO orders_products VALUES('c53c89b6-2459-421d-9a91-9e9e89aee932', '7077641f-036b-4fa7-9dd2-cd4f4985dc60', 2, null);
+INSERT INTO orders_products VALUES('6489d886-987f-406b-be43-204bf79e5de2', 'bee3e0c8-be36-4f7d-bc6f-2440dccd0d89', 2, null);
+INSERT INTO orders_products VALUES('6489d886-987f-406b-be43-204bf79e5de2', 'cc6eb804-bf6e-421c-87ac-8da5e03b6e5f', 3, null);
+INSERT INTO orders_products VALUES('063289a6-cd2f-4be0-baaa-7f2132a5a9bf', '69fff21c-972e-4d59-8395-252f83b9a534', 1, null);
+INSERT INTO orders_products VALUES('063289a6-cd2f-4be0-baaa-7f2132a5a9bf', '3109a581-9967-4f6a-84cb-23335edf8cc1', 2, null);
+INSERT INTO orders_products VALUES('063289a6-cd2f-4be0-baaa-7f2132a5a9bf', '9de2e56e-103f-4795-b698-b616d5f5f13c', 1, null);
+INSERT INTO orders_products VALUES('9cdb3b16-f115-43aa-9b4b-05c0de1007eb', '5c6d0d64-b3f0-4513-88dc-ef9bf24e4cd8', 2, null);
+INSERT INTO orders_products VALUES('9cdb3b16-f115-43aa-9b4b-05c0de1007eb', '8d4e85d3-0176-40b5-a4c1-0b2783d87acd', 2, null);
+INSERT INTO orders_products VALUES('1deda162-6c13-407d-bbff-68e4ee7ea401', 'bee3e0c8-be36-4f7d-bc6f-2440dccd0d89', 1, null);
+INSERT INTO orders_products VALUES('1deda162-6c13-407d-bbff-68e4ee7ea401', '847f8247-32e4-473b-8dc8-afec9b93ae22', 1, null);
+INSERT INTO orders_products VALUES('1deda162-6c13-407d-bbff-68e4ee7ea401', 'cc6eb804-bf6e-421c-87ac-8da5e03b6e5f', 2, null);
+INSERT INTO orders_products VALUES('849df40b-877c-4f80-9083-cd02d5f04605', 'ac8f589b-ba83-4207-912a-88eec233614e', 2, null);
+INSERT INTO orders_products VALUES('849df40b-877c-4f80-9083-cd02d5f04605', '69fff21c-972e-4d59-8395-252f83b9a534', 3, null);
