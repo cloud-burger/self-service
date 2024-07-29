@@ -6,6 +6,7 @@ import { ProductRepository as IProductRepository } from '~/domain/order/reposito
 import { ProductDbSchema } from './dtos/product-db-schema';
 import { DatabaseProductMapper } from './mappers/database-product';
 import { DELETE_PRODUCT_BY_ID } from './queries/delete-product-by-id';
+import { FIND_PRODUCT_BY_CATEGORY } from './queries/find-product-by-category';
 import { FIND_PRODUCT_BY_CATEGORY_AND_NAME } from './queries/find-product-by-category-and-name';
 import { FIND_PRODUCT_BY_ID } from './queries/find-product-by-id';
 import { INSERT_PRODUCT } from './queries/insert-product';
@@ -42,6 +43,31 @@ export class ProductRepository implements IProductRepository {
       sql: UPDATE_PRODUCT,
       parameters: recordToSave,
     });
+  }
+
+  async findByCategory(category: ProductCategory): Promise<Product[] | null> {
+    const { records } = await this.connection.query({
+      sql: FIND_PRODUCT_BY_CATEGORY,
+      parameters: {
+        category,
+      },
+    });
+
+    if (!records.length) {
+      logger.debug({
+        message: 'Product does not exists',
+        data: {
+          category,
+          records,
+        },
+      });
+
+      return null;
+    }
+
+    return records.map((record) =>
+      DatabaseProductMapper.toDomain(record as ProductDbSchema),
+    );
   }
 
   async findByCategoryAndName(

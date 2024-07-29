@@ -5,6 +5,7 @@ import { env } from './env';
 
 import { createCustomer } from './handlers/customer/create';
 import { findCustomerByDocumentNumber } from './handlers/customer/find-by-document-number';
+import { findProductByCategory } from './handlers/order/find-product-by-category'
 import { createProduct } from './handlers/order/create-product';
 import { listOrders } from './handlers/order/list-orders';
 import { updateProduct } from './handlers/order/update-product';
@@ -20,6 +21,7 @@ router.post('/customer', createCustomer);
 router.get('/customer/:documentNumber', findCustomerByDocumentNumber);
 
 // Product
+router.get('/product/:category', findProductByCategory);
 router.post('/product', createProduct);
 router.put('/product/:id', updateProduct);
 router.delete('/product/:id', deleteProduct);
