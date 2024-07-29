@@ -3,7 +3,7 @@ import logger from '@cloud-burger/logger';
 import { Order } from '../entities/order';
 import { OrderRepository } from '../repositories/order';
 
-export class GetOrdersUseCase {
+export class ListOrdersUseCase {
   constructor(private orderRepository: OrderRepository) {}
 
   async execute(input: OrderPaginationParams): Promise<Order> {
