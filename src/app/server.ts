@@ -23,7 +23,7 @@ router.post('/product', createProduct);
 router.put('/product/:id', updateProduct);
 
 // Orders
-router.get('/orders/get', getOrders)
+router.get('/orders', getOrders)
 
 app.use(cors());
 app.use(express.json());
