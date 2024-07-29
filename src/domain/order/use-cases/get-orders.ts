@@ -6,7 +6,9 @@ import { OrderRepository } from '../repositories/order';
 export class GetOrdersUseCase {
   constructor(private orderRepository: OrderRepository) {}
 
-  async execute(): Promise<Order> {
+  async execute(input: OrderPaginationParams): Promise<Order> {
+      return await this.orderRepository.findMany(input);
+  }
     const orders = await this.orderRepository.get();
 
     logger.debug({
