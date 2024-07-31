@@ -20,9 +20,8 @@ export class OrderRepository implements IOrderRepository {
       return [];
     }
 
-   
      //esse cara precisa retornar um array de orders por ser uma listagem  
-     return records.map((record) => {
+    return records.map((record) => {
       return DatabaseOrderMapper.toDomain(record as OrderDbSchema)
     });
   }

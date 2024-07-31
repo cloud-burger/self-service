@@ -5,26 +5,26 @@ import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 
-import { GetOrdersUseCase } from '~/domain/order/use-cases/get-orders';
+import { ListOrdersUseCase } from '~/domain/order/use-cases/get-orders';
 import { OrderRepository } from '~/driven/database/order/postgres/order-repository';
-import { GetOrdersController } from '~/driver/order/controllers/get-orders';
+import { ListOrdersController } from '~/driver/order/controllers/get-orders';
 
 let pool: Pool;
 let orderRepository: OrderRepository;
-let getOrdersUseCase: GetOrdersUseCase;
-let getOrdersController: GetOrdersController;
+let listOrdersUseCase: ListOrdersUseCase;
+let listOrdersController: ListOrdersController;
 let apiHandler: ApiHandler;
 
 const setDependencies = (connection: Connection) => {
   orderRepository = new OrderRepository(connection);
-  getOrdersUseCase = new GetOrdersUseCase(
+  listOrdersUseCase = new ListOrdersUseCase(
     orderRepository,
   );
-  getOrdersController =
-    new GetOrdersController(
-      getOrdersUseCase,
+  listOrdersController =
+    new ListOrdersController(
+      listOrdersUseCase,
     );
-  apiHandler = new ApiHandler(getOrdersController.handler);
+  apiHandler = new ApiHandler(listOrdersController.handler);
 };
 
 export const getOrders = async (

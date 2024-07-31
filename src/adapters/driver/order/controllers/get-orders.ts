@@ -2,6 +2,7 @@ import { Controller, Request, Response } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { Order } from '~/domain/order/entities/order';
 import { ListOrdersUseCase } from '~/domain/order/use-cases/get-orders';
+// import { OrderPaginationParams } from '~/domain/order/repositories/order'
 
 export class ListOrdersController {
   constructor(
@@ -10,8 +11,12 @@ export class ListOrdersController {
 
   handler: Controller = async (
     request: Request,
-  ): Promise<Response<Order>> => {
-
+  ): Promise<Response<Order[]>> => {
+    
+    if (request.body.customerId) {
+      console.log(request.body.customerId)
+    }
+    
     logger.info({
       message: 'List orders request',
       data: request,
