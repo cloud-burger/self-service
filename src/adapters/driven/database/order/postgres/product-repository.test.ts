@@ -22,7 +22,7 @@ describe('product repository', () => {
 
     expect(connection.query).toHaveBeenNthCalledWith(1, {
       parameters: {
-        amount: '20.99',
+        amount: 20.99,
         category: 'BURGER',
         created_at: '2024-07-12T22:18:26.351Z',
         description:
@@ -45,7 +45,7 @@ describe('product repository', () => {
 
     expect(connection.query).toHaveBeenNthCalledWith(1, {
       parameters: {
-        amount: '20.99',
+        amount: 20.99,
         category: 'BURGER',
         created_at: '2024-07-12T22:18:26.351Z',
         description:

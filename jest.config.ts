@@ -36,4 +36,5 @@ export default {
   },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   verbose: true,
+  bail: true,
 };

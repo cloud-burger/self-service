@@ -6,6 +6,7 @@ import { env } from './env';
 import { createCustomer } from './handlers/customer/create';
 import { findCustomerByDocumentNumber } from './handlers/customer/find-by-document-number';
 import { createProduct } from './handlers/order/create-product';
+import { listOrders } from './handlers/order/list-orders';
 import { updateProduct } from './handlers/order/update-product';
 
 const app = express();
@@ -20,6 +21,9 @@ router.get('/customer/:documentNumber', findCustomerByDocumentNumber);
 // Product
 router.post('/product', createProduct);
 router.put('/product/:id', updateProduct);
+
+// Orders
+router.get('/orders', listOrders);
 
 app.use(cors());
 app.use(express.json());

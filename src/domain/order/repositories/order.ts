@@ -1,5 +1,11 @@
 import { Order } from '../entities/order';
 
+export interface OrderPaginationParams {
+  page: string;
+  size: string;
+  status?: string;
+}
+
 export interface OrderRepository {
-  create(Order: Order): Promise<void>;
+  findMany(input: OrderPaginationParams): Promise<Order[]>;
 }

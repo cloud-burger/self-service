@@ -3,7 +3,7 @@ export interface ProductDbSchema {
   name: string;
   category: string;
   description: string;
-  amount: string;
+  amount: number;
   image?: string;
   created_at: string;
   updated_at: string;
