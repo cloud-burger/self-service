@@ -4,10 +4,9 @@ import { Request, Response } from 'express';
 import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
-
-import { ListOrdersUseCase } from '~/domain/order/use-cases/get-orders';
+import { ListOrdersUseCase } from '~/domain/order/use-cases/list-orders';
 import { OrderRepository } from '~/driven/database/order/postgres/order-repository';
-import { ListOrdersController } from '~/driver/order/controllers/get-orders';
+import { ListOrdersController } from '~/driver/order/controllers/list-orders';
 
 let pool: Pool;
 let orderRepository: OrderRepository;
@@ -17,17 +16,12 @@ let apiHandler: ApiHandler;
 
 const setDependencies = (connection: Connection) => {
   orderRepository = new OrderRepository(connection);
-  listOrdersUseCase = new ListOrdersUseCase(
-    orderRepository,
-  );
-  listOrdersController =
-    new ListOrdersController(
-      listOrdersUseCase,
-    );
+  listOrdersUseCase = new ListOrdersUseCase(orderRepository);
+  listOrdersController = new ListOrdersController(listOrdersUseCase);
   apiHandler = new ApiHandler(listOrdersController.handler);
 };
 
-export const getOrders = async (
+export const listOrders = async (
   request: Request,
   response: Response,
 ): Promise<Response> => {
