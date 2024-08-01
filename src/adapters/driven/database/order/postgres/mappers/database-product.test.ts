@@ -4,7 +4,7 @@ import { DatabaseProductMapper } from './database-product';
 describe('database product mapper', () => {
   it('should map to database', () => {
     expect(DatabaseProductMapper.toDatabase(makeProduct())).toEqual({
-      amount: '20.99',
+      amount: 20.99,
       category: 'BURGER',
       created_at: '2024-07-12T22:18:26.351Z',
       description:
@@ -19,7 +19,7 @@ describe('database product mapper', () => {
   it('should map to domain', () => {
     expect(
       DatabaseProductMapper.toDomain({
-        amount: '20.99',
+        amount: 20.99,
         category: 'BURGER',
         created_at: '2024-07-12T22:18:26.351Z',
         description:

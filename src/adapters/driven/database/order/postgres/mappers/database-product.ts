@@ -19,7 +19,7 @@ export class DatabaseProductMapper {
   static toDatabase(product: Product): ProductDbSchema {
     return {
       id: product.id,
-      amount: product.amount.toString(),
+      amount: product.amount,
       category: product.category,
       description: product.description,
       name: product.name,
