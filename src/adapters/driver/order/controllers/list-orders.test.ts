@@ -164,7 +164,7 @@ describe('list orders controller', () => {
       statusCode: 200,
     });
     expect(listOrdersUseCase.execute).toHaveBeenNthCalledWith(1, {
-      page: '1',
+      page: '0',
       size: '10',
       status: 'DONE',
     });

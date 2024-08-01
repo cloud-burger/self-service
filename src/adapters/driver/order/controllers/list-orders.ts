@@ -38,7 +38,7 @@ export class ListOrdersController {
 
     const orders = await this.listOrdersUseCase.execute({
       status: data.status,
-      page: String(data.pageNumber),
+      page: String(data.pageNumber - 1),
       size: String(data.pageSize),
     });
 
