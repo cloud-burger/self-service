@@ -11,6 +11,9 @@ import { deleteProduct } from './handlers/order/delete-product';
 import { findProductsByCategory } from './handlers/order/find-products-by-category';
 import { listOrders } from './handlers/order/list-orders';
 import { updateProduct } from './handlers/order/update-product';
+import * as bodyParser from "body-parser";
+import swaggerUi from "swagger-ui-express";
+import swaggerOutput from "./swagger_output.json";
 
 const app = express();
 const PORT = +env.PORT;
@@ -30,6 +33,10 @@ router.delete('/product/:id', deleteProduct);
 // Orders
 router.get('/order', listOrders);
 router.post('/order', createOrder);
+
+// Swagger
+app.use(bodyParser.json());
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 
 app.use(cors());
 app.use(express.json());

@@ -1,6 +1,6 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["node_modulest", "test", "dist"],
+  "include": ["src/**/*", "src/app/swagger-output.json"],
+  "exclude": ["node_modules", "test", "dist"],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -24,6 +24,7 @@
       "~/driver/*": ["./adapters/driver/*"],
       "~/domain/*": ["./domain/*"]
     },
-    "types": ["jest", "node"]
+    "types": ["jest", "node", "express"],
+    "typeRoots": ["node_modules/@types"]
   }
 }
