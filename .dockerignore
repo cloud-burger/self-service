@@ -2,3 +2,5 @@
 README.md
 compose.yaml
 Dockerfile
+*/src/app/swagger_output.json
+*/src/app/swagger.examples.ts

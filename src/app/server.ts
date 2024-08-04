@@ -8,6 +8,9 @@ import { findCustomerByDocumentNumber } from './handlers/customer/find-by-docume
 import { createProduct } from './handlers/order/create-product';
 import { listOrders } from './handlers/order/list-orders';
 import { updateProduct } from './handlers/order/update-product';
+import * as bodyParser from "body-parser";
+import swaggerUi from "swagger-ui-express";
+import swaggerOutput from "./swagger_output.json";
 
 const app = express();
 const PORT = +env.PORT;
@@ -24,6 +27,10 @@ router.put('/product/:id', updateProduct);
 
 // Orders
 router.get('/orders', listOrders);
+
+// Swagger
+app.use(bodyParser.json());
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 
 app.use(cors());
 app.use(express.json());
