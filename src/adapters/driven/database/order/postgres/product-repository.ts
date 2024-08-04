@@ -45,7 +45,7 @@ export class ProductRepository implements IProductRepository {
     });
   }
 
-  async findByCategory(category: ProductCategory): Promise<Product[] | null> {
+  async findByCategory(category: ProductCategory): Promise<Product[]> {
     const { records } = await this.connection.query({
       sql: FIND_PRODUCT_BY_CATEGORY,
       parameters: {
@@ -62,7 +62,7 @@ export class ProductRepository implements IProductRepository {
         },
       });
 
-      return null;
+      return [];
     }
 
     return records.map((record) =>

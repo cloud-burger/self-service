@@ -12,24 +12,6 @@ export class FindProductByCategoryUseCase {
     constructor(private productRepository: ProductRepository) {}
 
     async execute({ category }: Input): Promise<Product[]> {
-        const product = await this.productRepository.findByCategory(category);
-
-        if (!product) {
-            logger.warn({
-                message: 'Product not found',
-                data: {
-                    category
-                }
-            });
-
-            throw new NotFoundError('Product not found');
-        }
-
-        logger.debug({
-            message: 'Product found',
-            data: product
-        });
-
-        return product;
+        return await this.productRepository.findByCategory(category);
     }
 }
