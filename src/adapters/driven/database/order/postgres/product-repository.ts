@@ -9,6 +9,7 @@ import { FIND_PRODUCT_BY_CATEGORY_AND_NAME } from './queries/find-product-by-cat
 import { FIND_PRODUCT_BY_ID } from './queries/find-product-by-id';
 import { INSERT_PRODUCT } from './queries/insert-product';
 import { UPDATE_PRODUCT } from './queries/update-product';
+import { DELETE_PRODUCT_BY_ID } from './queries/delete-product-by-id';
 
 export class ProductRepository implements IProductRepository {
   constructor(private connection: Connection) {}
@@ -96,5 +97,16 @@ export class ProductRepository implements IProductRepository {
     const [product] = records;
 
     return DatabaseProductMapper.toDomain(product as ProductDbSchema);
+  }
+
+  async deleteById(id: string): Promise<boolean> {
+    await this.connection.query({
+      sql: DELETE_PRODUCT_BY_ID,
+      parameters: {
+        id,
+      },
+    });
+
+    return true;
   }
 }

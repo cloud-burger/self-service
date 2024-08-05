@@ -82,8 +82,30 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /product/{id}:
+    delete:
+      tags:
+        - Product
+      description: Delete product
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   parameters:
+    Id:
+      in: path
+      name: id
+      schema:
+        $ref: '#/components/schemas/Id'
+      required: true
     DocumentNumber:
       in: path
       name: documentNumber
@@ -111,6 +133,12 @@ components:
             $ref: '#/components/schemas/ProductResponse'
     UpdateProduct:
       description: Product updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductResponse'
+    DeleteProduct:
+      description: Product deleted successfully
       content:
         application/json:
           schema:
@@ -268,8 +296,7 @@ components:
               reason:
                 type: string
                 description: Invalid param reason
-                example: Customer document number failed custom validation because invalid
-                  document
+                example: Parameter number failed custom validation because is invalid
     CreateCustomerRequest:
       type: object
       properties:
