@@ -22,7 +22,7 @@ describe('delete product controller', () => {
     } as unknown as Request);
 
     expect(response).toEqual({
-      statusCode: 200
+      statusCode: 204
     });
   });
 });
