@@ -5,10 +5,8 @@ import {
   ValidationError,
 } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { validateSchema } from '@cloud-burger/utils';
 import { Product } from '~/domain/order/entities/product';
 import { DeleteProductUseCase } from '~/domain/order/use-cases/delete-product';
-import { productSchema } from './validations/product-schema';
 
 export class DeleteProductController {
   constructor(private deleteProductUseCase: DeleteProductUseCase) {}
@@ -33,7 +31,7 @@ export class DeleteProductController {
     });
 
     return {
-      statusCode: deleted ? 400 : 200
+      statusCode: deleted ? 204 : 400
     };
   };
 }
