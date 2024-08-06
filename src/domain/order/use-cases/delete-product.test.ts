@@ -3,7 +3,7 @@ import { makeProduct } from 'tests/factories/make-product';
 import { ProductRepository } from '../repositories/product';
 import { DeleteProductUseCase } from './delete-product';
 
-describe('update product use case', () => {
+describe('delete product use case', () => {
   let productRepository: MockProxy<ProductRepository>;
   let deleteProductUseCase: DeleteProductUseCase;
 

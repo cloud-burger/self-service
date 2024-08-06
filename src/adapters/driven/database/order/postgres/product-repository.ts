@@ -103,8 +103,8 @@ export class ProductRepository implements IProductRepository {
     await this.connection.query({
       sql: DELETE_PRODUCT_BY_ID,
       parameters: {
-        id,
-      },
+        id
+      }
     });
 
     return true;
