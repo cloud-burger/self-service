@@ -76,6 +76,46 @@ describe('product repository', () => {
     });
   });
 
+  it('should find products by category successfully', async () => {
+    connection.query.mockResolvedValue({
+      records: [
+        {
+          amount: '20.99',
+          category: 'BURGER',
+          created_at: '2024-07-12T22:18:26.351Z',
+          description:
+            'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
+          id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+          image: null,
+          name: 'Bacon Burger',
+          updated_at: '2024-07-12T22:18:26.351Z',
+        },
+      ],
+    });
+
+    const products = await productRepository.findByCategory(
+      ProductCategory.BURGER,
+    );
+
+    expect(products).toEqual([
+      {
+        amount: 20.99,
+        category: 'BURGER',
+        createdAt: new Date('2024-07-12T22:18:26.351Z'),
+        description:
+          'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        image: null,
+        name: 'Bacon Burger',
+        updatedAt: new Date('2024-07-12T22:18:26.351Z'),
+      },
+    ]);
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: { category: 'BURGER' },
+      sql: 'SELECT * FROM public.products WHERE category = :category',
+    });
+  });
+
   it('should find product by category and name successfully', async () => {
     connection.query.mockResolvedValue({
       records: [

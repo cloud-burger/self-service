@@ -98,6 +98,18 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /product/{category}:
+    get: 
+      tags:
+        - Product
+      description: Find products by category
+      parameters:
+        - $ref: '#/components/parameters/Category'
+      responses:
+        '200':
+          $ref: '#/components/responses/FindProductByCategory'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   parameters:
     Id:
@@ -105,6 +117,12 @@ components:
       name: id
       schema:
         $ref: '#/components/schemas/Id'
+      required: true
+    Category:
+      in: path
+      name: id
+      schema:
+        $ref: '#/components/schemas/ProductCategory'
       required: true
     DocumentNumber:
       in: path
@@ -137,12 +155,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ProductResponse'
-    DeleteProduct:
+    FindProductByCategory:
       description: Product deleted successfully
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ProductResponse'
+            $ref: '#/components/schemas/ProductsResponse'
     NoContent:
       description: No Content
     BadRequest:
@@ -241,6 +259,10 @@ components:
           $ref: '#/components/schemas/Date'
         updatedAt:
           $ref: '#/components/schemas/Date'
+    ProductsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProductResponse'
     ProductResponse:
       type: object
       properties:

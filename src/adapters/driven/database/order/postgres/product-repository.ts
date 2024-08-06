@@ -53,18 +53,6 @@ export class ProductRepository implements IProductRepository {
       },
     });
 
-    if (!records.length) {
-      logger.debug({
-        message: 'Product does not exists',
-        data: {
-          category,
-          records,
-        },
-      });
-
-      return [];
-    }
-
     return records.map((record) =>
       DatabaseProductMapper.toDomain(record as ProductDbSchema),
     );
