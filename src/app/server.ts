@@ -6,9 +6,10 @@ import { env } from './env';
 import { createCustomer } from './handlers/customer/create';
 import { findCustomerByDocumentNumber } from './handlers/customer/find-by-document-number';
 import { createProduct } from './handlers/order/create-product';
+import { deleteProduct } from './handlers/order/delete-product';
+import { findProductsByCategory } from './handlers/order/find-products-by-category';
 import { listOrders } from './handlers/order/list-orders';
 import { updateProduct } from './handlers/order/update-product';
-import { deleteProduct } from './handlers/order/delete-product';
 
 const app = express();
 const PORT = +env.PORT;
@@ -20,6 +21,7 @@ router.post('/customer', createCustomer);
 router.get('/customer/:documentNumber', findCustomerByDocumentNumber);
 
 // Product
+router.get('/product/:category', findProductsByCategory);
 router.post('/product', createProduct);
 router.put('/product/:id', updateProduct);
 router.delete('/product/:id', deleteProduct);

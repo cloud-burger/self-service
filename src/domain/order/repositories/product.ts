@@ -10,4 +10,5 @@ export interface ProductRepository {
   ): Promise<Product | null>;
   findById(id: string): Promise<Product | null>;
   deleteById(id: string): Promise<void>;
+  findByCategory(category: string): Promise<Product[]>;
 }
