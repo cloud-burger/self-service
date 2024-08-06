@@ -1,3 +1,5 @@
+import { InternalServerError } from '@cloud-burger/handlers';
+import logger from '@cloud-burger/logger';
 import Connection from '~/app/postgres/connection';
 import { Order } from '~/domain/order/entities/order';
 import {
@@ -8,7 +10,6 @@ import { OrdersDbSchema } from './dtos/orders-db-schema';
 import { DatabaseOrderMapper } from './mappers/database-order';
 import { FIND_MANY } from './queries/find-many';
 import { INSERT_ORDER, INSERT_ORDER_PRODUCT } from './queries/insert-order';
-import logger from '@cloud-burger/logger';
 
 export class OrderRepository implements IOrderRepository {
   constructor(private connection: Connection) {}
@@ -29,40 +30,45 @@ export class OrderRepository implements IOrderRepository {
   }
 
   async create(order: Order): Promise<void> {
-    const {products, ...recordToSave} = DatabaseOrderMapper.toDatabase(order);
+    const { products, ...recordToSave } = DatabaseOrderMapper.toDatabase(order);
 
-    const columns = Object.keys(recordToSave)
-      .map((key) => {
-        return key;
-      });
+    const columnsAndParameters = (record: Record<string, any>) => {
+      const columns = Object.keys(record);
+      const parameters = columns.map((key) => `:${key}`);
+      return { columns, parameters };
+    };
 
-    const parameters = columns.map((key) => {
-      return `:${key}`;
-    });
+    const { columns, parameters } = columnsAndParameters(recordToSave);
 
-    await this.connection.query({
-      sql: INSERT_ORDER(columns.join(), parameters.join()),
-      parameters: recordToSave,
-    });
-
-    products.map((product) => {
-      return {product_id: product.id, quantity: product.quantity || 0, notes: product.notes || null, order_id: order.id};
-    });
-
-    for (const product of products) {
-      const columns = Object.keys(product)
-        .map((key) => {
-          return key;
-      });
-
-      const parameters = columns.map((key) => {
-        return `:${key}`;
-      });
-
+    await this.connection.begin();
+    try {
       await this.connection.query({
-        sql: INSERT_ORDER_PRODUCT(columns.join(), parameters.join()),
-        parameters: product,
+        sql: INSERT_ORDER(columns.join(), parameters.join()),
+        parameters: recordToSave,
       });
+
+      for (const product of products) {
+        const { columns: productColumns, parameters: productParameters } =
+          columnsAndParameters(product);
+
+        await this.connection.query({
+          sql: INSERT_ORDER_PRODUCT(
+            productColumns.join(),
+            productParameters.join(),
+          ),
+          parameters: product,
+        });
+      }
+
+      await this.connection.commit();
+    } catch (error) {
+      await this.connection.rollback();
+
+      logger.error({
+        message: 'Error while processing transaction',
+        data: error,
+      });
+      throw new InternalServerError('Error while processing transaction');
     }
   }
 }

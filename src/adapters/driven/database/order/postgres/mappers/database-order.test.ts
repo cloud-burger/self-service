@@ -1,3 +1,4 @@
+import { makeOrder } from 'tests/factories/make-order';
 import { DatabaseOrderMapper } from './database-order';
 
 describe('database order mapper', () => {
@@ -57,6 +58,25 @@ describe('database order mapper', () => {
       ],
       status: 'DONE',
       updatedAt: new Date('2024-01-01T00:00:00.000Z'),
+    });
+  });
+
+  it('should map to database', () => {
+    expect(DatabaseOrderMapper.toDatabase(makeOrder())).toEqual({
+      amount: 20.99,
+      created_at: '2024-07-12T22:18:26.351Z',
+      customer_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+      id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+      products: [
+        {
+          notes: 'Sem bacon',
+          order_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+          product_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+          quantity: 1,
+        },
+      ],
+      status: 'RECEIVED',
+      updated_at: '2024-07-12T22:18:26.351Z',
     });
   });
 });

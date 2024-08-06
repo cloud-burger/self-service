@@ -42,17 +42,16 @@ export class DatabaseOrderMapper {
     return {
       id: order.id,
       amount: order.amount,
-      customer_id: order.customer ? order.customer.id.toString() : null,
+      customer_id: order.customer?.id || null,
       status: order.status,
       created_at: order.createdAt.toISOString(),
       updated_at: order.updatedAt.toISOString(),
-      products: order.products.map((product) => {
-        return {
-          id: product.id,
-          quantity: product.quantity,
-          notes: product.notes || null
-        }
-      })
+      products: order.products.map((product) => ({
+        order_id: order.id,
+        product_id: product.id,
+        quantity: product.quantity,
+        notes: product.notes || null,
+      })),
     };
   }
 }

@@ -19,5 +19,12 @@ export interface OrderDbSchema {
   status: string;
   created_at: string;
   updated_at: string;
-  products: Partial<ProductDbSchema>[];
+  products: OrderProductsDbSchema[];
+}
+
+interface OrderProductsDbSchema {
+  order_id: string;
+  product_id: string;
+  quantity: number;
+  notes?: string;
 }

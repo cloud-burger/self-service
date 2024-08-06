@@ -40,4 +40,46 @@ describe('pg connection', () => {
 
     expect(poolClientMock.release).toHaveBeenCalled();
   });
+
+  it('should run begin', async () => {
+    poolClientMock.query.mockResolvedValue({
+      rowCount: 1,
+      rows: [
+        {
+          amount: 10,
+        },
+      ],
+    } as never);
+
+    await pgConnection.begin();
+    expect(poolClientMock.query).toHaveBeenNthCalledWith(1, 'BEGIN');
+  });
+
+  it('should run commit', async () => {
+    poolClientMock.query.mockResolvedValue({
+      rowCount: 1,
+      rows: [
+        {
+          amount: 10,
+        },
+      ],
+    } as never);
+
+    await pgConnection.commit();
+    expect(poolClientMock.query).toHaveBeenNthCalledWith(1, 'COMMIT');
+  });
+
+  it('should run rollback', async () => {
+    poolClientMock.query.mockResolvedValue({
+      rowCount: 1,
+      rows: [
+        {
+          amount: 10,
+        },
+      ],
+    } as never);
+
+    await pgConnection.rollback();
+    expect(poolClientMock.query).toHaveBeenNthCalledWith(1, 'ROLLBACK');
+  });
 });

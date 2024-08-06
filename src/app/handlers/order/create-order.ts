@@ -4,7 +4,9 @@ import { Request, Response } from 'express';
 import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
+import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases/find-by-document-number';
 import { CreateOrderUseCase } from '~/domain/order/use-cases/create-order';
+import { CustomerRepository } from '~/driven/database/customer/postgres/customer-repository';
 import { OrderRepository } from '~/driven/database/order/postgres/order-repository';
 import { ProductRepository } from '~/driven/database/order/postgres/product-repository';
 import { CreateOrderController } from '~/driver/order/controllers/create-order';
@@ -12,6 +14,8 @@ import { CreateOrderController } from '~/driver/order/controllers/create-order';
 let pool: Pool;
 let orderRepository: OrderRepository;
 let productRepository: ProductRepository;
+let customerRepository: CustomerRepository;
+let findCustomerByDocumentNumberUseCase: FindCustomerByDocumentNumberUseCase;
 let createOrderUseCase: CreateOrderUseCase;
 let createOrderController: CreateOrderController;
 let apiHandler: ApiHandler;
@@ -19,7 +23,15 @@ let apiHandler: ApiHandler;
 const setDependencies = (connection: Connection) => {
   orderRepository = new OrderRepository(connection);
   productRepository = new ProductRepository(connection);
-  createOrderUseCase = new CreateOrderUseCase(orderRepository, productRepository);
+  customerRepository = new CustomerRepository(connection);
+  findCustomerByDocumentNumberUseCase = new FindCustomerByDocumentNumberUseCase(
+    customerRepository,
+  );
+  createOrderUseCase = new CreateOrderUseCase(
+    orderRepository,
+    productRepository,
+    findCustomerByDocumentNumberUseCase,
+  );
   createOrderController = new CreateOrderController(createOrderUseCase);
   apiHandler = new ApiHandler(createOrderController.handler);
 };
