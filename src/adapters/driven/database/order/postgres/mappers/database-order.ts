@@ -3,7 +3,7 @@ import { Order } from '~/domain/order/entities/order';
 import { Product } from '~/domain/order/entities/product';
 import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
 import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
-import { OrdersDbSchema } from '../dtos/orders-db-schema';
+import { OrderDbSchema, OrdersDbSchema } from '../dtos/orders-db-schema';
 
 export class DatabaseOrderMapper {
   static toDomain(orderDbSchema: OrdersDbSchema): Order {
@@ -36,5 +36,23 @@ export class DatabaseOrderMapper {
         });
       }),
     });
+  }
+
+  static toDatabase(order: Order): OrderDbSchema {
+    return {
+      id: order.id,
+      amount: order.amount,
+      customer_id: order.customer ? order.customer.id.toString() : null,
+      status: order.status,
+      created_at: order.createdAt.toISOString(),
+      updated_at: order.updatedAt.toISOString(),
+      products: order.products.map((product) => {
+        return {
+          id: product.id,
+          quantity: product.quantity,
+          notes: product.notes || null
+        }
+      })
+    };
   }
 }

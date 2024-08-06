@@ -11,3 +11,13 @@ export interface OrdersDbSchema {
   updated_at: string;
   products: ProductDbSchema[];
 }
+
+export interface OrderDbSchema {
+  id: string;
+  amount: number;
+  customer_id?: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  products: Partial<ProductDbSchema>[];
+}

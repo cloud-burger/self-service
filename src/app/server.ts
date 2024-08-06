@@ -10,6 +10,7 @@ import { deleteProduct } from './handlers/order/delete-product';
 import { findProductsByCategory } from './handlers/order/find-products-by-category';
 import { listOrders } from './handlers/order/list-orders';
 import { updateProduct } from './handlers/order/update-product';
+import { createOrder } from './handlers/order/create-order';
 
 const app = express();
 const PORT = +env.PORT;
@@ -28,6 +29,7 @@ router.delete('/product/:id', deleteProduct);
 
 // Orders
 router.get('/orders', listOrders);
+router.post('/order', createOrder);
 
 app.use(cors());
 app.use(express.json());
