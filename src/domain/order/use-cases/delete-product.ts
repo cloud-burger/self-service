@@ -9,16 +9,16 @@ interface Input {
 export class DeleteProductUseCase {
   constructor(private productRepository: ProductRepository) {}
 
-  async execute(input: Input): Promise<boolean> {
-    const product = await this.productRepository.findById(input.id);
+  async execute({ id }: Input): Promise<void> {
+    const product = await this.productRepository.findById(id);
 
     if (!product) {
       logger.warn({
-        message: 'Product not found to delete',
-        data: input,
+        message: 'Product not found',
+        data: id,
       });
 
-      throw new NotFoundError('Product not found to delete');
+      throw new NotFoundError('Product not found');
     }
 
     logger.debug({
@@ -26,6 +26,6 @@ export class DeleteProductUseCase {
       data: product,
     });
 
-    return await this.productRepository.deleteById(product.id);
+    await this.productRepository.deleteById(product.id);
   }
 }

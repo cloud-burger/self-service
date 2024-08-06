@@ -15,10 +15,33 @@ describe('delete product use case', () => {
   it('should delete product successfully', async () => {
     productRepository.findById.mockResolvedValue(makeProduct());
 
-    const deleted = await deleteProductUseCase.execute({
-      id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e'
+    await deleteProductUseCase.execute({
+      id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
     });
 
-    expect(deleted).toEqual(true);
+    expect(productRepository.findById).toHaveBeenNthCalledWith(
+      1,
+      'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+    );
+    expect(productRepository.deleteById).toHaveBeenNthCalledWith(
+      1,
+      'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+    );
+  });
+
+  it('should throw not found when product does not exists', async () => {
+    productRepository.findById.mockResolvedValue(null);
+
+    await expect(
+      deleteProductUseCase.execute({
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+      }),
+    ).rejects.toThrow('Product not found');
+
+    expect(productRepository.findById).toHaveBeenNthCalledWith(
+      1,
+      'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+    );
+    expect(productRepository.deleteById).not.toHaveBeenCalled();
   });
 });

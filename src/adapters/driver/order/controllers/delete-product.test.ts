@@ -13,7 +13,7 @@ describe('delete product controller', () => {
   });
 
   it('should delete product successfully', async () => {
-    deleteProductUseCase.execute.mockResolvedValue(true);
+    deleteProductUseCase.execute.mockResolvedValue();
 
     const response = await deleteProductController.handler({
       pathParameters: {
@@ -22,7 +22,7 @@ describe('delete product controller', () => {
     } as unknown as Request);
 
     expect(response).toEqual({
-      statusCode: 204
+      statusCode: 204,
     });
   });
 });

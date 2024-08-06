@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Request,
-  Response,
-  ValidationError,
-} from '@cloud-burger/handlers';
+import { Controller, Request, Response } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { Product } from '~/domain/order/entities/product';
 import { DeleteProductUseCase } from '~/domain/order/use-cases/delete-product';
@@ -14,24 +9,21 @@ export class DeleteProductController {
   handler: Controller = async (
     request: Request,
   ): Promise<Response<Product>> => {
-    const { body, pathParameters } = request;
-    const { id } = pathParameters;
+    const { id } = request.pathParameters;
 
-    if (!id) {
-      logger.warn({
-        message: 'Delete product validation error',
-        data: id,
-      });
-
-      throw new ValidationError('Invalid request parameter', []);
-    }
-
-    const deleted = await this.deleteProductUseCase.execute({
-      id
+    logger.info({
+      message: 'Delete product request',
+      data: request,
     });
 
+    await this.deleteProductUseCase.execute({
+      id,
+    });
+
+    logger.info('Delete product response');
+
     return {
-      statusCode: deleted ? 204 : 400
+      statusCode: 204,
     };
   };
 }
