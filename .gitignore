@@ -1,5 +1,7 @@
 /dist
 /node_modules
+/src/app/swagger_output.json
+/src/app/swagger.examples.ts
 
 logs
 *.logs

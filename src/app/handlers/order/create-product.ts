@@ -25,6 +25,32 @@ export const createProduct = async (
   request: Request,
   response: Response,
 ): Promise<Response> => {
+  /*  #swagger.requestBody = {
+      "content": {
+        "application/json": {
+          "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                    "type": "string",
+                },
+                "category": {
+                    "type": "string",
+                    "description": "must be one of [BURGER, SIDE, DRINK, DESSERT]"
+                },
+                "description": {
+                    "type": "string",
+                },
+                "amount": {
+                    "type": "integer",
+                }
+              }
+            }
+          }
+        }
+      }
+  */
+      
   logger.setEvent('self-service', request);
   logger.debug({
     message: 'Event received',
