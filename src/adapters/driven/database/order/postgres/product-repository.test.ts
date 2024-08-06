@@ -166,4 +166,17 @@ describe('product repository', () => {
       sql: 'SELECT * FROM public.products WHERE id = :id',
     });
   });
+
+  it('should delete by id successfully', async () => {
+    connection.query.mockResolvedValue({
+      records: [],
+    });
+
+    await productRepository.deleteById('eba521ba-f6b7-46b5-ab5f-dd582495705e');
+
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: { id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e' },
+      sql: 'DELETE FROM public.products WHERE id=:id;',
+    });
+  });
 });

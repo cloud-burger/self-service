@@ -8,6 +8,7 @@ import { findCustomerByDocumentNumber } from './handlers/customer/find-by-docume
 import { createProduct } from './handlers/order/create-product';
 import { listOrders } from './handlers/order/list-orders';
 import { updateProduct } from './handlers/order/update-product';
+import { deleteProduct } from './handlers/order/delete-product';
 
 const app = express();
 const PORT = +env.PORT;
@@ -21,6 +22,7 @@ router.get('/customer/:documentNumber', findCustomerByDocumentNumber);
 // Product
 router.post('/product', createProduct);
 router.put('/product/:id', updateProduct);
+router.delete('/product/:id', deleteProduct);
 
 // Orders
 router.get('/orders', listOrders);

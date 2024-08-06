@@ -9,4 +9,5 @@ export interface ProductRepository {
     name: string,
   ): Promise<Product | null>;
   findById(id: string): Promise<Product | null>;
+  deleteById(id: string): Promise<void>;
 }

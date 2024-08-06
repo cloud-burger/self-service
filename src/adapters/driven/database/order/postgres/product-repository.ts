@@ -5,6 +5,7 @@ import { ProductCategory } from '~/domain/order/entities/value-objects/enums/pro
 import { ProductRepository as IProductRepository } from '~/domain/order/repositories/product';
 import { ProductDbSchema } from './dtos/product-db-schema';
 import { DatabaseProductMapper } from './mappers/database-product';
+import { DELETE_PRODUCT_BY_ID } from './queries/delete-product-by-id';
 import { FIND_PRODUCT_BY_CATEGORY_AND_NAME } from './queries/find-product-by-category-and-name';
 import { FIND_PRODUCT_BY_ID } from './queries/find-product-by-id';
 import { INSERT_PRODUCT } from './queries/insert-product';
@@ -96,5 +97,14 @@ export class ProductRepository implements IProductRepository {
     const [product] = records;
 
     return DatabaseProductMapper.toDomain(product as ProductDbSchema);
+  }
+
+  async deleteById(id: string): Promise<void> {
+    await this.connection.query({
+      sql: DELETE_PRODUCT_BY_ID,
+      parameters: {
+        id,
+      },
+    });
   }
 }
