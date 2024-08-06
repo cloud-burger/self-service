@@ -5,6 +5,7 @@ import { env } from './env';
 
 import { createCustomer } from './handlers/customer/create';
 import { findCustomerByDocumentNumber } from './handlers/customer/find-by-document-number';
+import { createOrder } from './handlers/order/create-order';
 import { createProduct } from './handlers/order/create-product';
 import { deleteProduct } from './handlers/order/delete-product';
 import { findProductsByCategory } from './handlers/order/find-products-by-category';
@@ -27,7 +28,8 @@ router.put('/product/:id', updateProduct);
 router.delete('/product/:id', deleteProduct);
 
 // Orders
-router.get('/orders', listOrders);
+router.get('/order', listOrders);
+router.post('/order', createOrder);
 
 app.use(cors());
 app.use(express.json());

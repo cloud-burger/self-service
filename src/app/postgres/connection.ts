@@ -1,5 +1,8 @@
 export interface Connection {
   query(sql: QueryObject): Promise<QueryResult>;
+  begin(): Promise<void>;
+  commit(): Promise<void>;
+  rollback(): Promise<void>;
   release(): void;
 }
 

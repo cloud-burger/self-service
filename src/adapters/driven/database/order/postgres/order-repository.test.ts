@@ -1,4 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended';
+import { makeOrder } from 'tests/factories/make-order';
+import { makeProduct } from 'tests/factories/make-product';
 import Connection from '~/app/postgres/connection';
 import { OrderRepository } from './order-repository';
 import { FIND_MANY } from './queries/find-many';
@@ -141,5 +143,104 @@ describe('order repository', () => {
       parameters: { page: '1', size: '10' },
       sql: FIND_MANY({ page: '1', size: '10' }),
     });
+  });
+
+  it('should create order successfully', async () => {
+    connection.begin.mockResolvedValue();
+    connection.query.mockResolvedValue({
+      records: [],
+    });
+    connection.commit.mockResolvedValue();
+    connection.query.mockResolvedValueOnce({
+      records: [],
+    });
+
+    await orderRepository.create(makeOrder());
+
+    expect(connection.begin).toHaveBeenCalledTimes(1);
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: {
+        amount: 20.99,
+        created_at: '2024-07-12T22:18:26.351Z',
+        customer_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        status: 'RECEIVED',
+        updated_at: '2024-07-12T22:18:26.351Z',
+      },
+      sql: 'INSERT INTO public.orders (id,amount,customer_id,status,created_at,updated_at) VALUES (:id,:amount,:customer_id,:status,:created_at,:updated_at);',
+    });
+    expect(connection.commit).toHaveBeenCalled();
+    expect(connection.query).toHaveBeenNthCalledWith(2, {
+      parameters: {
+        notes: 'Sem bacon',
+        order_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        product_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        quantity: 1,
+      },
+      sql: 'INSERT INTO public.orders_products (order_id,product_id,quantity,notes) VALUES (:order_id,:product_id,:quantity,:notes);',
+    });
+    expect(connection.rollback).not.toHaveBeenCalled();
+  });
+
+  it('should rollback transaction and throws when error while create order', async () => {
+    connection.begin.mockResolvedValue();
+    connection.query.mockResolvedValueOnce({
+      records: [],
+    });
+    connection.query.mockResolvedValueOnce({
+      records: [],
+    });
+    connection.query.mockRejectedValue(new Error('unknown error'));
+
+    await expect(
+      orderRepository.create(
+        makeOrder({
+          customer: null,
+          products: [
+            makeProduct({
+              quantity: 10,
+              notes: null,
+            }),
+            makeProduct({
+              quantity: 1,
+              notes: 'sem bacon',
+            }),
+          ],
+        }),
+      ),
+    ).rejects.toThrow('Error while processing transaction');
+
+    expect(connection.begin).toHaveBeenCalledTimes(1);
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: {
+        amount: 20.99,
+        created_at: '2024-07-12T22:18:26.351Z',
+        customer_id: null,
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        status: 'RECEIVED',
+        updated_at: '2024-07-12T22:18:26.351Z',
+      },
+      sql: 'INSERT INTO public.orders (id,amount,customer_id,status,created_at,updated_at) VALUES (:id,:amount,:customer_id,:status,:created_at,:updated_at);',
+    });
+    expect(connection.commit).not.toHaveBeenCalled();
+    expect(connection.query).toHaveBeenNthCalledWith(2, {
+      parameters: {
+        notes: null,
+        order_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        product_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        quantity: 10,
+      },
+      sql: 'INSERT INTO public.orders_products (order_id,product_id,quantity,notes) VALUES (:order_id,:product_id,:quantity,:notes);',
+    });
+    expect(connection.query).toHaveBeenNthCalledWith(3, {
+      parameters: {
+        notes: 'sem bacon',
+        order_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        product_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        quantity: 1,
+      },
+      sql: 'INSERT INTO public.orders_products (order_id,product_id,quantity,notes) VALUES (:order_id,:product_id,:quantity,:notes);',
+    });
+    expect(connection.rollback).toHaveBeenCalledTimes(1);
   });
 });

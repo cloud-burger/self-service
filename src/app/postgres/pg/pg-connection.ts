@@ -34,4 +34,16 @@ export class PgConnection implements Connection {
   release(): void {
     this.instance.release();
   }
+
+  async begin(): Promise<void> {
+    await this.instance.query('BEGIN');
+  }
+
+  async commit(): Promise<void> {
+    await this.instance.query('COMMIT');
+  }
+
+  async rollback(): Promise<void> {
+    await this.instance.query('ROLLBACK');
+  }
 }
