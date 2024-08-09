@@ -6,8 +6,9 @@ import {
 } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
-import { Order } from '~/domain/order/entities/order';
 import { ListOrdersUseCase } from '~/domain/order/use-cases/list-orders';
+import { OrderResponse } from './presenters/dtos/order-response';
+import { ListOrdersPresenter } from './presenters/list-orders';
 import { listOrdersSchema } from './validations/list-orders-schema';
 
 export class ListOrdersController {
@@ -15,7 +16,7 @@ export class ListOrdersController {
 
   handler: Controller = async (
     request: Request,
-  ): Promise<Response<Order[]>> => {
+  ): Promise<Response<OrderResponse[]>> => {
     logger.info({
       message: 'List orders request',
       data: request,
@@ -44,12 +45,12 @@ export class ListOrdersController {
 
     logger.info({
       message: 'List orders response',
-      data: request,
+      data: orders,
     });
 
     return {
       statusCode: 200,
-      body: orders,
+      body: ListOrdersPresenter.toHttp(orders),
     };
   };
 }
