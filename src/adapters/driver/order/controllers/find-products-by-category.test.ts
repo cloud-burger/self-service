@@ -32,9 +32,6 @@ describe('find product by category controller', () => {
           description:
             'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
           name: 'Bacon Burger',
-          image: null,
-          createdAt: expect.any(Date),
-          updatedAt: expect.any(Date),
         },
       ],
       statusCode: 200,

@@ -68,13 +68,10 @@ describe('update product controller', () => {
       body: {
         amount: 20.99,
         category: 'BURGER',
-        createdAt: new Date('2024-07-12T22:18:26.351Z'),
         description:
           'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
         id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-        image: null,
         name: 'Bacon Burger',
-        updatedAt: new Date('2024-07-12T22:18:26.351Z'),
       },
       statusCode: 200,
     });

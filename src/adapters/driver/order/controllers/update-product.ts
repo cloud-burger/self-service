@@ -6,8 +6,9 @@ import {
 } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
-import { Product } from '~/domain/order/entities/product';
 import { UpdateProductUseCase } from '~/domain/order/use-cases/update-product';
+import { ProductResponse } from './presenters/dtos/product-response';
+import { ProductPresenter } from './presenters/product';
 import { productSchema } from './validations/product-schema';
 
 export class UpdateProductController {
@@ -15,7 +16,7 @@ export class UpdateProductController {
 
   handler: Controller = async (
     request: Request,
-  ): Promise<Response<Product>> => {
+  ): Promise<Response<ProductResponse>> => {
     const { body, pathParameters } = request;
     const { id } = pathParameters;
 
@@ -39,7 +40,7 @@ export class UpdateProductController {
 
     return {
       statusCode: 200,
-      body: product,
+      body: ProductPresenter.toHttp(product),
     };
   };
 }
