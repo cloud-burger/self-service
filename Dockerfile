@@ -1,15 +1,16 @@
 FROM node:20.14-slim
 
+RUN mkdir -p /app \ 
+    chown node /app
+
 WORKDIR /app
 
-ENV PORT=8080
+USER node
 
-COPY . .
+COPY --chown=node:node . .
 
-RUN npm install
-RUN npm run build
-RUN rm -rf src
-
-EXPOSE 8080
+RUN npm install \
+    npm run build \
+    rm -rf src
 
 CMD ["npm", "run", "start"]
