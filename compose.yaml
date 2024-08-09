@@ -5,15 +5,16 @@ services:
     depends_on:
       - db
     ports:
-      - '8080:8080'
+      - '${PORT}:${PORT}'
     restart: always
     environment:
-      DATABASE_HOST: db
-      DATABASE_USERNAME: superuser
-      DATABASE_PASSWORD: supersecret
-      DATABASE_PORT: 5432
-      DATABASE_NAME: self_service
-      DATABASE_CONNECTION_TIMEOUT: 120000
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_CONNECTION_TIMEOUT: ${DATABASE_CONNECTION_TIMEOUT}
+      PORT: ${PORT}
 
   db:
     container_name: postgres
@@ -28,5 +29,5 @@ services:
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_USER: superuser
-      POSTGRES_PASSWORD: supersecret
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
