@@ -1,84 +1,105 @@
-# self-service
-self-service é um projeto escrito em TypeScript com a implementação de um serviço para uma lanchonete.
-## DDD
+# Self-Service
+
+O projeto **Self-Service** é uma solução desenvolvida em TypeScript para a implementação de um serviço de pedidos em uma lanchonete.
+
+## Domain Driven Design (DDD)
+
 ### Event Storming
-Para esclarecimento das funcionalidades do projeto, pode-se consultar o event storming no seguinte link: https://miro.com/app/board/uXjVK5Nr1BA=/?share_link_id=973174946711 
+
+Para esclarecer as funcionalidades e os fluxos do projeto, consulte o Event Storming disponível no seguinte link: [Event Storming | Miro](https://miro.com/app/board/uXjVK5Nr1BA=/?share_link_id=973174946711).
 
 ### Glossário
-Foi escrita uma wiki com o glossário do projeto, contendo o dicionário com a linguagem ubíqua, veja o link: https://github.com/cloud-burger/self-service/wiki/Gloss%C3%A1rio
+
+O projeto possui uma wiki com o glossário e o dicionário de termos utilizados, detalhando a linguagem ubíqua. Acesse o glossário aqui: [Glossário](https://github.com/cloud-burger/self-service/wiki/Gloss%C3%A1rio).
 
 ## Dependências
-Será necessário instalar o docker compose, para isso é recomendada a instalação do docker desktop: https://www.docker.com/products/docker-desktop/
 
-É recomendado ter o node em ambiente local, assim será possível instalar as dependências do projeto e evitar que o seu editor fique acusando erro nas bibliotecas, para isso, primeiramente instale o node na sua máquina: https://nodejs.org/pt (O projeto foi desenvolvido e testado com a versão 20 do node).
+### Docker e Node.js
 
-Tendo o node instalado, execute o comando abaixo para a instalação das dependências: 
-```
+Este projeto requer a instalação do Docker Compose e do Node.js. Recomendamos a instalação do Docker Desktop seguindo este [tutorial de instalação do Docker](https://www.docker.com/products/docker-desktop).
+
+O projeto foi desenvolvido e testado com a versão 20 do Node.js. Para instalar o Node.js, siga este [tutorial](https://nodejs.org/pt).
+
+Após instalar o Node.js, execute o comando abaixo para instalar as dependências do projeto:
+
+```bash
 npm install
 ```
 
 ### Pacotes do projeto
-Alguns dos pacotes utilizados e instalados quando se executa o `npm install` se encontram no seguinte repositório: https://github.com/cloud-burger/packages
 
-Esse repositório contém algumas bibliotecas privadas desenvolvidas por nós para nos ajudar com algumas implementações do projeto, como logger e handler de APIs.
+Alguns dos pacotes utilizados são instalados automaticamente ao executar `npm install`. Esses pacotes estão disponíveis em nosso repositório de bibliotecas privadas: [Projeto com bibliotecas privadas](https://github.com/cloud-burger/packages). Esse repositório inclui bibliotecas como loggers e handlers de APIs, também disponíveis publicamente no [NPM](https://www.npmjs.com/).
 
-## Rodar o projeto
-O projeto possui a dependência de uma base de dados, portanto, para isso será necessário subir os seus containers. 
+## Execução do projeto
 
-Primeiramente realize o build das imagens do docker. Para isso, execute o seguinte comando na raiz do projeto:
-```
-docker compose build
-```
-Na sequência realize o up dos containers com o seguinte comando: 
-```
-docker compose up
-```
-Será realizado o up de um container com o Postgres, isso já irá popular a base de dados com registros de exemplo.
-Além do Postres, também será realizado o up do container da imagem do serviço, compilando os arquivos TS. 
+### Construção e inicialização dos Containers
 
-Realizado o up dos containers corretamente, o serviço estará disponível na porta `8080`.
+O projeto depende de um banco de dados, que será executado em um container Docker. Para configurar o ambiente:
 
-## Portas do serviço
-O serviço estará disponível na porta `8080`.
-```
-http://localhost:8080/
-```
+1. Realize o build das imagens Docker:
 
-A base de dados do Postgres estará disponível na porta `5432`.
+    ```bash
+    docker compose build
+    ```
 
-Demais informações sobre credenciais de acesso do ambiente local podem ser encontradas no arquivo `.env`, que está na raiz do projeto.
+2. Inicie os containers:
 
-## Rodar os testes 
-Primeiro, instale as dependências do projeto:
-```
-npm install
-```
-Na sequência execute o seguinte comando para realizar os testes:
-```
-npm run test
-```
+    ```bash
+    docker compose up
+    ```
 
-## Documentação OpenAPI
-O projeto possui uma documentação OpenAPI que pode ser visualizada no endereço: http://localhost:8080/swagger/
-...
+Após a execução dos comandos, o serviço estará disponível na porta 8080. O container do Postgres será populado automaticamente com dados de exemplo.
+
+## Acesso ao serviço
+
+- Serviço: <http://localhost:8080/>
+- Banco de dados Postgres: Porta 5432
+
+Informações sobre as credenciais de acesso estão disponíveis no arquivo `.env` na raiz do projeto.
+
+## Testes
+
+Para rodar os testes do projeto, siga os passos abaixo:
+
+1. Instale as dependências:
+
+    ```bash
+    npm install
+    ```
+
+2. Execute os testes:
+
+    ```bash
+    npm run test
+    ```
+
+## Documentação
+
+A documentação OpenAPI do projeto está disponível em: [Documentação OpenAPI](http://localhost:8080/swagger/)
+
+TUma versão alternativa gerada com Redoc pode ser acessada em:  [Documentação Redoc](http://localhost:3000/docs/self-service.html)
 
 ## Desenvolvimento
-Durante o desenvolvimento do projeto, sempre que um arquivo TS for alterado, para a realização da compilação dos arquivos com as novas alterações será necessário rebuildar as imagens do docker. Para ajudar nesse processo, alguns script foram criados, o principal deles é o `rebuild.sh`.
 
-Portanto, quando uma alteração for realizada, é necessário realizar o down dos seus contêineres com o seguinte comando sendo executado na raiz do projeto: 
-```
-docker compose down
-```
+Durante o desenvolvimento, sempre que um arquivo TypeScript for alterado, será necessário recompilar os arquivos e rebuildar as imagens Docker. Utilize o script rebuild.sh para facilitar esse processo:
 
-Realizado o down dos containers, então executar o script com o seguinte comando: 
-```
-./scripts/rebuild.sh
-```
+1. Derrube os containers existentes:
 
-O script irá remover as imagens dos container e realizar um novo up deles, já com os arquivos TS recompilados. 
+    ```bash
+    docker compose down
+    ```
 
-## Base de dados
-Como adiantado nos tópicos acima, o projeto utiliza um banco de dados com o Postgres. Uma documentação completa com as suas entidades do projeto pode ser visualizada no seguinte arquivo: https://github.com/cloud-burger/self-service/blob/main/docs/self-service.md
+2. Execute o script de rebuild:
 
-É possível se conectar com a base utilizando as configurações do arquivo `.env`. Veja exemplo de configuração usando o DBeaver:
+    ```bash
+    ./scripts/rebuild.sh
+    ```
+
+Este script removerá as imagens atuais e subirá novas, já com os arquivos TypeScript recompilados.
+
+## Banco de Dados
+
+O projeto utiliza um banco de dados Postgres. Uma documentação completa das entidades está disponível em: [Refinamento](docs/self-service.md)
+
+Conecte-se à base de dados usando as configurações fornecidas no arquivo `.env`. Exemplo de configuração no DBeaver:
 ![image](https://github.com/user-attachments/assets/ca5a231e-4609-4f35-bbc4-c28fef4eba19)
