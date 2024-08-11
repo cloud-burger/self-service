@@ -30,11 +30,11 @@ Alguns dos pacotes utilizados são instalados automaticamente ao executar `npm i
 
 O projeto depende de um banco de dados, que será executado em um container Docker. Para configurar o ambiente, execute o comando abaixo:
 
-    ```bash
-    docker compose up
-    ```
+```bash
+docker compose up
+```
 
-Após a execução do comando, o serviço estará disponível na porta 8080, seguindo as parametrizações do arquivo `.env` na raiz do projeto, como por exemplo credencais de acesso do banco de dados.
+Após a execução do comando, o serviço estará disponível na porta `8080`, seguindo as parametrizações do arquivo `.env` na raiz do projeto, como por exemplo credencais de acesso do banco de dados.
 O container do PostgreSQL será populado automaticamente com dados de exemplo.
 
 ## Acesso ao serviço
