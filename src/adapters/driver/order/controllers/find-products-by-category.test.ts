@@ -27,7 +27,7 @@ describe('find product by category controller', () => {
       body: [
         {
           id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-          amount: 20.99,
+          amount: 'R$\xa020,99',
           category: 'BURGER',
           description:
             'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
