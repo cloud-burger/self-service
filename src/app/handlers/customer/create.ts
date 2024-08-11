@@ -27,24 +27,6 @@ export const createCustomer = async (
   request: Request,
   response: Response,
 ): Promise<Response> => {
-  /*  #swagger.requestBody = {
-      "content": {
-        "application/json": {
-          "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                    "type": "string",
-                },
-                "documentNumber": {
-                    "type": "string",
-                }
-              }
-            }
-          }
-        }
-      }
-  */
   logger.setEvent('self-service', request);
   logger.debug({
     message: 'Event received',

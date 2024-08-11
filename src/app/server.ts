@@ -3,6 +3,9 @@ import cors from 'cors';
 import express, { Router } from 'express';
 import { env } from './env';
 
+import * as bodyParser from 'body-parser';
+import swaggerUi from 'swagger-ui-express';
+import swagger from '../../docs/open-api.json';
 import { createCustomer } from './handlers/customer/create';
 import { findCustomerByDocumentNumber } from './handlers/customer/find-by-document-number';
 import { createOrder } from './handlers/order/create-order';
@@ -11,9 +14,6 @@ import { deleteProduct } from './handlers/order/delete-product';
 import { findProductsByCategory } from './handlers/order/find-products-by-category';
 import { listOrders } from './handlers/order/list-orders';
 import { updateProduct } from './handlers/order/update-product';
-import * as bodyParser from "body-parser";
-import swaggerUi from "swagger-ui-express";
-import swaggerOutput from "./swagger_output.json";
 
 const app = express();
 const PORT = +env.PORT;
@@ -36,7 +36,7 @@ router.post('/order', createOrder);
 
 // Swagger
 app.use(bodyParser.json());
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swagger));
 
 app.use(cors());
 app.use(express.json());

@@ -25,16 +25,6 @@ export const listOrders = async (
   request: Request,
   response: Response,
 ): Promise<Response> => {
-  /*  #swagger.parameters['data'] = {
-        in: 'query',
-        required: true,
-        description: 'List of orders.',
-        schema: {
-            pageNumber: 1,
-            pageSize: 10
-        }
-    }
-  */
   logger.setEvent('self-service', request);
   logger.debug({
     message: 'Event received',
