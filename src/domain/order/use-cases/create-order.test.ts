@@ -32,7 +32,7 @@ describe('create order use case', () => {
         products: [
           {
             id: '123',
-            amount: 1,
+            notes: 'no ice',
             quantity: 2,
           },
         ],
@@ -55,7 +55,7 @@ describe('create order use case', () => {
       products: [
         {
           id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-          amount: 20.99,
+          notes: 'no ice',
           quantity: 2,
         },
       ],
@@ -77,8 +77,16 @@ describe('create order use case', () => {
       products: [
         {
           amount: 20.99,
+          category: 'BURGER',
+          createdAt: new Date('2024-07-12T22:18:26.351Z'),
+          description:
+            'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
           id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+          image: null,
+          name: 'Bacon Burger',
+          notes: 'no ice',
           quantity: 2,
+          updatedAt: new Date('2024-07-12T22:18:26.351Z'),
         },
       ],
       status: 'RECEIVED',
@@ -107,8 +115,16 @@ describe('create order use case', () => {
       products: [
         {
           amount: 20.99,
+          category: 'BURGER',
+          createdAt: new Date('2024-07-12T22:18:26.351Z'),
+          description:
+            'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
           id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+          image: null,
+          name: 'Bacon Burger',
+          notes: 'no ice',
           quantity: 2,
+          updatedAt: new Date('2024-07-12T22:18:26.351Z'),
         },
       ],
       status: 'RECEIVED',
@@ -124,8 +140,8 @@ describe('create order use case', () => {
       products: [
         {
           id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-          amount: 20.99,
           quantity: 2,
+          notes: 'no ice',
         },
       ],
     });
@@ -138,8 +154,16 @@ describe('create order use case', () => {
       products: [
         {
           amount: 20.99,
+          category: 'BURGER',
+          createdAt: new Date('2024-07-12T22:18:26.351Z'),
+          description:
+            'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
           id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+          image: null,
+          name: 'Bacon Burger',
+          notes: 'no ice',
           quantity: 2,
+          updatedAt: new Date('2024-07-12T22:18:26.351Z'),
         },
       ],
       status: 'RECEIVED',
@@ -158,8 +182,16 @@ describe('create order use case', () => {
       products: [
         {
           amount: 20.99,
+          category: 'BURGER',
+          createdAt: new Date('2024-07-12T22:18:26.351Z'),
+          description:
+            'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
           id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+          image: null,
+          name: 'Bacon Burger',
+          notes: 'no ice',
           quantity: 2,
+          updatedAt: new Date('2024-07-12T22:18:26.351Z'),
         },
       ],
       status: 'RECEIVED',

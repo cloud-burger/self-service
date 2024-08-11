@@ -31,6 +31,8 @@ export class DatabaseOrderMapper {
           description: product.description,
           name: product.name,
           image: product.image,
+          quantity: product.quantity,
+          notes: product.notes,
           createdAt: new Date(product.created_at),
           updatedAt: new Date(product.updated_at),
         });

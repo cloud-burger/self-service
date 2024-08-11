@@ -23,9 +23,10 @@ export const FIND_MANY = (input: OrderPaginationParams) => {
                 'category', p.category,
                 'description', p.description,
                 'amount', p.amount,
-                'quantity', op.quantity,
                 'created_at', p.created_at,
-                'updated_at', p.updated_at
+                'updated_at', p.updated_at,
+                'quantity', op.quantity,
+                'notes', op.notes
             )) AS products
           FROM public.orders o
           LEFT JOIN public.customers c ON o.customer_id = c.id

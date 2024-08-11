@@ -20,10 +20,6 @@ export class OrderRepository implements IOrderRepository {
       parameters: { ...input },
     });
 
-    if (!records.length) {
-      return [];
-    }
-
     return records.map((orderDbSchema) => {
       return DatabaseOrderMapper.toDomain(orderDbSchema as OrdersDbSchema);
     });
