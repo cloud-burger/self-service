@@ -1,0 +1,754 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "description": "Api responsible for managing customer orders from the Cloud Burger restaurant",
+    "version": "1.0.0",
+    "title": "Self Service",
+    "contact": {
+      "name": "Cloud Burger Support",
+      "email": "support@cloud-burger.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local running"
+    }
+  ],
+  "paths": {
+    "/customer": {
+      "post": {
+        "tags": ["Customer"],
+        "description": "Create customer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateCustomer"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/customer/{documentNumber}": {
+      "get": {
+        "tags": ["Customer"],
+        "description": "Find customer by document number",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentNumber"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/FindCustomerByDocumentNumber"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/product": {
+      "post": {
+        "tags": ["Product"],
+        "description": "Create product",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateProduct"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/components/responses/ConflictError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "put": {
+        "tags": ["Product"],
+        "description": "Update product",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UpdateProduct"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Product"],
+        "description": "Delete product",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/NoContent"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/product/{category}": {
+      "get": {
+        "tags": ["Product"],
+        "description": "Find products by category",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Category"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/FindProductByCategory"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/order": {
+      "post": {
+        "tags": ["Order"],
+        "description": "Create order",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/XIdentification"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreateOrder"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Order"],
+        "description": "List orders",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageSize"
+          },
+          {
+            "$ref": "#/components/parameters/PageNumber"
+          },
+          {
+            "$ref": "#/components/parameters/OrderStatus"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ListOrders"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "PageSize": {
+        "in": "query",
+        "name": "pageSize",
+        "schema": {
+          "$ref": "#/components/schemas/PageSize"
+        },
+        "required": true
+      },
+      "PageNumber": {
+        "in": "query",
+        "name": "pageNumber",
+        "schema": {
+          "$ref": "#/components/schemas/PageNumber"
+        },
+        "required": true
+      },
+      "OrderStatus": {
+        "in": "query",
+        "name": "status",
+        "schema": {
+          "$ref": "#/components/schemas/OrderStatus"
+        },
+        "required": false
+      },
+      "Id": {
+        "in": "path",
+        "name": "id",
+        "schema": {
+          "$ref": "#/components/schemas/Id"
+        },
+        "required": true
+      },
+      "XIdentification": {
+        "in": "header",
+        "name": "x-identification",
+        "schema": {
+          "$ref": "#/components/schemas/DocumentNumber"
+        },
+        "required": false
+      },
+      "Category": {
+        "in": "path",
+        "name": "category",
+        "schema": {
+          "$ref": "#/components/schemas/ProductCategory"
+        },
+        "required": true
+      },
+      "DocumentNumber": {
+        "in": "path",
+        "name": "documentNumber",
+        "schema": {
+          "$ref": "#/components/schemas/DocumentNumber"
+        },
+        "required": true
+      }
+    },
+    "responses": {
+      "CreateCustomer": {
+        "description": "Customer created successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomerResponse"
+            }
+          }
+        }
+      },
+      "FindCustomerByDocumentNumber": {
+        "description": "Customer found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CustomerResponse"
+            }
+          }
+        }
+      },
+      "CreateProduct": {
+        "description": "Product created successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProductResponse"
+            }
+          }
+        }
+      },
+      "UpdateProduct": {
+        "description": "Product updated successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProductResponse"
+            }
+          }
+        }
+      },
+      "FindProductByCategory": {
+        "description": "Product deleted successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProductsResponse"
+            }
+          }
+        }
+      },
+      "CreateOrder": {
+        "description": "Order created successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrderResponse"
+            }
+          }
+        }
+      },
+      "ListOrders": {
+        "description": "List orders successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ListOrdersResponse"
+            }
+          }
+        }
+      },
+      "NoContent": {
+        "description": "No Content"
+      },
+      "BadRequest": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BadRequestErrorResponse"
+            }
+          }
+        }
+      },
+      "ConflictError": {
+        "description": "Conflic Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ConflictErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NotFoundErrorResponse"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/InternalServerErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Id": {
+        "type": "string",
+        "example": "297d3ea7-610d-4c46-85f8-e3cb2fa4dd83",
+        "description": "Identifier"
+      },
+      "PageSize": {
+        "type": "number",
+        "example": 10,
+        "description": "Page size"
+      },
+      "PageNumber": {
+        "type": "number",
+        "example": 1,
+        "description": "Page number"
+      },
+      "DocumentNumber": {
+        "type": "string",
+        "example": "53523992060",
+        "description": "Customer document number"
+      },
+      "CustomerName": {
+        "type": "string",
+        "example": "John Due",
+        "description": "Customer name"
+      },
+      "CustomerEmail": {
+        "type": "string",
+        "example": "johndue@gmail.com",
+        "description": "Customer email"
+      },
+      "ProductName": {
+        "type": "string",
+        "example": "X Burger",
+        "description": "Product name"
+      },
+      "ProductCategory": {
+        "type": "string",
+        "enum": ["BURGER", "SIDE", "DRINK", "DESSERT"],
+        "description": "Product category",
+        "example": "BURGER"
+      },
+      "OrderStatus": {
+        "type": "string",
+        "enum": ["RECEIVED", "PREPARING", "DONE", "FINISHED"],
+        "description": "Order status",
+        "example": "RECEIVED"
+      },
+      "ProductDescription": {
+        "type": "string",
+        "example": "Pão carne e queijo",
+        "description": "Product description"
+      },
+      "Amount": {
+        "type": "string",
+        "example": "R$ 19,99",
+        "description": "Amount"
+      },
+      "ProductAmount": {
+        "type": "number",
+        "example": "19,99",
+        "description": "Product Amount"
+      },
+      "ProductImage": {
+        "type": "string",
+        "format": "binary",
+        "description": "Product image"
+      },
+      "ProductNotes": {
+        "type": "string",
+        "description": "Product notes",
+        "example": "no sugar"
+      },
+      "ProductQuantity": {
+        "type": "number",
+        "description": "Product quantity",
+        "example": 1
+      },
+      "Date": {
+        "type": "string",
+        "example": "2024-01-01 23:59:59"
+      },
+      "Reason": {
+        "type": "string",
+        "example": "Error reason"
+      },
+      "CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "documentNumber": {
+            "$ref": "#/components/schemas/DocumentNumber"
+          },
+          "name": {
+            "$ref": "#/components/schemas/CustomerName"
+          },
+          "email": {
+            "$ref": "#/components/schemas/CustomerEmail"
+          }
+        }
+      },
+      "ListOrdersResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/OrderResponse"
+        }
+      },
+      "OrderResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/CustomerResponse",
+            "required": false
+          },
+          "status": {
+            "$ref": "#/components/schemas/OrderStatus"
+          },
+          "products": {
+            "$ref": "#/components/schemas/OrderProductsResponse"
+          }
+        }
+      },
+      "ProductsResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ProductResponse"
+        }
+      },
+      "ProductResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "name": {
+            "$ref": "#/components/schemas/ProductName"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ProductCategory"
+          },
+          "description": {
+            "$ref": "#/components/schemas/ProductDescription"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "image": {
+            "$ref": "#/components/schemas/ProductImage"
+          }
+        }
+      },
+      "OrderProductsResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/OrderProductResponse"
+        }
+      },
+      "OrderProductResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "name": {
+            "$ref": "#/components/schemas/ProductName"
+          },
+          "category": {
+            "$ref": "#/components/schemas/ProductCategory"
+          },
+          "description": {
+            "$ref": "#/components/schemas/ProductDescription"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "image": {
+            "$ref": "#/components/schemas/ProductImage"
+          },
+          "notes": {
+            "$ref": "#/components/schemas/ProductNotes"
+          },
+          "quantity": {
+            "$ref": "#/components/schemas/ProductQuantity"
+          }
+        }
+      },
+      "NotFoundErrorResponse": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "$ref": "#/components/schemas/Reason"
+          }
+        }
+      },
+      "InternalServerErrorResponse": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "$ref": "#/components/schemas/Reason"
+          }
+        }
+      },
+      "ConflictErrorResponse": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "$ref": "#/components/schemas/Reason"
+          }
+        }
+      },
+      "BadRequestErrorResponse": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "$ref": "#/components/schemas/Reason"
+          },
+          "invalidParams": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Field name",
+                  "example": "amount"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Field value",
+                  "example": "1"
+                },
+                "reason": {
+                  "type": "string",
+                  "description": "Invalid param reason",
+                  "example": "Parameter number failed custom validation because is invalid"
+                }
+              }
+            }
+          }
+        }
+      },
+      "CreateCustomerRequest": {
+        "type": "object",
+        "properties": {
+          "documentNumber": {
+            "$ref": "#/components/schemas/DocumentNumber",
+            "required": true
+          },
+          "name": {
+            "$ref": "#/components/schemas/CustomerName",
+            "required": true
+          },
+          "email": {
+            "$ref": "#/components/schemas/CustomerEmail",
+            "required": false
+          }
+        }
+      },
+      "CreateOrderRequest": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateOrderProductRequest"
+            }
+          }
+        }
+      },
+      "CreateOrderProductRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id",
+            "required": true
+          },
+          "quantity": {
+            "$ref": "#/components/schemas/ProductQuantity",
+            "required": true
+          },
+          "notes": {
+            "$ref": "#/components/schemas/ProductNotes",
+            "required": false
+          }
+        }
+      },
+      "CreateProductRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ProductName",
+            "required": true
+          },
+          "category": {
+            "$ref": "#/components/schemas/ProductCategory",
+            "required": true
+          },
+          "description": {
+            "$ref": "#/components/schemas/ProductDescription",
+            "required": true
+          },
+          "amount": {
+            "$ref": "#/components/schemas/ProductAmount",
+            "required": true
+          },
+          "image": {
+            "$ref": "#/components/schemas/ProductImage",
+            "required": false
+          }
+        }
+      },
+      "UpdateProductRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ProductName",
+            "required": true
+          },
+          "category": {
+            "$ref": "#/components/schemas/ProductCategory",
+            "required": true
+          },
+          "description": {
+            "$ref": "#/components/schemas/ProductDescription",
+            "required": true
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Amount",
+            "required": true
+          },
+          "image": {
+            "$ref": "#/components/schemas/ProductImage",
+            "required": false
+          }
+        }
+      }
+    }
+  }
+}

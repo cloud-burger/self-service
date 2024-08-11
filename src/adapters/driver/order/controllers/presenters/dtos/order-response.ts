@@ -4,7 +4,7 @@ import { ProductResponse } from './product-response';
 
 export interface OrderResponse {
   id: string;
-  amount: number;
+  amount: string;
   customer?: CustomerResponse;
   status: OrderStatus;
   products: ProductResponse[];

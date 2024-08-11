@@ -10,7 +10,13 @@ import { ProductRepository } from '../repositories/product';
 
 interface Input {
   customerTaxId?: string;
-  products: Partial<Product>[];
+  products: Partial<ProductInput>[];
+}
+
+interface ProductInput {
+  id: string;
+  quantity: number;
+  notes?: string;
 }
 
 export class CreateOrderUseCase {
@@ -23,7 +29,7 @@ export class CreateOrderUseCase {
   async execute({ products, customerTaxId }: Input): Promise<Order> {
     const now = new Date();
     let dataCustomer: Customer = null;
-
+    let dataProducts: Product[] = [];
     if (customerTaxId) {
       dataCustomer = await this.findCustomerByDocumentNumberUseCase.execute({
         documentNumber: customerTaxId,
@@ -40,10 +46,13 @@ export class CreateOrderUseCase {
         });
         throw new NotFoundError('Product not found');
       }
+      dataProduct.quantity = product.quantity;
+      dataProduct.notes = product.notes;
+      dataProducts.push(dataProduct);
     }
 
     const order = new Order({
-      amount: products.reduce(
+      amount: dataProducts.reduce(
         (total, product) => total + product.amount * product.quantity,
         0,
       ),
@@ -51,7 +60,7 @@ export class CreateOrderUseCase {
       status: OrderStatus.RECEIVED,
       createdAt: now,
       updatedAt: now,
-      products: products,
+      products: dataProducts,
     });
 
     logger.debug({

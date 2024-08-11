@@ -3,6 +3,9 @@ import cors from 'cors';
 import express, { Router } from 'express';
 import { env } from './env';
 
+import * as bodyParser from 'body-parser';
+import swaggerUi from 'swagger-ui-express';
+import swagger from '../../docs/open-api.json';
 import { createCustomer } from './handlers/customer/create';
 import { findCustomerByDocumentNumber } from './handlers/customer/find-by-document-number';
 import { createOrder } from './handlers/order/create-order';
@@ -30,6 +33,10 @@ router.delete('/product/:id', deleteProduct);
 // Orders
 router.get('/order', listOrders);
 router.post('/order', createOrder);
+
+// Swagger
+app.use(bodyParser.json());
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swagger));
 
 app.use(cors());
 app.use(express.json());

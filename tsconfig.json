@@ -1,6 +1,6 @@
 {
   "include": ["src/**/*"],
-  "exclude": ["node_modulest", "test", "dist"],
+  "exclude": ["node_modules", "test", "dist"],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
@@ -18,12 +18,14 @@
     "skipLibCheck": true,
     "incremental": true,
     "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
+    "resolveJsonModule": true,
     "paths": {
       "~/app/*": ["./app/*"],
       "~/driven/*": ["./adapters/driven/*"],
       "~/driver/*": ["./adapters/driver/*"],
       "~/domain/*": ["./domain/*"]
     },
-    "types": ["jest", "node"]
+    "types": ["jest", "node", "express"],
+    "typeRoots": ["node_modules/@types"]
   }
 }

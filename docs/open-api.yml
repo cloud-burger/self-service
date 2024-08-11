@@ -63,10 +63,13 @@ paths:
           $ref: '#/components/responses/ConflictError'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /product/{id}:
     put:
       tags:
         - Product
       description: Update product
+      parameters:
+        - $ref: '#/components/parameters/Id'
       requestBody:
         required: true
         content:
@@ -82,7 +85,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-  /product/{id}:
     delete:
       tags:
         - Product
@@ -110,17 +112,76 @@ paths:
           $ref: '#/components/responses/FindProductByCategory'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /order:
+    post:
+      tags:
+        - Order
+      description: Create order
+      parameters:
+        - $ref: '#/components/parameters/XIdentification'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/CreateOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get: 
+      tags:
+        - Order
+      description: List orders
+      parameters:
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/OrderStatus'
+      responses:
+        '200':
+          $ref: '#/components/responses/ListOrders'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   parameters:
+    PageSize:
+      in: query
+      name: pageSize
+      schema:
+        $ref: '#/components/schemas/PageSize'
+      required: true
+    PageNumber:
+      in: query
+      name: pageNumber
+      schema:
+        $ref: '#/components/schemas/PageNumber'
+      required: true
+    OrderStatus:
+      in: query
+      name: status
+      schema:
+        $ref: '#/components/schemas/OrderStatus'
+      required: false
     Id:
       in: path
       name: id
       schema:
         $ref: '#/components/schemas/Id'
       required: true
+    XIdentification:
+      in: header
+      name: x-identification
+      schema:
+        $ref: '#/components/schemas/DocumentNumber'
+      required: false
     Category:
       in: path
-      name: id
+      name: category
       schema:
         $ref: '#/components/schemas/ProductCategory'
       required: true
@@ -161,6 +222,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ProductsResponse'
+    CreateOrder:
+      description: Order created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrderResponse'
+    ListOrders:
+      description: List orders successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListOrdersResponse'
     NoContent:
       description: No Content
     BadRequest:
@@ -192,17 +265,18 @@ components:
       type: string
       example: 297d3ea7-610d-4c46-85f8-e3cb2fa4dd83
       description: Identifier
+    PageSize:
+      type: number
+      example: 10
+      description: Page size
+    PageNumber:
+      type: number
+      example: 1
+      description: Page number
     DocumentNumber:
       type: string
       example: '53523992060'
       description: Customer document number
-    CustomerStatus:
-      type: string
-      enum:
-        - ACTIVE
-        - INACTIVE
-      example: ACTIVE
-      description: Customer status
     CustomerName:
       type: string
       example: John Due
@@ -224,18 +298,39 @@ components:
         - DESSERT
       description: Product category
       example: BURGER
+    OrderStatus:
+      type: string
+      enum:
+        - RECEIVED
+        - PREPARING
+        - DONE
+        - FINISHED
+      description: Order status
+      example: RECEIVED
     ProductDescription:
       type: string
       example: Pão carne e queijo
       description: Product description
+    Amount:
+      type: string
+      example: R$ 19,99
+      description: Amount
     ProductAmount:
       type: number
-      example: 19.99
-      description: Product amount
+      example: 19,99
+      description: Product Amount
     ProductImage:
       type: string
       format: binary
       description: Product image
+    ProductNotes:
+      type: string
+      description: Product notes
+      example: no sugar
+    ProductQuantity:
+      type: number
+      description: Product quantity
+      example: 1
     Date:
       type: string
       example: '2024-01-01 23:59:59'
@@ -251,14 +346,26 @@ components:
           $ref: '#/components/schemas/DocumentNumber'
         name:
           $ref: '#/components/schemas/CustomerName'
-        status:
-          $ref: '#/components/schemas/CustomerStatus'
         email:
           $ref: '#/components/schemas/CustomerEmail'
-        createdAt:
-          $ref: '#/components/schemas/Date'
-        updatedAt:
-          $ref: '#/components/schemas/Date'
+    ListOrdersResponse:
+      type: array
+      items: 
+        $ref: '#/components/schemas/OrderResponse'
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        customer:
+          $ref: '#/components/schemas/CustomerResponse'
+          required: false
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        products:
+          $ref: '#/components/schemas/OrderProductsResponse'
     ProductsResponse:
       type: array
       items:
@@ -275,13 +382,32 @@ components:
         description:
           $ref: '#/components/schemas/ProductDescription'
         amount:
-          $ref: '#/components/schemas/ProductAmount'
+          $ref: '#/components/schemas/Amount'
         image:
           $ref: '#/components/schemas/ProductImage'
-        createdAt:
-          $ref: '#/components/schemas/Date'
-        updatedAt:
-          $ref: '#/components/schemas/Date'
+    OrderProductsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrderProductResponse'
+    OrderProductResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        name:
+          $ref: '#/components/schemas/ProductName'
+        category:
+          $ref: '#/components/schemas/ProductCategory'
+        description:
+          $ref: '#/components/schemas/ProductDescription'
+        amount:
+          $ref: '#/components/schemas/Amount'
+        image:
+          $ref: '#/components/schemas/ProductImage'
+        notes:
+          $ref: '#/components/schemas/ProductNotes'
+        quantity:
+          $ref: '#/components/schemas/ProductQuantity'
     NotFoundErrorResponse:
       type: object
       properties:
@@ -331,6 +457,25 @@ components:
         email:
           $ref: '#/components/schemas/CustomerEmail'
           required: false
+    CreateOrderRequest:
+      type: object
+      properties:
+        products:
+          type: array
+          items: 
+            $ref: '#/components/schemas/CreateOrderProductRequest'
+    CreateOrderProductRequest: 
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+          required: true
+        quantity:
+          $ref: '#/components/schemas/ProductQuantity'
+          required: true
+        notes: 
+          $ref: '#/components/schemas/ProductNotes'
+          required: false
     CreateProductRequest:
       type: object
       properties:
@@ -348,7 +493,7 @@ components:
           required: true
         image:
           $ref: '#/components/schemas/ProductImage'
-          required: true
+          required: false
     UpdateProductRequest:
       type: object
       properties:
@@ -362,8 +507,8 @@ components:
           $ref: '#/components/schemas/ProductDescription'
           required: true
         amount:
-          $ref: '#/components/schemas/ProductAmount'
+          $ref: '#/components/schemas/Amount'
           required: true
         image:
           $ref: '#/components/schemas/ProductImage'
-          required: true
+          required: false
