@@ -14,11 +14,13 @@ Será necessário instalar o docker compose, para isso é recomendada a instala�
 
 Tendo o node instalado, execute o comando abaixo para a instalação das dependências: 
 ```
-npm run install
+npm install
 ```
 
 ### Pacotes do projeto
-Alguns dos pacotes utilizados e instalados quando se executa o `npm run install` se encontram no seguinte repositório: https://github.com/cloud-burger/packages
+Alguns dos pacotes utilizados e instalados quando se executa o `npm install` se encontram no seguinte repositório: https://github.com/cloud-burger/packages
+
+Esse repositório contém algumas bibliotecas privadas desenvolvidas por nós para nos ajudar com algumas implementações do projeto, como logger e handler de APIs.
 
 ## Rodar o projeto
 O projeto possui a dependência de uma base de dados, portanto, para isso será necessário subir os seus containers. 
@@ -36,14 +38,6 @@ Além do Postres, também será realizado o up do container da imagem do serviç
 
 Realizado o up dos containers corretamente, o serviço estará disponível na porta `8080`.
 
-### Testar funcionamento do serviço
-É possível testar o serviço realizando qualquer requisição get para um dos endpoints.
-Segue um curl com a requisição de um dos clientes populados no up do banco de dados:
-```
-curl --location 'http://localhost:8080/customer/90123456788'
-```
-Esta requisição deverá retornar os dados do usuário "Rafael Santos".
-
 ## Portas do serviço
 O serviço estará disponível na porta `8080`.
 ```
@@ -57,15 +51,15 @@ Demais informações sobre credenciais de acesso do ambiente local podem ser enc
 ## Rodar os testes 
 Primeiro, instale as dependências do projeto:
 ```
-npm run install
+npm install
 ```
 Na sequência execute o seguinte comando para realizar os testes:
 ```
 npm run test
 ```
 
-## Rodar documentação OpenAPI (WiP)
-O projeto possui uma documentação OpenAPI que pode ser visualizada seguindo os seguintes passos:
+## Documentação OpenAPI
+O projeto possui uma documentação OpenAPI que pode ser visualizada no endereço: http://localhost:8080/swagger/
 ...
 
 ## Desenvolvimento
