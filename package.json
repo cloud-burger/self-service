@@ -11,8 +11,7 @@
     "start": "node dist/app/server.js",
     "lint": "eslint --fix",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored --ignore '**/*.test.js'",
-    "dev": "ts-node-dev -r --respawn --transpile-only --ignore-watch node_modules --no-notify src/app/server.ts",
-    "swagger": "ts-node src/app/swagger.ts"
+    "dev": "ts-node-dev -r --respawn --transpile-only --ignore-watch node_modules --no-notify src/app/server.ts"
   },
   "author": "",
   "license": "ISC",
@@ -41,7 +40,6 @@
     "node-mocks-http": "^1.15.0",
     "prettier": "^3.3.2",
     "source-map-support": "^0.5.21",
-    "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1",
     "ts-jest": "^29.2.2",
     "ts-loader": "^9.5.1",
