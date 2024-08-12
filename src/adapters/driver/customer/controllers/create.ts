@@ -6,8 +6,9 @@ import {
 } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
-import { Customer } from '~/domain/customer/entities/customer';
 import { CreateCustomerUseCase } from '~/domain/customer/use-cases/create';
+import { CustomerPresenter } from './presenter/customer';
+import { CustomerResponse } from './presenter/dtos/customer-response';
 import { createCustomerSchema } from './validations/create-schema';
 
 export class CreateCustomerController {
@@ -15,7 +16,7 @@ export class CreateCustomerController {
 
   handler: Controller = async (
     request: Request,
-  ): Promise<Response<Customer>> => {
+  ): Promise<Response<CustomerResponse>> => {
     const { body } = request;
 
     logger.info({
@@ -40,7 +41,7 @@ export class CreateCustomerController {
 
     return {
       statusCode: 201,
-      body: customer,
+      body: CustomerPresenter.toHttp(customer),
     };
   };
 }
