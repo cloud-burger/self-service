@@ -5,6 +5,7 @@ import { OrderStatus } from './value-objects/enums/order-status';
 
 export interface OrderProps extends EntityProps {
   amount: number;
+  number?: number;
   products: Partial<Product>[];
   customer?: Customer;
   status: OrderStatus;
@@ -14,6 +15,7 @@ export interface OrderProps extends EntityProps {
 
 export class Order extends Entity {
   amount: number;
+  number?: number;
   products: Product[];
   customer?: Customer;
   status: OrderStatus;

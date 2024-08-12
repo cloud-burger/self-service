@@ -8,6 +8,7 @@ describe('database order mapper', () => {
         amount: 10,
         created_at: '2024-01-01',
         id: '123',
+        number: 123,
         products: [
           {
             amount: 10,
@@ -44,6 +45,7 @@ describe('database order mapper', () => {
         updatedAt: new Date('2024-01-01T00:00:00.000Z'),
       },
       id: '123',
+      number: 123,
       products: [
         {
           amount: 10,

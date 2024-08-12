@@ -5,6 +5,7 @@ import { ProductResponse } from './product-response';
 export interface OrderResponse {
   id: string;
   amount: string;
+  number: number;
   customer?: CustomerResponse;
   status: OrderStatus;
   products: ProductResponse[];

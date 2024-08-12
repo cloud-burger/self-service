@@ -66,6 +66,7 @@ describe('create order controller', () => {
     expect(response).toEqual({
       body: {
         amount: 'R$\xa020,99',
+        number: 123,
         customer: {
           documentNumber: '53523992060',
           email: 'johndue@gmail.com',

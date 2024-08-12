@@ -23,6 +23,7 @@ export class DatabaseOrderMapper {
       status: orderDbSchema.status as OrderStatus,
       createdAt: new Date(orderDbSchema.created_at),
       updatedAt: new Date(orderDbSchema.updated_at),
+      number: orderDbSchema.number,
       products: orderDbSchema.products.map((product) => {
         return new Product({
           id: product.id,

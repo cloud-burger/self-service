@@ -8,5 +8,5 @@ export interface OrderPaginationParams {
 
 export interface OrderRepository {
   findMany(input: OrderPaginationParams): Promise<Order[]>;
-  create(order: Order): Promise<void>;
+  create(order: Order): Promise<number>;
 }

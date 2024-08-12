@@ -463,6 +463,11 @@
         "example": "R$ 19,99",
         "description": "Amount"
       },
+      "Number": {
+        "type": "number",
+        "example": 10,
+        "description": "Order number"
+      },
       "ProductAmount": {
         "type": "number",
         "example": "19,99",
@@ -522,6 +527,9 @@
           },
           "amount": {
             "$ref": "#/components/schemas/Amount"
+          },
+          "number": {
+            "$ref": "#/components/schemas/Number"
           },
           "customer": {
             "$ref": "#/components/schemas/CustomerResponse",
