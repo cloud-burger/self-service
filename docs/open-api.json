@@ -463,15 +463,20 @@
         "example": "R$ 19,99",
         "description": "Amount"
       },
+      "Number": {
+        "type": "number",
+        "example": 10,
+        "description": "Order number"
+      },
       "ProductAmount": {
         "type": "number",
-        "example": "19,99",
+        "example": 19.99,
         "description": "Product Amount"
       },
       "ProductImage": {
         "type": "string",
-        "format": "binary",
-        "description": "Product image"
+        "example": "assets.myimage.com/213",
+        "description": "Product image url"
       },
       "ProductNotes": {
         "type": "string",
@@ -522,6 +527,9 @@
           },
           "amount": {
             "$ref": "#/components/schemas/Amount"
+          },
+          "number": {
+            "$ref": "#/components/schemas/Number"
           },
           "customer": {
             "$ref": "#/components/schemas/CustomerResponse",
@@ -740,7 +748,7 @@
             "required": true
           },
           "amount": {
-            "$ref": "#/components/schemas/Amount",
+            "$ref": "#/components/schemas/ProductAmount",
             "required": true
           },
           "image": {

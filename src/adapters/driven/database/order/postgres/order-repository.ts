@@ -6,7 +6,7 @@ import {
   OrderRepository as IOrderRepository,
   OrderPaginationParams,
 } from '~/domain/order/repositories/order';
-import { OrdersDbSchema } from './dtos/orders-db-schema';
+import { OrderNumber, OrdersDbSchema } from './dtos/orders-db-schema';
 import { DatabaseOrderMapper } from './mappers/database-order';
 import { FIND_MANY } from './queries/find-many';
 import { INSERT_ORDER, INSERT_ORDER_PRODUCT } from './queries/insert-order';
@@ -25,7 +25,7 @@ export class OrderRepository implements IOrderRepository {
     });
   }
 
-  async create(order: Order): Promise<void> {
+  async create(order: Order): Promise<number> {
     const { products, ...recordToSave } = DatabaseOrderMapper.toDatabase(order);
 
     const columnsAndParameters = (record: Record<string, any>) => {
@@ -38,10 +38,14 @@ export class OrderRepository implements IOrderRepository {
 
     await this.connection.begin();
     try {
-      await this.connection.query({
+      const { records } = await this.connection.query({
         sql: INSERT_ORDER(columns.join(), parameters.join()),
         parameters: recordToSave,
       });
+
+      const [order] = records;
+
+      const { number } = order as OrderNumber;
 
       for (const product of products) {
         const { columns: productColumns, parameters: productParameters } =
@@ -57,6 +61,8 @@ export class OrderRepository implements IOrderRepository {
       }
 
       await this.connection.commit();
+
+      return number;
     } catch (error) {
       await this.connection.rollback();
 

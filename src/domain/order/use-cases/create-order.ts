@@ -68,7 +68,9 @@ export class CreateOrderUseCase {
       data: order,
     });
 
-    await this.orderRepository.create(order);
+    const orderNumber = await this.orderRepository.create(order);
+
+    order.number = orderNumber;
 
     return order;
   }

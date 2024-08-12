@@ -4,12 +4,17 @@ import { ProductDbSchema } from './product-db-schema';
 export interface OrdersDbSchema {
   id: string;
   amount: number;
+  number?: number;
   customer_id?: string;
   customer?: CustomerDbSchema;
   status: string;
   created_at: string;
   updated_at: string;
   products: ProductDbSchema[];
+}
+
+export interface OrderNumber {
+  number: number;
 }
 
 export interface OrderDbSchema {

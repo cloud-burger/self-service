@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS products (
     category VARCHAR(100) NOT NULL,
     description VARCHAR(200) NOT NULL,
     amount NUMERIC NOT NULL,
-    image BYTEA,
+    image VARCHAR(1000),
     created_at TIMESTAMP NOT NULL, 
     updated_at TIMESTAMP NOT NULL,
     CONSTRAINT products_pk PRIMARY KEY (id)
@@ -40,6 +40,7 @@ CREATE INDEX IF NOT EXISTS products_category_index ON public.products using btre
 -- criação da tabela orders
 CREATE TABLE IF NOT EXISTS orders (
     id VARCHAR(100),
+    number SERIAL UNIQUE,
     amount NUMERIC NOT NULL,
     customer_id VARCHAR(100),
     status VARCHAR(30) NOT NULL,
@@ -93,16 +94,16 @@ INSERT INTO products VALUES('7077641f-036b-4fa7-9dd2-cd4f4985dc60', 'Mozzarella 
 INSERT INTO products VALUES('60868805-bf67-4e8f-8d04-ac0ff94f009c', 'Salada de Frutas', 'SIDE', 'Salada de frutas frescas da estação.', 6.50, null, now(), now());
 
 -- orders
-INSERT INTO orders VALUES('1376c2b4-74bd-477c-8f44-7cc593e8c734', 45.48, '5c1c5144-be00-4f01-8853-2f37cca74465', 'RECEIVED', now(), now());
-INSERT INTO orders VALUES('a0aad9ce-35ea-43a6-b3e8-ac8d63943fd7', 32.50, null, 'PREPARING', now(), now());
-INSERT INTO orders VALUES('52541b29-b267-4ec7-a311-a4ed5cd087af', 19.50, '982ad0de-eb12-47f9-8cd1-8e2055d7f87a', 'PREPARING', now(), now());
-INSERT INTO orders VALUES('7aa7bc1a-5e31-420f-867c-72f5ba460e35', 16.00, 'bba39fad-9d9b-4802-823f-8ce288175cc3', 'RECEIVED', now(), now());
-INSERT INTO orders VALUES('c53c89b6-2459-421d-9a91-9e9e89aee932', 31.00, null, 'DONE', now(), now());
-INSERT INTO orders VALUES('6489d886-987f-406b-be43-204bf79e5de2', 84.48, '1cd903f5-eb34-4d0a-84f0-8b6e9875fd8f', 'DONE', now(), now());
-INSERT INTO orders VALUES('063289a6-cd2f-4be0-baaa-7f2132a5a9bf', 23.50, '8627cac5-852c-4691-8663-a7b839b383a5', 'FINISHED', now(), now());
-INSERT INTO orders VALUES('9cdb3b16-f115-43aa-9b4b-05c0de1007eb', 24.00, 'b95167f0-6375-4fff-8366-b6326ac6e636', 'FINISHED', now(), now());
-INSERT INTO orders VALUES('1deda162-6c13-407d-bbff-68e4ee7ea401', 64.99, 'acb1c279-7f77-4d4c-9709-d6c4b51aba90', 'FINISHED', now(), now());
-INSERT INTO orders VALUES('849df40b-877c-4f80-9083-cd02d5f04605', 40.98, '23ecc2e3-45fd-48ba-8369-9ca94ea8ec71', 'DONE', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('1376c2b4-74bd-477c-8f44-7cc593e8c734', 45.48, '5c1c5144-be00-4f01-8853-2f37cca74465', 'RECEIVED', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('a0aad9ce-35ea-43a6-b3e8-ac8d63943fd7', 32.50, null, 'PREPARING', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('52541b29-b267-4ec7-a311-a4ed5cd087af', 19.50, '982ad0de-eb12-47f9-8cd1-8e2055d7f87a', 'PREPARING', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('7aa7bc1a-5e31-420f-867c-72f5ba460e35', 16.00, 'bba39fad-9d9b-4802-823f-8ce288175cc3', 'RECEIVED', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('c53c89b6-2459-421d-9a91-9e9e89aee932', 31.00, null, 'DONE', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('6489d886-987f-406b-be43-204bf79e5de2', 84.48, '1cd903f5-eb34-4d0a-84f0-8b6e9875fd8f', 'DONE', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('063289a6-cd2f-4be0-baaa-7f2132a5a9bf', 23.50, '8627cac5-852c-4691-8663-a7b839b383a5', 'FINISHED', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('9cdb3b16-f115-43aa-9b4b-05c0de1007eb', 24.00, 'b95167f0-6375-4fff-8366-b6326ac6e636', 'FINISHED', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('1deda162-6c13-407d-bbff-68e4ee7ea401', 64.99, 'acb1c279-7f77-4d4c-9709-d6c4b51aba90', 'FINISHED', now(), now());
+INSERT INTO orders (id, amount, customer_id, status, created_at, updated_at) VALUES('849df40b-877c-4f80-9083-cd02d5f04605', 40.98, '23ecc2e3-45fd-48ba-8369-9ca94ea8ec71', 'DONE', now(), now());
 
 -- order products
 INSERT INTO orders_products VALUES('1376c2b4-74bd-477c-8f44-7cc593e8c734', 'c3dd096a-485a-46f6-9243-11501733a36f', 1, null);

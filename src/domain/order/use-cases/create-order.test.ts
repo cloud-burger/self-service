@@ -49,7 +49,7 @@ describe('create order use case', () => {
       makeCustomer(),
     );
     productRepository.findById.mockResolvedValue(makeProduct());
-    orderRepository.create.mockResolvedValue();
+    orderRepository.create.mockResolvedValue(123);
 
     const order = await createOrderUseCase.execute({
       products: [
@@ -65,6 +65,7 @@ describe('create order use case', () => {
     expect(order).toEqual({
       amount: 41.98,
       createdAt: expect.any(Date),
+      number: 123,
       customer: {
         createdAt: expect.any(Date),
         documentNumber: '53523992060',
@@ -103,6 +104,7 @@ describe('create order use case', () => {
     expect(orderRepository.create).toHaveBeenNthCalledWith(1, {
       amount: 41.98,
       createdAt: expect.any(Date),
+      number: 123,
       customer: {
         createdAt: expect.any(Date),
         documentNumber: '53523992060',
@@ -134,7 +136,7 @@ describe('create order use case', () => {
 
   it('should create order without customer successfully', async () => {
     productRepository.findById.mockResolvedValue(makeProduct());
-    orderRepository.create.mockResolvedValue();
+    orderRepository.create.mockResolvedValue(123);
 
     const order = await createOrderUseCase.execute({
       products: [
@@ -150,6 +152,7 @@ describe('create order use case', () => {
       amount: 41.98,
       createdAt: expect.any(Date),
       customer: null,
+      number: 123,
       id: expect.any(String),
       products: [
         {
@@ -177,6 +180,7 @@ describe('create order use case', () => {
     expect(orderRepository.create).toHaveBeenNthCalledWith(1, {
       amount: 41.98,
       createdAt: expect.any(Date),
+      number: 123,
       customer: null,
       id: expect.any(String),
       products: [

@@ -7,6 +7,7 @@ export const makeOrder = (override: Partial<Order> = {}): Order =>
   new Order({
     id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
     amount: 20.99,
+    number: 123,
     customer: makeCustomer(),
     products: [makeProduct({ quantity: 1, notes: 'Sem bacon' })],
     status: OrderStatus.RECEIVED,

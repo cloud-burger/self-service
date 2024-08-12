@@ -9,6 +9,7 @@ export class OrderPresenter {
   static toHttp(order: Order): OrderResponse {
     return removeNullValues({
       id: order.id,
+      number: order.number,
       amount: getFormattedCurrency(order.amount),
       status: order.status,
       products: order.products.map((product) =>

@@ -147,16 +147,21 @@ describe('order repository', () => {
 
   it('should create order successfully', async () => {
     connection.begin.mockResolvedValue();
-    connection.query.mockResolvedValue({
-      records: [],
+    connection.query.mockResolvedValueOnce({
+      records: [
+        {
+          number: 1,
+        },
+      ],
     });
     connection.commit.mockResolvedValue();
     connection.query.mockResolvedValueOnce({
       records: [],
     });
 
-    await orderRepository.create(makeOrder());
+    const orderNumber = await orderRepository.create(makeOrder());
 
+    expect(orderNumber).toEqual(1);
     expect(connection.begin).toHaveBeenCalledTimes(1);
     expect(connection.query).toHaveBeenNthCalledWith(1, {
       parameters: {
@@ -167,7 +172,7 @@ describe('order repository', () => {
         status: 'RECEIVED',
         updated_at: '2024-07-12T22:18:26.351Z',
       },
-      sql: 'INSERT INTO public.orders (id,amount,customer_id,status,created_at,updated_at) VALUES (:id,:amount,:customer_id,:status,:created_at,:updated_at);',
+      sql: 'INSERT INTO public.orders (id,amount,customer_id,status,created_at,updated_at) VALUES (:id,:amount,:customer_id,:status,:created_at,:updated_at) RETURNING number;',
     });
     expect(connection.commit).toHaveBeenCalled();
     expect(connection.query).toHaveBeenNthCalledWith(2, {
@@ -185,7 +190,11 @@ describe('order repository', () => {
   it('should rollback transaction and throws when error while create order', async () => {
     connection.begin.mockResolvedValue();
     connection.query.mockResolvedValueOnce({
-      records: [],
+      records: [
+        {
+          number: 1,
+        },
+      ],
     });
     connection.query.mockResolvedValueOnce({
       records: [],
@@ -220,7 +229,7 @@ describe('order repository', () => {
         status: 'RECEIVED',
         updated_at: '2024-07-12T22:18:26.351Z',
       },
-      sql: 'INSERT INTO public.orders (id,amount,customer_id,status,created_at,updated_at) VALUES (:id,:amount,:customer_id,:status,:created_at,:updated_at);',
+      sql: 'INSERT INTO public.orders (id,amount,customer_id,status,created_at,updated_at) VALUES (:id,:amount,:customer_id,:status,:created_at,:updated_at) RETURNING number;',
     });
     expect(connection.commit).not.toHaveBeenCalled();
     expect(connection.query).toHaveBeenNthCalledWith(2, {
