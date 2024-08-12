@@ -48,6 +48,7 @@ A documentação OpenAPI do projeto está disponível em: [Documentação OpenAP
 
 Uma versão alternativa gerada com Redoc pode ser acessada em:  [Documentação Redoc](http://localhost:3000/docs/self-service.html)
 
+A collection do Postman do projeto está disponível em: [Collection Postman](docs/Self-Service.postman_collection.json). Veja aqui como importar no Postman [Tutorial](https://learning.postman.com/docs/getting-started/importing-and-exporting/importing-data/)
 
 ## Desenvolvimento
 
