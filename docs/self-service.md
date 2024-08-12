@@ -20,7 +20,7 @@ Entidade que representa um cliente.
 
 #### Product
 
-Entidade que representa um produto.
+Entidade que representa um produto
 
 | Campo       | Descrição         | Obrigatório | Tipo          |
 |-------------|-------------------|-------------|---------------|
@@ -28,7 +28,7 @@ Entidade que representa um produto.
 | category    | Categoria         | true        | `string`      |
 | description | Descrição         | true        | `string`      |
 | amount      | Valor unitário    | true        | `number`      |
-| image       | Imagem            | false       | `blob ?? string` |
+| image       | Imagem            | false       | `string` |
 | notes       | Notas             | false       | `string`      |
 
 #### Order
@@ -73,7 +73,7 @@ Entidade de banco de dados que representa um produto.
 | category     | Categoria            | true        | `Varchar`   |
 | description  | Descrição            | true        | `Varchar`   |
 | amount       | Valor unitário       | true        | `Numeric`   |
-| image        | Imagem do produto    | true        | `Blob?`     |
+| image        | Imagem do produto    | true        | `Varchar`     |
 | created_at   | Data de criação      | true        | `Timestamp` |
 | updated_at   | Data de atualização  | true        | `Timestamp` |
 

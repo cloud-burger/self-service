@@ -470,7 +470,7 @@
       },
       "ProductAmount": {
         "type": "number",
-        "example": "19,99",
+        "example": "19.99",
         "description": "Product Amount"
       },
       "ProductImage": {
@@ -748,7 +748,7 @@
             "required": true
           },
           "amount": {
-            "$ref": "#/components/schemas/Amount",
+            "$ref": "#/components/schemas/ProductAmount",
             "required": true
           },
           "image": {

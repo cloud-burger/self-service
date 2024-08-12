@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS products (
     category VARCHAR(100) NOT NULL,
     description VARCHAR(200) NOT NULL,
     amount NUMERIC NOT NULL,
-    image BYTEA,
+    image VARCHAR(1000),
     created_at TIMESTAMP NOT NULL, 
     updated_at TIMESTAMP NOT NULL,
     CONSTRAINT products_pk PRIMARY KEY (id)
