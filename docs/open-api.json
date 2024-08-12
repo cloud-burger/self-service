@@ -470,13 +470,13 @@
       },
       "ProductAmount": {
         "type": "number",
-        "example": "19.99",
+        "example": 19.99,
         "description": "Product Amount"
       },
       "ProductImage": {
         "type": "string",
-        "format": "binary",
-        "description": "Product image"
+        "example": "assets.myimage.com/213",
+        "description": "Product image url"
       },
       "ProductNotes": {
         "type": "string",
