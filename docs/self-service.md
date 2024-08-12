@@ -38,6 +38,7 @@ Entidade que representa um pedido.
 | Campo    | Descrição            | Obrigatório | Tipo        |
 |----------|----------------------|-------------|-------------|
 | amount   | Valor                | true        | `number`    |
+| number   | Número do pedido     | true        | `number`    |
 | products | Produtos             | true        | `Product[]` |
 | customer | Cliente identificado | false       | `Customer`  |
 | status   | Status               | true        | `Status`    |
@@ -84,6 +85,7 @@ Entidade de banco de dados que representa um pedido.
 |---------------|-------------------------|-------------|-------------|
 | id (PK)       | Identificador único     | true        | `Varchar`   |
 | amount        | Valor total             | true        | `Numeric`   |
+| number        | Número do pedidos       | true        | `Numeric`   |
 | customer_id   | Identificador do cliente| false       | `Varchar`   |
 | status        | Status                  | true        | `Varchar`   |
 | created_at    | Data de criação         | true        | `Timestamp` |
