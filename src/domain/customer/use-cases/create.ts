@@ -1,3 +1,4 @@
+import { ConflictError } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { Customer } from '../entities/customer';
 import { CustomerRepository } from '../repositories/customer';
@@ -16,12 +17,12 @@ export class CreateCustomerUseCase {
       await this.customerRepository.findByDocumentNumber(documentNumber);
 
     if (customer) {
-      logger.debug({
+      logger.warn({
         message: 'Customer already exists',
         data: customer,
       });
 
-      return customer;
+      throw new ConflictError('Customer already exists');
     }
 
     const now = new Date();

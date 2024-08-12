@@ -44,23 +44,17 @@ describe('create customer use case', () => {
     });
   });
 
-  it('should return existent customer', async () => {
+  it('should throw conflict error when customer already exists', async () => {
     customerRepository.findByDocumentNumber.mockResolvedValue(makeCustomer());
 
-    const customer = await createCustomerUseCase.execute({
-      documentNumber: '53523992060',
-      email: 'johndue@gmail.com',
-      name: 'John Due',
-    });
+    await expect(
+      createCustomerUseCase.execute({
+        documentNumber: '53523992060',
+        email: 'johndue@gmail.com',
+        name: 'John Due',
+      }),
+    ).rejects.toThrow('Customer already exists');
 
-    expect(customer).toEqual({
-      createdAt: new Date('2024-07-12T22:18:26.351Z'),
-      documentNumber: '53523992060',
-      email: 'johndue@gmail.com',
-      id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-      name: 'John Due',
-      updatedAt: new Date('2024-07-12T22:18:26.351Z'),
-    });
     expect(customerRepository.findByDocumentNumber).toHaveBeenNthCalledWith(
       1,
       '53523992060',
