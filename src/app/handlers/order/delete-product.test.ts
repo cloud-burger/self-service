@@ -8,9 +8,9 @@ import { deleteProduct } from './delete-product';
 jest.mock('~/app/postgres/connection');
 jest.mock('~/app/postgres/pool');
 jest.mock('~/app/postgres/pool-factory');
+jest.mock('~/controllers/order/delete-product');
 jest.mock('~/domain/order/use-cases/delete-product');
-jest.mock('~/driven/database/order/postgres/product-repository');
-jest.mock('~/driver/order/controllers/delete-product');
+jest.mock('~/gateways/database/order/product-repository');
 
 describe('delete product handler', () => {
   const poolFactoryMock = jest.mocked(PoolFactory);

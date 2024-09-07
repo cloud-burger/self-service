@@ -2,8 +2,8 @@ import { Controller, Request, Response } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
 import { FindProductsByCategoryUseCase } from '~/domain/order/use-cases/find-products-by-category';
-import { ProductResponse } from './presenters/dtos/product-response';
-import { FindProductsByCategoryPresenter } from './presenters/find-products-by-category';
+import { ProductResponse } from '~/presenters/order/dtos/product-response';
+import { FindProductsByCategoryPresenter } from '~/presenters/order/find-products-by-category';
 
 export class FindProductsByCategoryController {
   constructor(

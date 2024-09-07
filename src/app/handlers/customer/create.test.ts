@@ -8,9 +8,9 @@ import { createCustomer } from './create';
 jest.mock('~/app/postgres/connection');
 jest.mock('~/app/postgres/pool');
 jest.mock('~/app/postgres/pool-factory');
+jest.mock('~/controllers/customer/create');
 jest.mock('~/domain/customer/use-cases/create');
-jest.mock('~/driven/database/customer/postgres/customer-repository');
-jest.mock('~/driver/customer/controllers/create');
+jest.mock('~/gateways/database/customer/customer-repository');
 
 describe('create customer handler', () => {
   const poolFactoryMock = jest.mocked(PoolFactory);

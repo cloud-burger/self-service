@@ -4,9 +4,9 @@ import { Request, Response } from 'express';
 import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
+import { ListOrdersController } from '~/controllers/order/list-orders';
 import { ListOrdersUseCase } from '~/domain/order/use-cases/list-orders';
-import { OrderRepository } from '~/driven/database/order/postgres/order-repository';
-import { ListOrdersController } from '~/driver/order/controllers/list-orders';
+import { OrderRepository } from '~/gateways/database/order/order-repository';
 
 let pool: Pool;
 let orderRepository: OrderRepository;

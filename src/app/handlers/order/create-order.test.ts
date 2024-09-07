@@ -8,12 +8,12 @@ import { createOrder } from './create-order';
 jest.mock('~/app/postgres/connection');
 jest.mock('~/app/postgres/pool');
 jest.mock('~/app/postgres/pool-factory');
+jest.mock('~/controllers/order/create-order');
 jest.mock('~/domain/customer/use-cases/find-by-document-number');
 jest.mock('~/domain/order/use-cases/create-order');
-jest.mock('~/driven/database/customer/postgres/customer-repository');
-jest.mock('~/driven/database/order/postgres/order-repository');
-jest.mock('~/driven/database/order/postgres/product-repository');
-jest.mock('~/driver/order/controllers/create-order');
+jest.mock('~/gateways/database/customer/customer-repository');
+jest.mock('~/gateways/database/order/order-repository');
+jest.mock('~/gateways/database/order/product-repository');
 
 describe('create order handler', () => {
   const poolFactoryMock = jest.mocked(PoolFactory);

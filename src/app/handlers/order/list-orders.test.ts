@@ -8,9 +8,9 @@ import { listOrders } from './list-orders';
 jest.mock('~/app/postgres/connection');
 jest.mock('~/app/postgres/pool');
 jest.mock('~/app/postgres/pool-factory');
+jest.mock('~/controllers/order/list-orders');
 jest.mock('~/domain/order/use-cases/list-orders');
-jest.mock('~/driven/database/order/postgres/order-repository');
-jest.mock('~/driver/order/controllers/list-orders');
+jest.mock('~/gateways/database/order/order-repository');
 
 describe('list orders handler', () => {
   const poolFactoryMock = jest.mocked(PoolFactory);
