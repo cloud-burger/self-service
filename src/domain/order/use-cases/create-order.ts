@@ -1,10 +1,7 @@
 import { NotFoundError } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { Customer } from '~/domain/customer/entities/customer';
 import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases/find-by-document-number';
 import { Order } from '../entities/order';
-import { Product } from '../entities/product';
-import { OrderStatus } from '../entities/value-objects/enums/order-status';
 import { OrderRepository } from '../repositories/order';
 import { ProductRepository } from '../repositories/product';
 
@@ -27,13 +24,13 @@ export class CreateOrderUseCase {
   ) {}
 
   async execute({ products, customerTaxId }: Input): Promise<Order> {
-    const now = new Date();
-    let dataCustomer: Customer = null;
-    let dataProducts: Product[] = [];
+    const order = new Order();
     if (customerTaxId) {
-      dataCustomer = await this.findCustomerByDocumentNumberUseCase.execute({
+      const customer = await this.findCustomerByDocumentNumberUseCase.execute({
         documentNumber: customerTaxId,
       });
+
+      order.addCustomer(customer);
     }
 
     for (const product of products) {
@@ -46,22 +43,14 @@ export class CreateOrderUseCase {
         });
         throw new NotFoundError('Product not found');
       }
-      dataProduct.quantity = product.quantity;
-      dataProduct.notes = product.notes;
-      dataProducts.push(dataProduct);
+
+      dataProduct.setQuantity(product.quantity);
+      dataProduct.setNotes(product.notes);
+
+      order.addProduct(dataProduct);
     }
 
-    const order = new Order({
-      amount: dataProducts.reduce(
-        (total, product) => total + product.amount * product.quantity,
-        0,
-      ),
-      customer: dataCustomer,
-      status: OrderStatus.RECEIVED,
-      createdAt: now,
-      updatedAt: now,
-      products: dataProducts,
-    });
+    order.calculateAmount();
 
     logger.debug({
       message: 'Creating order',
@@ -70,7 +59,7 @@ export class CreateOrderUseCase {
 
     const orderNumber = await this.orderRepository.create(order);
 
-    order.number = orderNumber;
+    order.setNumber(orderNumber);
 
     return order;
   }

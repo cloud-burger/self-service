@@ -4,8 +4,8 @@ export interface CustomerProps extends EntityProps {
   documentNumber: string;
   name: string;
   email: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Customer extends Entity {
@@ -17,6 +17,10 @@ export class Customer extends Entity {
 
   constructor(input: CustomerProps) {
     super(input.id);
+
+    input.createdAt = input.createdAt ?? new Date();
+    input.updatedAt = input.updatedAt ?? new Date();
+
     Object.assign(this, input);
   }
 }

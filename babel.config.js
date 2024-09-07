@@ -16,8 +16,9 @@ module.exports = {
       {
         alias: {
           '~/app': './src/app',
-          '~/driven': './src/adapters/driven',
-          '~/driver': './src/adapters/driver',
+          '~/controllers': './src/adapters/controllers',
+          '~/gateways': './src/adapters/gateways',
+          '~/presenters': './src/adapters/presenters',
           '~/domain': './src/domain',
         },
       },

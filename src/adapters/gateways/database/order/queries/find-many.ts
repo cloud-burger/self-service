@@ -32,9 +32,16 @@ export const FIND_MANY = (input: OrderPaginationParams) => {
           LEFT JOIN public.customers c ON o.customer_id = c.id
           JOIN public.orders_products op ON o.id = op.order_id
           JOIN public.products p ON op.product_id = p.id
-          WHERE 1=1${clauses}
+          WHERE o.status <> 'FINISHED'
           GROUP BY o.id, c.id
-          ORDER BY o.created_at desc
-          limit :size::numeric
-          offset (:page::numeric) * (:size::numeric - 1);`;
+          ORDER BY 
+              CASE 
+                  WHEN o.status = 'DONE' THEN 1
+                  WHEN o.status = 'PREPARING' THEN 2
+                  WHEN o.status = 'RECEIVED' THEN 3
+                  ELSE 4
+              END,
+              o.created_at ASC
+          LIMIT :size::numeric
+          OFFSET (:page::numeric) * (:size::numeric - 1);`;
 };
