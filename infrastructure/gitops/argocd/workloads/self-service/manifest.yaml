@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: self-service
+  name: self-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: self-service
+  template:
+    metadata:
+      labels:
+        app: self-service
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
