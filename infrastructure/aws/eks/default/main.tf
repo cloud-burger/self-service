@@ -39,7 +39,7 @@ provider "kubernetes" {
 }
 
 locals {
-  name   = "getting-started-gitops"
+  name   = "infra-kubernetes-prd"
   region = var.region
 
   cluster_version = var.kubernetes_version

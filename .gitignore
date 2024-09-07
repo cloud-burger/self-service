@@ -6,6 +6,6 @@ logs
 npm-debug.log*
 
 coverage/
-*.tfstate
-*.lock.hcl
+*.tfstate*
+*.lock.hcl*
 .terraform*
