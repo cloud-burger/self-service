@@ -7,8 +7,8 @@ import {
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
 import { CreateCustomerUseCase } from '~/domain/customer/use-cases/create';
-import { CustomerPresenter } from './presenter/customer';
-import { CustomerResponse } from './presenter/dtos/customer-response';
+import { CustomerPresenter } from '~/presenters/customer/customer';
+import { CustomerResponse } from '~/presenters/customer/dtos/customer-response';
 import { createCustomerSchema } from './validations/create-schema';
 
 export class CreateCustomerController {

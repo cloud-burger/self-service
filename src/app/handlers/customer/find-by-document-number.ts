@@ -4,9 +4,9 @@ import { Request, Response } from 'express';
 import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
+import { FindCustomerByDocumentNumberController } from '~/controllers/customer/find-by-document-number';
 import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases/find-by-document-number';
-import { CustomerRepository } from '~/driven/database/customer/postgres/customer-repository';
-import { FindCustomerByDocumentNumberController } from '~/driver/customer/controllers/find-by-document-number';
+import { CustomerRepository } from '~/gateways/database/customer/customer-repository';
 
 let pool: Pool;
 let customerRepository: CustomerRepository;

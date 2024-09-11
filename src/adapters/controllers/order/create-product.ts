@@ -6,19 +6,23 @@ import {
 } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
-import { UpdateProductUseCase } from '~/domain/order/use-cases/update-product';
-import { ProductResponse } from './presenters/dtos/product-response';
-import { ProductPresenter } from './presenters/product';
+import { CreateProductUseCase } from '~/domain/order/use-cases/create-product';
+import { ProductResponse } from '~/presenters/order/dtos/product-response';
+import { ProductPresenter } from '~/presenters/order/product';
 import { productSchema } from './validations/product-schema';
 
-export class UpdateProductController {
-  constructor(private updateProductUseCase: UpdateProductUseCase) {}
+export class CreateProductController {
+  constructor(private createProductUseCase: CreateProductUseCase) {}
 
   handler: Controller = async (
     request: Request,
   ): Promise<Response<ProductResponse>> => {
-    const { body, pathParameters } = request;
-    const { id } = pathParameters;
+    const { body } = request;
+
+    logger.info({
+      message: 'Create product request',
+      data: request,
+    });
 
     const { data, errors } = validateSchema(productSchema, body);
 
@@ -26,20 +30,17 @@ export class UpdateProductController {
 
     if (hasValidationErrors) {
       logger.warn({
-        message: 'Update product validation error',
+        message: 'Create product validation error',
         data: errors,
       });
 
       throw new ValidationError('Invalid request data', errors);
     }
 
-    const product = await this.updateProductUseCase.execute({
-      id,
-      ...data,
-    });
+    const product = await this.createProductUseCase.execute(data);
 
     return {
-      statusCode: 200,
+      statusCode: 201,
       body: ProductPresenter.toHttp(product),
     };
   };

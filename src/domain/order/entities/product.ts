@@ -9,8 +9,8 @@ export interface ProductProps extends EntityProps {
   image?: any;
   quantity?: number;
   notes?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Product extends Entity {
@@ -26,6 +26,18 @@ export class Product extends Entity {
 
   constructor(input: ProductProps) {
     super(input.id);
+
+    input.createdAt = input.createdAt ?? new Date();
+    input.updatedAt = input.updatedAt ?? new Date();
+
     Object.assign(this, input);
+  }
+
+  setNotes(notes: string) {
+    this.notes = notes;
+  }
+
+  setQuantity(quantity: number) {
+    this.quantity = quantity;
   }
 }

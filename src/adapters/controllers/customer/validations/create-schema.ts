@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { validateDocumentNumber } from '~/driver/helpers/document-number';
+import { validateDocumentNumber } from '~/controllers/helpers/document-number';
 
 export const createCustomerSchema = Joi.object({
   documentNumber: Joi.string()

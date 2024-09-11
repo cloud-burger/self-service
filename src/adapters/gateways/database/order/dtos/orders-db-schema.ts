@@ -1,4 +1,4 @@
-import { CustomerDbSchema } from '../../../customer/postgres/dtos/customer-db-schema';
+import { CustomerDbSchema } from '../../customer/dtos/customer-db-schema';
 import { ProductDbSchema } from './product-db-schema';
 
 export interface OrdersDbSchema {

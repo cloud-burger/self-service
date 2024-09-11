@@ -4,9 +4,9 @@ import { Request, Response } from 'express';
 import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
+import { DeleteProductController } from '~/controllers/order/delete-product';
 import { DeleteProductUseCase } from '~/domain/order/use-cases/delete-product';
-import { ProductRepository } from '~/driven/database/order/postgres/product-repository';
-import { DeleteProductController } from '~/driver/order/controllers/delete-product';
+import { ProductRepository } from '~/gateways/database/order/product-repository';
 
 let pool: Pool;
 let productRepository: ProductRepository;

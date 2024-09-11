@@ -4,13 +4,13 @@ import { Product } from './product';
 import { OrderStatus } from './value-objects/enums/order-status';
 
 export interface OrderProps extends EntityProps {
-  amount: number;
+  amount?: number;
   number?: number;
-  products: Partial<Product>[];
+  products?: Product[];
   customer?: Customer;
-  status: OrderStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  status?: OrderStatus;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Order extends Entity {
@@ -22,8 +22,34 @@ export class Order extends Entity {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(input: OrderProps) {
+  constructor(input: OrderProps = {}) {
     super(input.id);
+
+    input.status = input.status ?? OrderStatus.RECEIVED;
+    input.createdAt = input.createdAt ?? new Date();
+    input.updatedAt = input.updatedAt ?? new Date();
+    input.products = input.products ?? [];
+    input.customer = input.customer ?? null;
+
     Object.assign(this, input);
+  }
+
+  addProduct(product: Product) {
+    this.products.push(product);
+  }
+
+  addCustomer(customer: Customer) {
+    this.customer = customer;
+  }
+
+  calculateAmount() {
+    this.amount = this.products.reduce(
+      (total, product) => total + product.amount * product.quantity,
+      0,
+    );
+  }
+
+  setNumber(number: number) {
+    this.number = number;
   }
 }

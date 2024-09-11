@@ -15,7 +15,13 @@ interface Input {
 export class CreateProductUseCase {
   constructor(private productRepository: ProductRepository) {}
 
-  async execute({ name, category, ...rest }: Input): Promise<Product> {
+  async execute({
+    name,
+    category,
+    amount,
+    description,
+    image,
+  }: Input): Promise<Product> {
     const product = await this.productRepository.findByCategoryAndName(
       category,
       name,
@@ -30,14 +36,12 @@ export class CreateProductUseCase {
       throw new ConflictError('Product already exists');
     }
 
-    const now = new Date();
-
     const newProduct = new Product({
       name,
       category,
-      createdAt: now,
-      updatedAt: now,
-      ...rest,
+      amount,
+      description,
+      image,
     });
 
     logger.debug({

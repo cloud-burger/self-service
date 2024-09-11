@@ -8,9 +8,9 @@ import { findProductsByCategory } from './find-products-by-category';
 jest.mock('~/app/postgres/connection');
 jest.mock('~/app/postgres/pool');
 jest.mock('~/app/postgres/pool-factory');
+jest.mock('~/controllers/order/find-products-by-category');
 jest.mock('~/domain/order/use-cases/find-products-by-category');
-jest.mock('~/driven/database/order/postgres/product-repository');
-jest.mock('~/driver/order/controllers/find-products-by-category');
+jest.mock('~/gateways/database/order/product-repository');
 
 describe('find product by category handler', () => {
   const poolFactoryMock = jest.mocked(PoolFactory);

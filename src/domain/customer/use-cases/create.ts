@@ -25,14 +25,10 @@ export class CreateCustomerUseCase {
       throw new ConflictError('Customer already exists');
     }
 
-    const now = new Date();
-
     const newCustomer = new Customer({
       documentNumber,
       email,
       name,
-      createdAt: now,
-      updatedAt: now,
     });
 
     logger.debug({

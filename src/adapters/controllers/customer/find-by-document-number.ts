@@ -1,8 +1,8 @@
 import { Controller, Request, Response } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases/find-by-document-number';
-import { CustomerPresenter } from './presenter/customer';
-import { CustomerResponse } from './presenter/dtos/customer-response';
+import { CustomerPresenter } from '~/presenters/customer/customer';
+import { CustomerResponse } from '~/presenters/customer/dtos/customer-response';
 
 export class FindCustomerByDocumentNumberController {
   constructor(

@@ -7,8 +7,8 @@ import {
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
 import { ListOrdersUseCase } from '~/domain/order/use-cases/list-orders';
-import { OrderResponse } from './presenters/dtos/order-response';
-import { ListOrdersPresenter } from './presenters/list-orders';
+import { OrderResponse } from '~/presenters/order/dtos/order-response';
+import { ListOrdersPresenter } from '~/presenters/order/list-orders';
 import { listOrdersSchema } from './validations/list-orders-schema';
 
 export class ListOrdersController {

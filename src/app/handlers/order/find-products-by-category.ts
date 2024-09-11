@@ -4,9 +4,9 @@ import { Request, Response } from 'express';
 import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
+import { FindProductsByCategoryController } from '~/controllers/order/find-products-by-category';
 import { FindProductsByCategoryUseCase } from '~/domain/order/use-cases/find-products-by-category';
-import { ProductRepository } from '~/driven/database/order/postgres/product-repository';
-import { FindProductsByCategoryController } from '~/driver/order/controllers/find-products-by-category';
+import { ProductRepository } from '~/gateways/database/order/product-repository';
 
 let pool: Pool;
 let productRepository: ProductRepository;

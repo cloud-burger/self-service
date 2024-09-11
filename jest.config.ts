@@ -18,8 +18,9 @@ export default {
   moduleFileExtensions: ['ts', 'js', 'json'],
   moduleNameMapper: {
     '~/app/(.*)': '<rootDir>/src/app/$1',
-    '~/driven/(.*)': '<rootDir>/src/adapters/driven/$1',
-    '~/driver/(.*)': '<rootDir>/src/adapters/driver/$1',
+    '~/controllers/(.*)': '<rootDir>/src/adapters/controllers/$1',
+    '~/gateways/(.*)': '<rootDir>/src/adapters/gateways/$1',
+    '~/presenters/(.*)': '<rootDir>/src/adapters/presenters/$1',
     '~/domain/(.*)': '<rootDir>/src/domain/$1',
   },
   modulePathIgnorePatterns: ['<rootDir>/.build/', '<rootDir>/node_modules/'],

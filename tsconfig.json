@@ -21,8 +21,9 @@
     "resolveJsonModule": true,
     "paths": {
       "~/app/*": ["./app/*"],
-      "~/driven/*": ["./adapters/driven/*"],
-      "~/driver/*": ["./adapters/driver/*"],
+      "~/controllers/*": ["./adapters/controllers/*"],
+      "~/gateways/*": ["./adapters/gateways/*"],
+      "~/presenters/*": ["./adapters/presenters/*"],
       "~/domain/*": ["./domain/*"]
     },
     "types": ["jest", "node", "express"],
