@@ -25,7 +25,7 @@ export class Order extends Entity {
   constructor(input: OrderProps = {}) {
     super(input.id);
 
-    input.status = input.status ?? OrderStatus.RECEIVED;
+    input.status = input.status ?? OrderStatus.WAITING_PAYMENT;
     input.createdAt = input.createdAt ?? new Date();
     input.updatedAt = input.updatedAt ?? new Date();
     input.products = input.products ?? [];

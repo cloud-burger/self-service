@@ -90,7 +90,7 @@ describe('create order use case', () => {
           updatedAt: new Date('2024-07-12T22:18:26.351Z'),
         },
       ],
-      status: 'RECEIVED',
+      status: 'WAITING_PAYMENT',
       updatedAt: expect.any(Date),
     });
     expect(findCustomerByDocumentNumberUseCase.execute).toHaveBeenNthCalledWith(
@@ -129,7 +129,7 @@ describe('create order use case', () => {
           updatedAt: new Date('2024-07-12T22:18:26.351Z'),
         },
       ],
-      status: 'RECEIVED',
+      status: 'WAITING_PAYMENT',
       updatedAt: expect.any(Date),
     });
   });
@@ -169,7 +169,7 @@ describe('create order use case', () => {
           updatedAt: new Date('2024-07-12T22:18:26.351Z'),
         },
       ],
-      status: 'RECEIVED',
+      status: 'WAITING_PAYMENT',
       updatedAt: expect.any(Date),
     });
     expect(findCustomerByDocumentNumberUseCase.execute).not.toHaveBeenCalled();
@@ -198,7 +198,7 @@ describe('create order use case', () => {
           updatedAt: new Date('2024-07-12T22:18:26.351Z'),
         },
       ],
-      status: 'RECEIVED',
+      status: 'WAITING_PAYMENT',
       updatedAt: expect.any(Date),
     });
   });

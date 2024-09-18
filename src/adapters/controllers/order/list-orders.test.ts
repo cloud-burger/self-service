@@ -42,7 +42,7 @@ describe('list orders controller', () => {
           {
             name: 'status',
             reason:
-              'status must be one of [RECEIVED, PREPARING, DONE, FINISHED]',
+              'status must be one of [WAITING_PAYMENT, RECEIVED, PREPARING, DONE, FINISHED]',
             value: 'OK',
           },
         ],
