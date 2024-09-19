@@ -1,0 +1,47 @@
+import { get, post } from '@cloud-burger/http-wrappers';
+import { Payment } from '~/domain/payment/entities/payment';
+import { PaymentService } from '~/domain/payment/services/payment';
+import { CreatePaymentResponse } from './dtos/create-payment-response';
+import { GetPaymentByIdResponse } from './dtos/get-payment-by-id-response';
+import { MercadoPagoMapper } from './mappers/mercado-pago-mapper';
+
+export class MercadoPagoService implements PaymentService {
+  constructor(
+    private mercadoPagoUrl: string,
+    private mercadoPagoToken: string,
+  ) {}
+
+  async create(payment: Payment): Promise<Payment> {
+    const request = MercadoPagoMapper.toHttp(payment);
+
+    const response = await post<CreatePaymentResponse>({
+      url: this.mercadoPagoUrl,
+      data: request,
+      headers: {
+        Authorization: this.mercadoPagoToken,
+      },
+    });
+
+    payment.setEmv(response.data.qr_data);
+
+    return payment;
+  }
+
+  async findByExternalId(id: string): Promise<Payment> {
+    const { data } = await get<GetPaymentByIdResponse>({
+      url: `${this.mercadoPagoUrl}/${id}`,
+      headers: {
+        Authorization: this.mercadoPagoToken,
+      },
+    });
+
+    const payment = new Payment({
+      id: data.external_reference,
+      amount: data.total_amount,
+    });
+
+    payment.setExternalId(data.id);
+
+    return payment;
+  }
+}
