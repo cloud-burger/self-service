@@ -6,7 +6,7 @@ import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { FindProductsByCategoryController } from '~/controllers/order/product/find-by-category';
 import { FindProductsByCategoryUseCase } from '~/domain/order/use-cases/product/find-by-category';
-import { ProductRepository } from '~/gateways/database/order/product-repository';
+import { ProductRepository } from '~/gateways/database/product/product-repository';
 
 let pool: Pool;
 let productRepository: ProductRepository;
