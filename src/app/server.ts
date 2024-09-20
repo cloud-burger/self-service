@@ -8,12 +8,12 @@ import swaggerUi from 'swagger-ui-express';
 import swagger from '../../docs/open-api.json';
 import { createCustomer } from './handlers/customer/create';
 import { findCustomerByDocumentNumber } from './handlers/customer/find-by-document-number';
-import { createOrder } from './handlers/order/create-order';
-import { createProduct } from './handlers/order/create-product';
-import { deleteProduct } from './handlers/order/delete-product';
-import { findProductsByCategory } from './handlers/order/find-products-by-category';
-import { listOrders } from './handlers/order/list-orders';
-import { updateProduct } from './handlers/order/update-product';
+import { createOrder } from './handlers/order/create';
+import { listOrders } from './handlers/order/list';
+import { createProduct } from './handlers/order/product/create';
+import { deleteProduct } from './handlers/order/product/delete';
+import { findProductsByCategory } from './handlers/order/product/find-by-category';
+import { updateProduct } from './handlers/order/product/update';
 
 const app = express();
 const PORT = +env.PORT;
