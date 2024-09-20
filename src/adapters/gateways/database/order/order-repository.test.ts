@@ -2,7 +2,9 @@ import { mock, MockProxy } from 'jest-mock-extended';
 import { makeOrder } from 'tests/factories/make-order';
 import { makeProduct } from 'tests/factories/make-product';
 import Connection from '~/app/postgres/connection';
+import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
 import { OrderRepository } from './order-repository';
+import { FIND_BY_ID } from './queries/find-by-id';
 import { FIND_MANY } from './queries/find-many';
 
 describe('order repository', () => {
@@ -251,5 +253,91 @@ describe('order repository', () => {
       sql: 'INSERT INTO public.orders_products (order_id,product_id,quantity,notes) VALUES (:order_id,:product_id,:quantity,:notes);',
     });
     expect(connection.rollback).toHaveBeenCalledTimes(1);
+  });
+
+  it('should update order status successfully', async () => {
+    connection.query.mockResolvedValue({
+      records: [],
+    });
+    await orderRepository.updateStatus(
+      'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+      OrderStatus.RECEIVED,
+    );
+
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: {
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        status: 'RECEIVED',
+        updated_at: expect.any(String),
+      },
+      sql: 'UPDATE public.orders SET status=:status, updated_at=:updated_at WHERE id=:id;',
+    });
+  });
+
+  it('should return null when order not found', async () => {
+    connection.query.mockResolvedValue({
+      records: [],
+    });
+
+    const order = await orderRepository.findById('123');
+
+    expect(order).toBeNull();
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: { id: '123' },
+      sql: FIND_BY_ID,
+    });
+  });
+
+  it('should return order successfully', async () => {
+    connection.query.mockResolvedValue({
+      records: [
+        {
+          amount: 10,
+          created_at: '2024-01-01',
+          id: '123',
+          products: [
+            {
+              amount: 10,
+              category: 'BURGER',
+              created_at: '2024-01-01',
+              description: 'Hamburger de salmão',
+              id: '123',
+              name: 'X-Salmão',
+              updated_at: '2024-01-01',
+              image: null,
+            },
+          ],
+          status: 'DONE',
+          updated_at: '2024-01-01',
+        },
+      ],
+    });
+
+    const order = await orderRepository.findById('123');
+
+    expect(order).toEqual({
+      amount: 10,
+      createdAt: new Date('2024-01-01T00:00:00.000Z'),
+      customer: null,
+      id: '123',
+      products: [
+        {
+          amount: 10,
+          category: 'BURGER',
+          createdAt: new Date('2024-01-01T00:00:00.000Z'),
+          description: 'Hamburger de salmão',
+          id: '123',
+          image: null,
+          name: 'X-Salmão',
+          updatedAt: new Date('2024-01-01T00:00:00.000Z'),
+        },
+      ],
+      status: 'DONE',
+      updatedAt: new Date('2024-01-01T00:00:00.000Z'),
+    });
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: { id: '123' },
+      sql: FIND_BY_ID,
+    });
   });
 });

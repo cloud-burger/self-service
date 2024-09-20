@@ -1,5 +1,5 @@
 import { CustomerDbSchema } from '../../customer/dtos/customer-db-schema';
-import { ProductDbSchema } from './product-db-schema';
+import { ProductDbSchema } from '../../product/dtos/product-db-schema';
 
 export interface OrdersDbSchema {
   id: string;

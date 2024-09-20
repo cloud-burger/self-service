@@ -52,4 +52,8 @@ export class Order extends Entity {
   setNumber(number: number) {
     this.number = number;
   }
+
+  setStatus(status: OrderStatus) {
+    this.status = status;
+  }
 }

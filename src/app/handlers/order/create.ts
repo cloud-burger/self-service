@@ -9,7 +9,7 @@ import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases
 import { CreateOrderUseCase } from '~/domain/order/use-cases/create';
 import { CustomerRepository } from '~/gateways/database/customer/customer-repository';
 import { OrderRepository } from '~/gateways/database/order/order-repository';
-import { ProductRepository } from '~/gateways/database/order/product-repository';
+import { ProductRepository } from '~/gateways/database/product/product-repository';
 
 let pool: Pool;
 let orderRepository: OrderRepository;
