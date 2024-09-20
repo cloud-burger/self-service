@@ -49,7 +49,6 @@
   },
   "dependencies": {
     "@cloud-burger/handlers": "^1.0.0",
-    "@cloud-burger/http-wrappers": "^0.0.1",
     "@cloud-burger/logger": "^1.0.0",
     "@cloud-burger/utils": "^1.0.0",
     "axios": "^1.7.2",
