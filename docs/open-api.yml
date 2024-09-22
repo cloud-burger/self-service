@@ -149,6 +149,26 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /order/{id}:
+    put:
+      tags:
+        - Order
+      description: Update order status
+      parameters:
+        - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderStatusRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreateOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
   parameters:
     PageSize:
@@ -484,6 +504,12 @@ components:
         notes: 
           $ref: '#/components/schemas/ProductNotes'
           required: false
+    UpdateOrderStatusRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+          required: true
     CreateProductRequest:
       type: object
       properties:
