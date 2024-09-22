@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "430a5fc5-7234-4c7e-9f58-8efb8a1dd857",
+		"_postman_id": "d10b8030-699c-4a2c-98d5-2d6d1da44688",
 		"name": "Self-Service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "15653232"
+		"_exporter_id": "17709552"
 	},
 	"item": [
 		{
@@ -246,6 +246,43 @@
 							"port": "8080",
 							"path": [
 								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-identification",
+								"value": "53523992060"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"RECEIVED\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/order/7aa7bc1a-5e31-420f-867c-72f5ba460e35",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"order",
+								"7aa7bc1a-5e31-420f-867c-72f5ba460e35"
 							]
 						}
 					},
