@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: self-service-postgres
+  name: self-service-postgres
+  namespace: self-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: self-service-postgres
+  template:
+    metadata:
+      labels:
+        app: self-service-postgres
+    spec:
+      containers:
+      - image: postgres:16
+        name: self-service-postgres
+        env:
+          - name: POSTGRES_USER
+            value: superuser
+          - name: POSTGRES_PASSWORD
+            value: supersecret
+        volumeMounts:
+          - name: data
+            mountPath: /dev/shm
+        ports:
+          - name: http
+            containerPort: 5432
+            protocol: TCP
+    volumes:
+      - name: data
+        emptyDir:
+          medium: "Memory"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: self-service-postgres
+  name: self-service-postgres
+  namespace: self-service
+spec:
+  ports:
+  - name: http
+    port: 5432
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: self-service-postgres
+  type: ClusterIP

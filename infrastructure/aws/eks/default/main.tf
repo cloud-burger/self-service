@@ -86,7 +86,7 @@ locals {
 ################################################################################
 module "eks_blueprints_addons" {
   source  = "aws-ia/eks-blueprints-addons/aws"
-  version = "~> 1.0"
+  version = "~> 1.1"
 
   cluster_name      = module.eks.cluster_name
   cluster_endpoint  = module.eks.cluster_endpoint
@@ -119,13 +119,14 @@ module "eks_blueprints_addons" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 19.13"
+  version = "~> 20.24"
 
   cluster_name                   = local.name
   cluster_version                = local.cluster_version
   cluster_endpoint_public_access = true
 
-
+  enable_cluster_creator_admin_permissions = true
+  
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
