@@ -54,7 +54,7 @@ spec:
     targetPort: http
   selector:
     app: self-service-backend
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
