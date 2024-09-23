@@ -31,10 +31,10 @@ spec:
           - name: http
             containerPort: 5432
             protocol: TCP
-    volumes:
-      - name: data
-        emptyDir:
-          medium: "Memory"
+      volumes:
+        - name: data
+          emptyDir:
+            medium: "Memory"
 ---
 apiVersion: v1
 kind: Service

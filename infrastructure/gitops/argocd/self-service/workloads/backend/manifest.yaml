@@ -25,7 +25,7 @@ spec:
             protocol: TCP
         env:
           - name: PORT
-            value: 8080
+            value: "8080"
           - name: DATABASE_HOST
             value: self-service-postgres.svc.cluster.local
           - name: DATABASE_USERNAME
@@ -33,11 +33,11 @@ spec:
           - name: DATABASE_PASSWORD
             value: supersecret
           - name: DATABASE_PORT
-            value: 5432
+            value: "5432"
           - name: DATABASE_NAME
             value: self_service
           - name: DATABASE_CONNECTION_TIMEOUT
-            value: 120000
+            value: "120000"
 ---
 apiVersion: v1
 kind: Service
