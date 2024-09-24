@@ -1,4 +1,5 @@
 */node_modules
+*/infrastructure
 README.md
 compose.yaml
 Dockerfile

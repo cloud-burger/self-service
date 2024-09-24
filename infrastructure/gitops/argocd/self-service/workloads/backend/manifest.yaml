@@ -17,7 +17,7 @@ spec:
         app: self-service-backend
     spec:
       containers:
-      - image: nginx:latest
+      - image: gabrielmadrid/self-service-backend:latest
         name: self-service-backend
         ports:
           - name: http
