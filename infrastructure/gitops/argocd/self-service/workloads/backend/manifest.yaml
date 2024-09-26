@@ -27,7 +27,7 @@ spec:
           - name: PORT
             value: "8080"
           - name: DATABASE_HOST
-            value: self-service-postgres.svc.cluster.local
+            value: self-service-postgres
           - name: DATABASE_USERNAME
             value: superuser
           - name: DATABASE_PASSWORD

@@ -11,6 +11,7 @@ echo "Deploying ArgoCD!"
 aws eks update-kubeconfig --name infra-kubernetes-prd --region us-east-1
 kubectl create ns argocd
 kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -n argocd
+sleep 120
 kubectl port-forward -n argocd svc/argocd-server 8080:80 &
 argocd login localhost:8080 --insecure --username admin --password $(kubectl get secrets argocd-initial-admin-secret -n argocd --template="{{index .data.password | base64decode}}")
 echo "Deploying self-service workload!"

@@ -16,6 +16,13 @@ spec:
       labels:
         app: self-service-postgres
     spec:
+      initCountainers:
+      - name: clone-migrations
+        image: busybox:latest
+        command: ['sh', '-c', 'sudo apt install git -y && git clone https://github.com/cloud-burger/self-service.git && cp self-service/migrations/init.sql /docker-entrypoint-initdb.d']
+        volumeMounts:
+          - name: migrations
+            mountPath: /docker-entrypoint-initdb.d
       containers:
       - image: postgres:16
         name: self-service-postgres
@@ -27,12 +34,17 @@ spec:
         volumeMounts:
           - name: data
             mountPath: /dev/shm
+          - name: migrations
+            mountPath: /docker-entrypoint-initdb.d
         ports:
           - name: http
             containerPort: 5432
             protocol: TCP
       volumes:
         - name: data
+          emptyDir:
+            medium: "Memory"
+        - name: migrations
           emptyDir:
             medium: "Memory"
 ---
