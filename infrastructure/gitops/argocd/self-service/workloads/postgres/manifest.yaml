@@ -18,8 +18,8 @@ spec:
     spec:
       initContainers:
       - name: clone-migrations
-        image: busybox:latest
-        command: ['sh', '-c', 'sudo apt install git -y && git clone https://github.com/cloud-burger/self-service.git && cp self-service/migrations/init.sql /docker-entrypoint-initdb.d']
+        image: alpine:latest
+        command: ['sh', '-c', 'apk add git && git clone https://github.com/cloud-burger/self-service.git && cp self-service/migrations/init.sql /docker-entrypoint-initdb.d']
         volumeMounts:
           - name: migrations
             mountPath: /docker-entrypoint-initdb.d
