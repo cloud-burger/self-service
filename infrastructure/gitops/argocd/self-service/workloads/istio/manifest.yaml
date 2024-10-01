@@ -3,6 +3,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: istio-base
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
@@ -23,37 +25,14 @@ spec:
     - ApplyOutOfSyncOnly=true
 
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: istio-operator
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/istio/istio.git
-    path: manifests/charts/istio-operator
-    targetRevision: 1.23.2
-  helm:
-    releaseName: istio-operator
-  destination:
-    name: "in-cluster"
-    namespace: istio-system
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: false
-    syncOptions:
-    - CreateNamespace=true
-    - ApplyOutOfSyncOnly=true
-
----
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: istiooperators.install.istio.io
   labels:
     release: istio
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   conversion:
     strategy: None
@@ -94,12 +73,40 @@ spec:
         x-kubernetes-preserve-unknown-fields: true
     served: true
     storage: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/istio/istio.git
+    path: manifests/charts/istio-operator
+    targetRevision: 1.23.2
+  helm:
+    releaseName: istio-operator
+  destination:
+    name: "in-cluster"
+    namespace: istio-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - CreateNamespace=true
+    - ApplyOutOfSyncOnly=true
 
 ---
 apiVersion: install.istio.io/v1alpha1
 metadata:
   name: istio-controlplane
   namespace: istio-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 kind: IstioOperator
 spec:
   profile: demo
@@ -114,6 +121,8 @@ kind: IstioOperator
 metadata:
   name: istio-ingressgateway
   namespace: istio-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   profile: empty
   components:
@@ -135,6 +144,8 @@ kind: Gateway
 metadata:
   name: istio-gateway
   namespace: istio-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   selector:
     istio: istio-ingressgateway
