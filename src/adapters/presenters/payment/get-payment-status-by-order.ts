@@ -5,8 +5,7 @@ export class GetPaymentStatusByOrderPresenter {
   static toHttp(payment: Payment): PaymentStatusResponse {
     return {
       id: payment.id,
-      status: payment.status,
-      order_id: payment.order.id
+      status: payment.status
     };
   }
 }

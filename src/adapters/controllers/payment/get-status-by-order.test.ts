@@ -32,7 +32,6 @@ describe('get payment status by order id controller', () => {
       body: {
         id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
         status: PaymentStatus.WAITING_PAYMENT,
-        order_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
       },
       statusCode: 200,
     });

@@ -3,6 +3,7 @@ import Connection from '~/app/postgres/connection';
 import { PaymentRepository } from './payment-repository';
 import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
 import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
+import { makePayment } from 'tests/factories/make-payment';
 
 describe('payment repository', () => {
   let connection: MockProxy<Connection>;
@@ -68,5 +69,17 @@ describe('payment repository', () => {
       parameters: { order_id: '456' },
       sql: 'SELECT * FROM public.payments WHERE order_id = :order_id',
     });
+  });
+
+  it('should create payment successfully', async () => {
+    const payment =
+      await paymentRepository.create(makePayment());
+
+  });
+
+  it('should update payment successfully', async () => {
+    const payment =
+      await paymentRepository.update(makePayment());
+
   });
 });

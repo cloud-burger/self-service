@@ -32,5 +32,27 @@ describe('database payment mapper', () => {
       createdAt: new Date('2023-01-01T00:00:00.000Z'),
       updatedAt: new Date('2023-01-01T00:00:00.000Z'),
     });
+
+    expect(
+      DatabasePaymentMapper.toDomain({
+        id: '123',
+        amount: 31,
+        order_id: '',
+        status: PaymentStatus.PAID,
+        emv: '00020101021123450016',
+        external_id: 1234557,
+        created_at: '2023-01-01',
+        updated_at: '2023-01-01',
+      }),
+    ).toEqual({
+      id: '123',
+      amount: 31,
+      status: PaymentStatus.PAID,
+      order: null,
+      emv: '00020101021123450016',
+      externalId: 1234557,
+      createdAt: new Date('2023-01-01T00:00:00.000Z'),
+      updatedAt: new Date('2023-01-01T00:00:00.000Z'),
+    });
   });
 });

@@ -3,5 +3,4 @@ import { PaymentStatus } from "~/domain/payment/entities/value-objects/payment-s
 export interface PaymentStatusResponse {
   id: string;
   status: PaymentStatus;
-  order_id: string;
 }
