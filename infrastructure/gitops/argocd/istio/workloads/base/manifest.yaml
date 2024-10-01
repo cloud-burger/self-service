@@ -65,10 +65,10 @@ spec:
   source:
     chart: base
     repoURL: https://istio-release.storage.googleapis.com/charts  # note: the oci:// syntax is not included.
+    targetRevision: 1.23.2
   destination:
     name: "in-cluster"
     namespace: istio-system
-    targetRevision: 1.23.2
   helm:
     releaseName: istio-base
   syncPolicy:
