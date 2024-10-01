@@ -63,6 +63,7 @@ spec:
   destination:
     name: "in-cluster"
     namespace: istio-system
+    targetRevision: 1.23.2
   helm:
     releaseName: istio-base
   syncPolicy:
