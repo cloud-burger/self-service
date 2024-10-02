@@ -15,6 +15,7 @@ import { deleteProduct } from './handlers/order/product/delete';
 import { findProductsByCategory } from './handlers/order/product/find-by-category';
 import { updateProduct } from './handlers/order/product/update';
 import { updateOrderStatus } from './handlers/order/update-status';
+import { getPaymentStatusByOrderId } from './handlers/payment/get-status-by-order';
 import { createPayment } from './handlers/payment/create';
 import { paymentReceiver } from '~/gateways/http/mercado-pago/webhook/mercado-pago-webhook';
 
@@ -38,6 +39,8 @@ router.get('/order', listOrders);
 router.post('/order', createOrder);
 router.put('/order/:id', updateOrderStatus);
 
+// Payments
+router.get('/payment/:orderId', getPaymentStatusByOrderId);
 router.post('/payment/:orderId', createPayment);
 router.post('/webhook', paymentReceiver);
 
