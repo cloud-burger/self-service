@@ -32,12 +32,12 @@ router.post('/product', createProduct);
 router.put('/product/:id', updateProduct);
 router.delete('/product/:id', deleteProduct);
 
-// Orders
+// Order
 router.get('/order', listOrders);
 router.post('/order', createOrder);
 router.put('/order/:id', updateOrderStatus);
 
-// Payments
+// Payment
 router.get('/payment/:orderId', getPaymentStatusByOrderId);
 
 // Swagger
