@@ -11,8 +11,6 @@ spec:
     repoURL: https://github.com/istio/istio.git
     path: manifests/charts/istio-operator
     targetRevision: 1.23.2
-  helm:
-    releaseName: istio-operator
   destination:
     name: "in-cluster"
     namespace: istio-system
