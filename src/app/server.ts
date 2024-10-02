@@ -15,6 +15,8 @@ import { deleteProduct } from './handlers/order/product/delete';
 import { findProductsByCategory } from './handlers/order/product/find-by-category';
 import { updateProduct } from './handlers/order/product/update';
 import { updateOrderStatus } from './handlers/order/update-status';
+import { createPayment } from './handlers/payment/create';
+import { paymentReceiver } from '~/gateways/http/mercado-pago/webhook/mercado-pago-webhook';
 
 const app = express();
 const PORT = +env.PORT;
@@ -35,6 +37,9 @@ router.delete('/product/:id', deleteProduct);
 router.get('/order', listOrders);
 router.post('/order', createOrder);
 router.put('/order/:id', updateOrderStatus);
+
+router.post('/payment/:orderId', createPayment);
+router.post('/webhook', paymentReceiver);
 
 // Swagger
 app.use(bodyParser.json());

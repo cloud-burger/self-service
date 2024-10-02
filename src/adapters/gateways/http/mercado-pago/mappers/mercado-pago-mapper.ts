@@ -1,6 +1,8 @@
 import { env } from '~/app/env';
 import { Payment } from '~/domain/payment/entities/payment';
 import { CreatePaymentRequest } from '../dtos/create-payment-request';
+import { GetPaymentByIdResponse } from '~/gateways/http/mercado-pago/dtos/get-payment-by-id-response';
+import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
 
 export class MercadoPagoMapper {
   static toHttp(payment: Payment): CreatePaymentRequest {
@@ -17,8 +19,22 @@ export class MercadoPagoMapper {
         unit_price: product.amount,
         unit_measure: 'unit',
       })),
-      notification_url: env.NOTIFICATION_WEBHOOK,
-      total_amount: order.amount,
+      notification_url: 'https://webhook.site/b53ad707-1441-4ca4-8524-529b78066588',
+      total_amount: +order.amount,
     };
+  }
+
+  static toDomain(paymentData: GetPaymentByIdResponse): Payment {
+    const statusMapper = {
+      payment_required: PaymentStatus.WAITING_PAYMENT,
+      paid: PaymentStatus.PAID
+    }
+
+    return new Payment({
+      id: paymentData.external_reference,
+      amount: paymentData.total_amount,
+      externalId: paymentData.id,
+      status: statusMapper[paymentData.order_status]
+    });
   }
 }

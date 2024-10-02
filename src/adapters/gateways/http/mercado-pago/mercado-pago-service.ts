@@ -35,13 +35,6 @@ export class MercadoPagoService implements PaymentService {
       },
     });
 
-    const payment = new Payment({
-      id: data.external_reference,
-      amount: data.total_amount,
-    });
-
-    payment.setExternalId(data.id);
-
-    return payment;
+    return MercadoPagoMapper.toDomain(data);
   }
 }
