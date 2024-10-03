@@ -140,7 +140,7 @@ locals {
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.24"
-
+  depends_on = [ module.vpc ]
   cluster_name                             = local.name
   cluster_version                          = local.cluster_version
   cluster_endpoint_public_access           = true
@@ -196,6 +196,7 @@ module "eks" {
 }
 
 resource "kubernetes_namespace_v1" "istio_system" {
+  depends_on = [ module.eks ]
   metadata {
     name = "istio-system"
   }
@@ -208,7 +209,10 @@ module "eks_blueprints_addons" {
   source  = "aws-ia/eks-blueprints-addons/aws"
   version = "~> 1.1"
 
-  depends_on = [ kubernetes_namespace_v1.istio_system ]
+  depends_on = [ 
+    kubernetes_namespace_v1.istio_system,
+    module.eks  
+  ]
 
   cluster_name      = module.eks.cluster_name
   cluster_endpoint  = module.eks.cluster_endpoint
@@ -231,7 +235,7 @@ module "eks_blueprints_addons" {
   enable_karpenter                    = local.aws_addons.enable_karpenter
   enable_velero                       = local.aws_addons.enable_velero
   enable_aws_gateway_api_controller   = local.aws_addons.enable_aws_gateway_api_controller
-  helm_releases                       = local.cluster_version
+  helm_releases                       = local.helm_releases
 
   tags = local.tags
 }
