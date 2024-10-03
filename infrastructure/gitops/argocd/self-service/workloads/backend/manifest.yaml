@@ -55,6 +55,7 @@ spec:
   selector:
     app: self-service-backend
   type: ClusterIP
+
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -75,3 +76,24 @@ spec:
       target:
         type: Utilization
         averageUtilization: 60
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: self-service-backend
+  namespace: self-service
+spec:
+  gateways:
+  - self-service-gateway
+  hosts:
+  - api.cloudburger.com.br
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+      host: self-service-backend
+      port:
+        number: 80
