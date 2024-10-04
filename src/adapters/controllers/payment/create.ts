@@ -16,11 +16,9 @@ export class CreatePaymentController {
     request: Request,
   ): Promise<Response<PaymentResponse>> => {
     const { orderId } = request.body;
-    const { body } = request;
 
     logger.info({
-      message: 'Create payment request',
-      data: { request, orderId, body },
+      message: 'Create payment request Order Id: ' + orderId
     });
 
     const payment = await this.createPaymentUseCase.execute({ orderId });

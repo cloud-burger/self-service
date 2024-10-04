@@ -39,18 +39,7 @@ export class PaymentRepository implements IPaymentRepository {
   async create(p: Payment): Promise<void> {
     const payment = DatabasePaymentMapper.toDatabase(p);
 
-    const columns = Object.keys(payment)
-      .filter(
-        (key) =>
-          payment[key] !== undefined && payment[key] !== null,
-      )
-      .map((key) => {
-        return key;
-      });
-
-    const parameters = columns.map((key) => {
-      return `:${key}`;
-    });
+    const { columns, parameters } = getColumnsParams(payment);
 
     try {
       await this.connection.begin();
@@ -75,4 +64,17 @@ export class PaymentRepository implements IPaymentRepository {
   async update(payment: Payment): Promise<void> {
     //TODO: Implementar update
   }
+}
+
+function getColumnsParams(payment: PaymentsDbSchema) {
+  const columns = Object.keys(payment)
+    .filter((key) => payment[key] !== undefined && payment[key] !== null)
+    .map((key) => {
+      return key;
+    });
+
+  const parameters = columns.map((key) => {
+    return `:${key}`;
+  });
+  return { columns, parameters };
 }

@@ -20,15 +20,6 @@ let paymentServices: PaymentService;
 let createPaymentController: CreatePaymentController;
 let apiHandler: ApiHandler;
 
-function getURLPaymentCreate() {
-  const external_pos_id = 'SELFSERVICE2024';
-
-  const uri =
-    env.MERCADO_PAGO_URL + `/instore/orders/qr/seller/collectors/${env.MERCADO_PAGO_USER_ID}/pos/${external_pos_id}/qrs`;
-
-  return uri;
-}
-
 const setDependencies = (connection: Connection) => {
   orderRepository = new OrderRepository(connection);
   paymentRepository = new PaymentRepository(connection);
@@ -60,4 +51,10 @@ export const createPayment = async (
   } finally {
     connection.release();
   }
+}
+
+function getURLPaymentCreate() {
+  const external_pos_id = 'SELFSERVICE2024';
+
+  return env.MERCADO_PAGO_URL + `/instore/orders/qr/seller/collectors/${env.MERCADO_PAGO_USER_ID}/pos/${external_pos_id}/qrs`;
 }
