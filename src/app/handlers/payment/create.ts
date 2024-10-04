@@ -6,8 +6,8 @@ import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { CreatePaymentController } from '~/controllers/payment/create';
 import { CreatePaymentUseCase } from '~/domain/payment/use-cases/create';
-import { PaymentRepository } from '~/gateways/database/payments/payment-repository';
 import { OrderRepository } from '~/gateways/database/order/order-repository';
+import { PaymentRepository } from '~/gateways/database/payment/payment-repository';
 import { PaymentService } from '~/domain/payment/services/payment';
 import { MercadoPagoService } from '~/gateways/http/mercado-pago/mercado-pago-service';
 import { env } from '~/app/env';
@@ -20,10 +20,19 @@ let paymentServices: PaymentService;
 let createPaymentController: CreatePaymentController;
 let apiHandler: ApiHandler;
 
+function getURLPaymentCreate() {
+  const external_pos_id = 'SELFSERVICE2024';
+
+  const uri =
+    env.MERCADO_PAGO_URL + `/instore/orders/qr/seller/collectors/${env.MERCADO_PAGO_USER_ID}/pos/${external_pos_id}/qrs`;
+
+  return uri;
+}
+
 const setDependencies = (connection: Connection) => {
   orderRepository = new OrderRepository(connection);
   paymentRepository = new PaymentRepository(connection);
-  paymentServices = new MercadoPagoService(env.mercadoPagoUrl, env.token)
+  paymentServices = new MercadoPagoService(getURLPaymentCreate(), 'Bearer ' + env.MERCADO_PAGO_API_TOKEN)
   createPaymentUseCase = new CreatePaymentUseCase(paymentServices, paymentRepository, orderRepository);
   createPaymentController = new CreatePaymentController(
     createPaymentUseCase

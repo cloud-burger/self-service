@@ -20,15 +20,8 @@ export class CreatePaymentUseCase {
   async execute({ orderId }: Input): Promise<Payment> {
     const payment = await this.paymentRepository.findByOrderId(orderId);
 
-    if (payment && payment.status == PaymentStatus.PAID) {
-      const messageError = 'Payment already confirmed';
-
-      logger.warn({
-        message: messageError,
-        data: payment,
-      });
-
-      throw new ConflictError(messageError);
+    if (payment) {
+      validatePayment(payment);
     }
 
     const order = await this.orderRepository.findById(orderId);
@@ -44,12 +37,26 @@ export class CreatePaymentUseCase {
     await this.paymentRepository.create(newPayment);
 
     logger.debug({
-      message: 'Creating payment',
+      message: 'Payment created',
       data: newPayment,
     });
 
-
     return newPayment;
   }
+}
 
+function validatePayment(payment: Payment) {
+  let messageError = 'Generic Error';
+
+  if (payment.status == PaymentStatus.PAID) {
+    messageError = 'Payment already confirmed';
+  }
+
+  if (payment.status == PaymentStatus.WAITING_PAYMENT) {
+    messageError = 'Already exist payment in progress or waiting payment';
+  }
+
+  logger.warn({message: messageError, data: payment});
+
+  throw new ConflictError(messageError);
 }

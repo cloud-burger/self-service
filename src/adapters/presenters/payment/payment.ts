@@ -6,11 +6,9 @@ export class PaymentPresenter {
     return {
       amount: payment.amount,
       status: payment.status,
-      order: payment.order,
+      orderId: payment.order.id,
       emv: payment.emv,
-      externalId: payment.externalId,
-      createdAt: payment.createdAt,
-      updatedAt: payment.updatedAt
+      createdAt: payment.createdAt
     };
   }
 }

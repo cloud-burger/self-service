@@ -15,12 +15,13 @@ export class CreatePaymentController {
   handler: Controller = async (
     request: Request,
   ): Promise<Response<PaymentResponse>> => {
+    const { orderId } = request.body;
+    const { body } = request;
+
     logger.info({
       message: 'Create payment request',
-      data: request,
+      data: { request, orderId, body },
     });
-
-    const { orderId } = request.pathParameters;
 
     const payment = await this.createPaymentUseCase.execute({ orderId });
 

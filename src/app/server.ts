@@ -41,7 +41,7 @@ router.put('/order/:id', updateOrderStatus);
 
 // Payments
 router.get('/payment/:orderId', getPaymentStatusByOrderId);
-router.post('/payment/:orderId', createPayment);
+router.post('/payment', createPayment);
 router.post('/webhook', paymentReceiver);
 
 // Swagger

@@ -20,4 +20,17 @@ export class DatabasePaymentMapper {
       updatedAt: new Date(paymentDbSchema.updated_at),
     });
   }
+
+  static toDatabase(payment: Payment): PaymentsDbSchema {
+    return {
+      id: payment.id,
+      amount: payment.amount,
+      order_id: payment.order.id,
+      emv: payment.emv,
+      external_id: payment.externalId,
+      status: payment.status.toString(),
+      created_at: payment.createdAt.toISOString(),
+      updated_at: payment.updatedAt.toISOString()
+    };
+  }
 }
