@@ -18,7 +18,9 @@
   "paths": {
     "/customer": {
       "post": {
-        "tags": ["Customer"],
+        "tags": [
+          "Customer"
+        ],
         "description": "Create customer",
         "requestBody": {
           "required": true,
@@ -48,7 +50,9 @@
     },
     "/customer/{documentNumber}": {
       "get": {
-        "tags": ["Customer"],
+        "tags": [
+          "Customer"
+        ],
         "description": "Find customer by document number",
         "parameters": [
           {
@@ -70,7 +74,9 @@
     },
     "/product": {
       "post": {
-        "tags": ["Product"],
+        "tags": [
+          "Product"
+        ],
         "description": "Create product",
         "requestBody": {
           "required": true,
@@ -100,7 +106,9 @@
     },
     "/product/{id}": {
       "put": {
-        "tags": ["Product"],
+        "tags": [
+          "Product"
+        ],
         "description": "Update product",
         "parameters": [
           {
@@ -133,7 +141,9 @@
         }
       },
       "delete": {
-        "tags": ["Product"],
+        "tags": [
+          "Product"
+        ],
         "description": "Delete product",
         "parameters": [
           {
@@ -158,7 +168,9 @@
     },
     "/product/{category}": {
       "get": {
-        "tags": ["Product"],
+        "tags": [
+          "Product"
+        ],
         "description": "Find products by category",
         "parameters": [
           {
@@ -177,7 +189,9 @@
     },
     "/order": {
       "post": {
-        "tags": ["Order"],
+        "tags": [
+          "Order"
+        ],
         "description": "Create order",
         "parameters": [
           {
@@ -207,7 +221,9 @@
         }
       },
       "get": {
-        "tags": ["Order"],
+        "tags": [
+          "Order"
+        ],
         "description": "List orders",
         "parameters": [
           {
@@ -226,6 +242,64 @@
           },
           "400": {
             "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/order/{id}": {
+      "put": {
+        "tags": [
+          "Order"
+        ],
+        "description": "Update order status",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrderStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CreateOrder"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/payment/{id}": {
+      "get": {
+        "tags": [
+          "Payment"
+        ],
+        "description": "Find payment by order id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/FindPaymentByOrderId"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "500": {
             "$ref": "#/components/responses/InternalServerError"
@@ -364,6 +438,16 @@
           }
         }
       },
+      "FindPaymentByOrderId": {
+        "description": "Payment found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaymentResponse"
+            }
+          }
+        }
+      },
       "NoContent": {
         "description": "No Content"
       },
@@ -446,15 +530,35 @@
       },
       "ProductCategory": {
         "type": "string",
-        "enum": ["BURGER", "SIDE", "DRINK", "DESSERT"],
+        "enum": [
+          "BURGER",
+          "SIDE",
+          "DRINK",
+          "DESSERT"
+        ],
         "description": "Product category",
         "example": "BURGER"
       },
       "OrderStatus": {
         "type": "string",
-        "enum": ["RECEIVED", "PREPARING", "DONE", "FINISHED"],
+        "enum": [
+          "RECEIVED",
+          "PREPARING",
+          "DONE",
+          "FINISHED"
+        ],
         "description": "Order status",
         "example": "RECEIVED"
+      },
+      "PaymentStatus": {
+        "type": "string",
+        "enum": [
+          "WAITING_PAYMENT",
+          "PAID",
+          "CANCELED"
+        ],
+        "description": "Payment status",
+        "example": "PAID"
       },
       "ProductDescription": {
         "type": "string",
@@ -610,6 +714,20 @@
           }
         }
       },
+      "PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatus"
+          },
+          "order_id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        }
+      },
       "NotFoundErrorResponse": {
         "type": "object",
         "properties": {
@@ -707,6 +825,15 @@
           "notes": {
             "$ref": "#/components/schemas/ProductNotes",
             "required": false
+          }
+        }
+      },
+      "UpdateOrderStatusRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/OrderStatus",
+            "required": true
           }
         }
       },

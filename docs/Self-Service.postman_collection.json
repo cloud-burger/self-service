@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d10b8030-699c-4a2c-98d5-2d6d1da44688",
+		"_postman_id": "a3f8ed2e-2114-4ede-8edd-c51786dc0d62",
 		"name": "Self-Service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17709552"
@@ -252,7 +252,7 @@
 					"response": []
 				},
 				{
-					"name": "update status",
+					"name": "update-status-by-id",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -321,6 +321,36 @@
 									"key": "status",
 									"value": "RECEIVED"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payment",
+			"item": [
+				{
+					"name": "get-status-by-order-id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/payment/c53c89b6-2459-421d-9a91-9e9e89aee932",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payment",
+								"c53c89b6-2459-421d-9a91-9e9e89aee932"
 							]
 						}
 					},
