@@ -14,7 +14,7 @@ describe('payment repository', () => {
     paymentRepository = new PaymentRepository(connection);
   });
 
-  it('should return null while payment not found', async () => {
+  it('should return null when payment not found while find payment by order id', async () => {
     connection.query.mockResolvedValue({
       records: [],
     });
@@ -69,6 +69,61 @@ describe('payment repository', () => {
     });
   });
 
+  it('should return null when payment not found while find payment by id', async () => {
+    connection.query.mockResolvedValue({
+      records: [],
+    });
+
+    const payment = await paymentRepository.findById('123');
+
+    expect(payment).toBeNull();
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: { id: '123' },
+      sql: "SELECT * FROM public.payments WHERE id = :id and status <> 'CANCELED'",
+    });
+  });
+
+  it('should return payment while find payment by id', async () => {
+    connection.query.mockResolvedValue({
+      records: [
+        {
+          id: '123',
+          amount: 23.1,
+          order_id: '456',
+          emv: '1234COM',
+          external_id: 1234567,
+          status: PaymentStatus.PAID,
+          created_at: '2023-01-01',
+          updated_at: '2023-01-01',
+        },
+      ],
+    });
+
+    const payment = await paymentRepository.findById('123');
+
+    expect(payment).toEqual({
+      id: '123',
+      amount: 23.1,
+      status: PaymentStatus.PAID,
+      order: {
+        id: '456',
+        status: OrderStatus.WAITING_PAYMENT,
+        products: [],
+        customer: null,
+        createdAt: expect.any(Date),
+        updatedAt: expect.any(Date),
+      },
+      emv: '1234COM',
+      externalId: 1234567,
+      createdAt: new Date('2023-01-01T00:00:00.000Z'),
+      updatedAt: new Date('2023-01-01T00:00:00.000Z'),
+    });
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: { id: '123' },
+      sql: "SELECT * FROM public.payments WHERE id = :id and status <> 'CANCELED'",
+    });
+  });
+
   it('should create payment successfully', async () => {
     connection.query.mockResolvedValue({
       records: [],
@@ -92,6 +147,20 @@ describe('payment repository', () => {
   });
 
   it('should update payment successfully', async () => {
-    await paymentRepository.update(makePayment());
+    await paymentRepository.update(
+      makePayment({
+        externalId: 123456789,
+      }),
+    );
+
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: {
+        external_id: 123456789,
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        status: 'WAITING_PAYMENT',
+        updated_at: expect.any(String),
+      },
+      sql: 'UPDATE public.payments SET status=:status, external_id=:external_id, updated_at=:updated_at WHERE id=:id;',
+    });
   });
 });

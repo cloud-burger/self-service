@@ -10,7 +10,8 @@ interface EnvSchemaProps {
   DATABASE_HOST: string;
   DATABASE_CONNECTION_TIMEOUT: string;
   NOTIFICATION_WEBHOOK: string;
-  MERCADO_PAGO_API_URL: string;
+  MERCADO_PAGO_CREATE_QR_API_URL: string;
+  MERCADO_PAGO_GET_QR_INFO_API_URL: string;
   MERCADO_PAGO_API_TOKEN: string;
 }
 
@@ -23,7 +24,8 @@ export const envSchema = Joi.object({
   DATABASE_HOST: Joi.string().required(),
   DATABASE_CONNECTION_TIMEOUT: Joi.string().required(),
   NOTIFICATION_WEBHOOK: Joi.string().required(),
-  MERCADO_PAGO_API_URL: Joi.string().required(),
+  MERCADO_PAGO_CREATE_QR_API_URL: Joi.string().required(),
+  MERCADO_PAGO_GET_QR_INFO_API_URL: Joi.string().required(),
   MERCADO_PAGO_API_TOKEN: Joi.string().required(),
 });
 
