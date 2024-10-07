@@ -85,15 +85,14 @@ metadata:
   namespace: self-service
 spec:
   gateways:
-  - self-service-gateway
+    - self-service-gateway
   hosts:
   - api.cloudburger.com.br
   http:
-  - match:
+  - name: self-service-backend-default
+    match:
     - uri:
         prefix: /
     route:
     - destination:
-      host: self-service-backend
-      port:
-        number: 80
+        host: self-service-backend.svc.cluster.local
