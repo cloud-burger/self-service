@@ -7,7 +7,6 @@ metadata:
   name: self-service-backend
   namespace: self-service
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: self-service-backend
