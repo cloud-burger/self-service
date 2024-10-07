@@ -1,7 +1,7 @@
 import { Order } from '~/domain/order/entities/order';
-import { PaymentsDbSchema } from '../dtos/payment-db-schema';
 import { Payment } from '~/domain/payment/entities/payment';
 import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
+import { PaymentsDbSchema } from '../dtos/payment-db-schema';
 
 export class DatabasePaymentMapper {
   static toDomain(paymentDbSchema: PaymentsDbSchema): Payment {
@@ -28,9 +28,9 @@ export class DatabasePaymentMapper {
       order_id: payment.order.id,
       emv: payment.emv,
       external_id: payment.externalId,
-      status: payment.status.toString(),
+      status: payment.status,
       created_at: payment.createdAt.toISOString(),
-      updated_at: payment.updatedAt.toISOString()
+      updated_at: payment.updatedAt.toISOString(),
     };
   }
 }

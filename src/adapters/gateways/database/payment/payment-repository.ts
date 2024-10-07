@@ -1,12 +1,11 @@
 import logger from '@cloud-burger/logger';
 import Connection from '~/app/postgres/connection';
-import { PaymentRepository as IPaymentRepository } from '~/domain/payment/repositories/payment';
 import { Payment } from '~/domain/payment/entities/payment';
-import { FIND_BY_ORDER_ID } from './queries/find-by-order-id';
+import { PaymentRepository as IPaymentRepository } from '~/domain/payment/repositories/payment';
+import { INSERT_PAYMENT } from '~/gateways/database/payment/queries/insert';
 import { PaymentsDbSchema } from './dtos/payment-db-schema';
 import { DatabasePaymentMapper } from './mappers/database-payment';
-import { InternalServerError } from '@cloud-burger/handlers';
-import { INSERT_PAYMENT } from '~/gateways/database/payment/queries/insert';
+import { FIND_BY_ORDER_ID } from './queries/find-by-order-id';
 
 export class PaymentRepository implements IPaymentRepository {
   constructor(private connection: Connection) {}
@@ -36,45 +35,28 @@ export class PaymentRepository implements IPaymentRepository {
     return DatabasePaymentMapper.toDomain(payment as PaymentsDbSchema);
   }
 
-  async create(p: Payment): Promise<void> {
-    const payment = DatabasePaymentMapper.toDatabase(p);
+  async create(payment: Payment): Promise<void> {
+    const recordToSave = DatabasePaymentMapper.toDatabase(payment);
 
-    const { columns, parameters } = getColumnsParams(payment);
-
-    try {
-      await this.connection.begin();
-
-      await this.connection.query({
-        sql: INSERT_PAYMENT(columns.join(), parameters.join()),
-        parameters: payment,
+    const columns = Object.keys(recordToSave)
+      .filter(
+        (key) => recordToSave[key] !== undefined && recordToSave[key] !== null,
+      )
+      .map((key) => {
+        return key;
       });
 
-      await this.connection.commit();
-    } catch (error) {
-      await this.connection.rollback();
+    const parameters = columns.map((key) => {
+      return `:${key}`;
+    });
 
-      logger.error({
-        message: 'Error while processing transaction',
-        data: error,
-      });
-      throw new InternalServerError('Error while processing transaction');
-    }
-
+    await this.connection.query({
+      sql: INSERT_PAYMENT(columns.join(), parameters.join()),
+      parameters: payment,
+    });
   }
+
   async update(payment: Payment): Promise<void> {
     //TODO: Implementar update
   }
-}
-
-function getColumnsParams(payment: PaymentsDbSchema) {
-  const columns = Object.keys(payment)
-    .filter((key) => payment[key] !== undefined && payment[key] !== null)
-    .map((key) => {
-      return key;
-    });
-
-  const parameters = columns.map((key) => {
-    return `:${key}`;
-  });
-  return { columns, parameters };
 }

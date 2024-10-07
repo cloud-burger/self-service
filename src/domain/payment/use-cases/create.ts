@@ -1,9 +1,9 @@
-import { Payment } from '~/domain/payment/entities/payment';
-import { OrderRepository } from '~/domain/order/repositories/order';
-import { PaymentRepository } from '~/domain/payment/repositories/payment';
-import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
+import { ConflictError, NotFoundError } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { ConflictError } from '@cloud-burger/handlers';
+import { OrderRepository } from '~/domain/order/repositories/order';
+import { Payment } from '~/domain/payment/entities/payment';
+import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
+import { PaymentRepository } from '~/domain/payment/repositories/payment';
 import { PaymentService } from '~/domain/payment/services/payment';
 
 interface Input {
@@ -12,51 +12,59 @@ interface Input {
 
 export class CreatePaymentUseCase {
   constructor(
-    private paymentServices: PaymentService,
+    private paymentService: PaymentService,
     private paymentRepository: PaymentRepository,
-    private orderRepository: OrderRepository
+    private orderRepository: OrderRepository,
   ) {}
 
   async execute({ orderId }: Input): Promise<Payment> {
-    const payment = await this.paymentRepository.findByOrderId(orderId);
+    const existentPayment = await this.paymentRepository.findByOrderId(orderId);
 
-    if (payment) {
-      validatePayment(payment);
+    if (existentPayment) {
+      const isOrderAlreadyPaid = existentPayment.status === PaymentStatus.PAID;
+
+      if (isOrderAlreadyPaid) {
+        logger.warn({
+          message: 'Payment already confirmed',
+          data: existentPayment,
+        });
+
+        throw new ConflictError('Payment already confirmed');
+      }
+
+      logger.debug({
+        message: 'Order already have a existent payment',
+        data: existentPayment,
+      });
+
+      return existentPayment;
     }
 
     const order = await this.orderRepository.findById(orderId);
 
-    let newPayment = await this.paymentServices.create(new Payment({
-      amount: order.amount,
-      status: PaymentStatus.WAITING_PAYMENT,
-      order: order,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
+    if (!order) {
+      logger.warn({
+        message: 'Order not found',
+        data: { orderId },
+      });
 
-    await this.paymentRepository.create(newPayment);
+      throw new NotFoundError('Order not found');
+    }
+
+    const payment = await this.paymentService.create(
+      new Payment({
+        amount: order.amount,
+        order: order,
+      }),
+    );
+
+    await this.paymentRepository.create(payment);
 
     logger.debug({
       message: 'Payment created',
-      data: newPayment,
+      data: payment,
     });
 
-    return newPayment;
+    return payment;
   }
-}
-
-function validatePayment(payment: Payment) {
-  let messageError = 'Generic Error';
-
-  if (payment.status == PaymentStatus.PAID) {
-    messageError = 'Payment already confirmed';
-  }
-
-  if (payment.status == PaymentStatus.WAITING_PAYMENT) {
-    messageError = 'Already exist payment in progress or waiting payment';
-  }
-
-  logger.warn({message: messageError, data: payment});
-
-  throw new ConflictError(messageError);
 }

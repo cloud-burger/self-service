@@ -3,7 +3,6 @@ import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-s
 export interface PaymentResponse {
   amount: number;
   status: PaymentStatus;
-  orderId?: string;
-  emv?: string;
-  createdAt?: Date;
+  orderId: string;
+  emv: string;
 }

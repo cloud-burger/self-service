@@ -24,6 +24,14 @@ export class UpdateOrderStatusUseCase {
       throw new NotFoundError('Order not found');
     }
 
+    if (OrderStatus.WAITING_PAYMENT === order.status) {
+      logger.warn({
+        message: 'Order payment required',
+      });
+
+      throw new ConflictError('Order payment required');
+    }
+
     if (OrderStatus.FINISHED === order.status) {
       logger.warn({
         message: 'Order has already been finished',

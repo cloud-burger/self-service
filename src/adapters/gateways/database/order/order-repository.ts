@@ -92,7 +92,7 @@ export class OrderRepository implements IOrderRepository {
     const { records } = await this.connection.query({
       sql: FIND_BY_ID,
       parameters: {
-        id: id,
+        id,
       },
     });
 

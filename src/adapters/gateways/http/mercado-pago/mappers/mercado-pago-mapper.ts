@@ -1,8 +1,8 @@
 import { env } from '~/app/env';
 import { Payment } from '~/domain/payment/entities/payment';
-import { CreatePaymentRequest } from '../dtos/create-payment-request';
-import { GetPaymentByIdResponse } from '~/gateways/http/mercado-pago/dtos/get-payment-by-id-response';
 import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
+import { GetPaymentByIdResponse } from '~/gateways/http/mercado-pago/dtos/get-payment-by-id-response';
+import { CreatePaymentRequest } from '../dtos/create-payment-request';
 
 export class MercadoPagoMapper {
   static toHttp(payment: Payment): CreatePaymentRequest {
@@ -11,7 +11,7 @@ export class MercadoPagoMapper {
     return {
       description: `SELFSERVICE-${order.number}`,
       title: `SELFSERVICE-${order.number}`,
-      external_reference: order.id,
+      external_reference: payment.id,
       items: order.products.map((product) => ({
         quantity: product.quantity,
         title: product.name,
@@ -27,14 +27,14 @@ export class MercadoPagoMapper {
   static toDomain(paymentData: GetPaymentByIdResponse): Payment {
     const statusMapper = {
       payment_required: PaymentStatus.WAITING_PAYMENT,
-      paid: PaymentStatus.PAID
-    }
+      paid: PaymentStatus.PAID,
+    };
 
     return new Payment({
       id: paymentData.external_reference,
       amount: paymentData.total_amount,
       externalId: paymentData.id,
-      status: statusMapper[paymentData.order_status]
+      status: statusMapper[paymentData.order_status],
     });
   }
 }

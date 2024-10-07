@@ -14,15 +14,15 @@ export class MercadoPagoService implements PaymentService {
   async create(payment: Payment): Promise<Payment> {
     const request = MercadoPagoMapper.toHttp(payment);
 
-    const response = await post<CreatePaymentResponse>({
+    const { data } = await post<CreatePaymentResponse>({
       url: this.mercadoPagoUrl,
       data: request,
       headers: {
-        Authorization: this.mercadoPagoToken,
+        Authorization: `Bearer ${this.mercadoPagoToken}`,
       },
     });
 
-    payment.setEmv(response.data.qr_data);
+    payment.setEmv(data.qr_data);
 
     return payment;
   }
@@ -31,7 +31,7 @@ export class MercadoPagoService implements PaymentService {
     const { data } = await get<GetPaymentByIdResponse>({
       url: `${this.mercadoPagoUrl}/${id}`,
       headers: {
-        Authorization: this.mercadoPagoToken,
+        Authorization: `Bearer ${this.mercadoPagoToken}`,
       },
     });
 

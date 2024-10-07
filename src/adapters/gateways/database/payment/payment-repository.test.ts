@@ -1,9 +1,9 @@
 import { mock, MockProxy } from 'jest-mock-extended';
-import Connection from '~/app/postgres/connection';
-import { PaymentRepository } from './payment-repository';
-import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
-import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
 import { makePayment } from 'tests/factories/make-payment';
+import Connection from '~/app/postgres/connection';
+import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
+import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
+import { PaymentRepository } from './payment-repository';
 
 describe('payment repository', () => {
   let connection: MockProxy<Connection>;
@@ -19,13 +19,12 @@ describe('payment repository', () => {
       records: [],
     });
 
-    const payment =
-      await paymentRepository.findByOrderId('123');
+    const payment = await paymentRepository.findByOrderId('123');
 
     expect(payment).toBeNull();
     expect(connection.query).toHaveBeenNthCalledWith(1, {
       parameters: { order_id: '123' },
-      sql: 'SELECT * FROM public.payments WHERE order_id = :order_id',
+      sql: "SELECT * FROM public.payments WHERE order_id = :order_id and status <> 'CANCELED'",
     });
   });
 
@@ -34,7 +33,7 @@ describe('payment repository', () => {
       records: [
         {
           id: '123',
-          amount: 23.10,
+          amount: 23.1,
           order_id: '456',
           emv: '1234COM',
           external_id: 1234567,
@@ -45,12 +44,11 @@ describe('payment repository', () => {
       ],
     });
 
-    const payment =
-      await paymentRepository.findByOrderId('456');
+    const payment = await paymentRepository.findByOrderId('456');
 
     expect(payment).toEqual({
       id: '123',
-      amount: 23.10,
+      amount: 23.1,
       status: PaymentStatus.PAID,
       order: {
         id: '456',
@@ -67,19 +65,15 @@ describe('payment repository', () => {
     });
     expect(connection.query).toHaveBeenNthCalledWith(1, {
       parameters: { order_id: '456' },
-      sql: 'SELECT * FROM public.payments WHERE order_id = :order_id',
+      sql: "SELECT * FROM public.payments WHERE order_id = :order_id and status <> 'CANCELED'",
     });
   });
 
   it('should create payment successfully', async () => {
-    const payment =
-      await paymentRepository.create(makePayment());
-
+    const payment = await paymentRepository.create(makePayment());
   });
 
   it('should update payment successfully', async () => {
-    const payment =
-      await paymentRepository.update(makePayment());
-
+    const payment = await paymentRepository.update(makePayment());
   });
 });
