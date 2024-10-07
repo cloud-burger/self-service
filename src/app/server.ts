@@ -15,6 +15,7 @@ import { deleteProduct } from './handlers/order/product/delete';
 import { findProductsByCategory } from './handlers/order/product/find-by-category';
 import { updateProduct } from './handlers/order/product/update';
 import { updateOrderStatus } from './handlers/order/update-status';
+import { createPayment } from './handlers/payment/create';
 import { getPaymentStatusByOrderId } from './handlers/payment/get-status-by-order';
 
 const app = express();
@@ -39,6 +40,7 @@ router.put('/order/:id', updateOrderStatus);
 
 // Payment
 router.get('/payment/:orderId', getPaymentStatusByOrderId);
+router.post('/payment', createPayment);
 
 // Swagger
 app.use(bodyParser.json());

@@ -86,7 +86,7 @@ describe('mercado pago service', () => {
       },
       url: 'http://mercadopago.com.br',
       headers: {
-        Authorization: 'tokenzinho',
+        Authorization: 'Bearer tokenzinho',
       },
     });
   });
@@ -151,7 +151,7 @@ describe('mercado pago service', () => {
       updatedAt: expect.any(Date),
     });
     expect(getMock).toHaveBeenNthCalledWith(1, {
-      headers: { Authorization: 'tokenzinho' },
+      headers: { Authorization: 'Bearer tokenzinho' },
       url: 'http://mercadopago.com.br/22960906837',
     });
   });

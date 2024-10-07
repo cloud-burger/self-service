@@ -5,9 +5,7 @@ import { PaymentStatusResponse } from '~/presenters/payment/dtos/payment-status-
 import { GetPaymentStatusByOrderPresenter } from '~/presenters/payment/get-payment-status-by-order';
 
 export class GetStatusByOrderController {
-  constructor(
-    private getStatusByOrderUseCase: GetStatusByOrderUseCase
-  ) {}
+  constructor(private getStatusByOrderUseCase: GetStatusByOrderUseCase) {}
 
   handler: Controller = async (
     request: Request,
@@ -21,6 +19,11 @@ export class GetStatusByOrderController {
 
     const payment = await this.getStatusByOrderUseCase.execute({
       orderId,
+    });
+
+    logger.info({
+      message: 'Get status by order id response',
+      data: payment,
     });
 
     return {

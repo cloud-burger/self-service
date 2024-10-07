@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import process from 'node:process';
 
 interface EnvSchemaProps {
   PORT: string;
@@ -9,6 +10,8 @@ interface EnvSchemaProps {
   DATABASE_HOST: string;
   DATABASE_CONNECTION_TIMEOUT: string;
   NOTIFICATION_WEBHOOK: string;
+  MERCADO_PAGO_API_URL: string;
+  MERCADO_PAGO_API_TOKEN: string;
 }
 
 export const envSchema = Joi.object({
@@ -20,6 +23,8 @@ export const envSchema = Joi.object({
   DATABASE_HOST: Joi.string().required(),
   DATABASE_CONNECTION_TIMEOUT: Joi.string().required(),
   NOTIFICATION_WEBHOOK: Joi.string().required(),
+  MERCADO_PAGO_API_URL: Joi.string().required(),
+  MERCADO_PAGO_API_TOKEN: Joi.string().required(),
 });
 
 const { value } = envSchema.validate(process.env);
