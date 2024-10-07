@@ -52,7 +52,7 @@ export class PaymentRepository implements IPaymentRepository {
 
     await this.connection.query({
       sql: INSERT_PAYMENT(columns.join(), parameters.join()),
-      parameters: payment,
+      parameters: recordToSave,
     });
   }
 

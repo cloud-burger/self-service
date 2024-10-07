@@ -51,7 +51,8 @@ describe('create payment handler', () => {
 
     expect(response).toEqual({
       body: {
-        amount: 20.99,
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        amount: 'R$\xa020,99',
         emv: '00020101021243650016COM.MERCADOLIBRE0201306364a9e4780-d0a6-42e8-98d7-f6805209d83a5204000053039865802BR5909Test Test6009SAO PAULO62070503***63041A36',
         orderId: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
         status: 'WAITING_PAYMENT',

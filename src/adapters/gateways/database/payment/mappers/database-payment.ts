@@ -24,7 +24,7 @@ export class DatabasePaymentMapper {
   static toDatabase(payment: Payment): PaymentsDbSchema {
     return {
       id: payment.id,
-      amount: payment.amount,
+      amount: +payment.amount,
       order_id: payment.order.id,
       emv: payment.emv,
       external_id: payment.externalId,

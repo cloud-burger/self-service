@@ -1,7 +1,8 @@
 import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
 
 export interface PaymentResponse {
-  amount: number;
+  id: string;
+  amount: string;
   status: PaymentStatus;
   orderId: string;
   emv: string;

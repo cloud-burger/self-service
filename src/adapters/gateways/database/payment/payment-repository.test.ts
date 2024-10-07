@@ -70,10 +70,28 @@ describe('payment repository', () => {
   });
 
   it('should create payment successfully', async () => {
-    const payment = await paymentRepository.create(makePayment());
+    connection.query.mockResolvedValue({
+      records: [],
+    });
+
+    await paymentRepository.create(makePayment());
+
+    expect(connection.query).toHaveBeenNthCalledWith(1, {
+      parameters: {
+        amount: 20.99,
+        created_at: '2024-07-12T22:18:26.351Z',
+        order_id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        emv: undefined,
+        external_id: undefined,
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        status: 'WAITING_PAYMENT',
+        updated_at: '2024-07-12T22:18:26.351Z',
+      },
+      sql: 'INSERT INTO public.payments (id,amount,order_id,status,created_at,updated_at) VALUES (:id,:amount,:order_id,:status,:created_at,:updated_at);',
+    });
   });
 
   it('should update payment successfully', async () => {
-    const payment = await paymentRepository.update(makePayment());
+    await paymentRepository.update(makePayment());
   });
 });
