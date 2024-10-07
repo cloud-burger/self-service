@@ -88,10 +88,10 @@ spec:
   hosts:
   - api.cloudburger.com.br
   http:
-  - name: self-service-backend-default
+  - name: self-service-backend
     match:
     - uri:
         prefix: /
     route:
     - destination:
-        host: self-service-backend.svc.cluster.local
+        host: self-service-backend
