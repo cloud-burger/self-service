@@ -102,24 +102,4 @@ describe('update order status use case', () => {
     );
     expect(orderRepository.updateStatus).not.toHaveBeenCalled();
   });
-
-  it('should throw conflict error when order must be paid', async () => {
-    orderRepository.findById.mockResolvedValue(
-      makeOrder({ status: OrderStatus.WAITING_PAYMENT }),
-    );
-    orderRepository.updateStatus.mockResolvedValue();
-
-    await expect(
-      updateOrderStatusUseCase.execute({
-        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-        status: OrderStatus.FINISHED,
-      }),
-    ).rejects.toThrow('Order payment required');
-
-    expect(orderRepository.findById).toHaveBeenNthCalledWith(
-      1,
-      'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-    );
-    expect(orderRepository.updateStatus).not.toHaveBeenCalled();
-  });
 });

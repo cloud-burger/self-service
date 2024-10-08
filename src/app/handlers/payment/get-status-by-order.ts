@@ -11,18 +11,15 @@ import { PaymentRepository } from '~/gateways/database/payment/payment-repositor
 let pool: Pool;
 let paymentRepository: PaymentRepository;
 let getStatusByOrderUseCase: GetStatusByOrderUseCase;
-let getStatusByOrderController: GetStatusByOrderController
+let getStatusByOrderController: GetStatusByOrderController;
 let apiHandler: ApiHandler;
 
 const setDependencies = (connection: Connection) => {
   paymentRepository = new PaymentRepository(connection);
-  getStatusByOrderUseCase = new GetStatusByOrderUseCase(
-    paymentRepository,
+  getStatusByOrderUseCase = new GetStatusByOrderUseCase(paymentRepository);
+  getStatusByOrderController = new GetStatusByOrderController(
+    getStatusByOrderUseCase,
   );
-  getStatusByOrderController =
-    new GetStatusByOrderController(
-      getStatusByOrderUseCase,
-    );
   apiHandler = new ApiHandler(getStatusByOrderController.handler);
 };
 
