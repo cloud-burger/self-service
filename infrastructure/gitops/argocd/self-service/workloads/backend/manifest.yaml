@@ -22,6 +22,12 @@ spec:
           - name: http
             containerPort: 8080
             protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            memory: 256Mi
         env:
           - name: PORT
             value: "8080"
@@ -74,7 +80,7 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 60
+        averageUtilization: 20
 
 ---
 apiVersion: networking.istio.io/v1

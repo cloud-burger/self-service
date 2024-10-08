@@ -73,6 +73,7 @@ locals {
     enable_ack_emrcontainers                     = try(var.addons.enable_ack_emrcontainers, false)
     enable_ack_sfn                               = try(var.addons.enable_ack_sfn, false)
     enable_ack_eventbridge                       = try(var.addons.enable_ack_eventbridge, false)
+    enable_metrics_server                        = try(var.addons.enable_metrics_server, false)
   }
 
    helm_releases = {
@@ -235,6 +236,7 @@ module "eks_blueprints_addons" {
   enable_karpenter                    = local.aws_addons.enable_karpenter
   enable_velero                       = local.aws_addons.enable_velero
   enable_aws_gateway_api_controller   = local.aws_addons.enable_aws_gateway_api_controller
+  enable_metrics_server               = local.aws_addons.enable_metrics_server
   helm_releases                       = local.helm_releases
 
   tags = local.tags
