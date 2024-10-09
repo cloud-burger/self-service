@@ -15,7 +15,8 @@ paths:
     post:
       tags:
         - Customer
-      description: Create customer
+      summary: Create customer
+      description: API responsible for creating customers
       requestBody:
         required: true
         content:
@@ -35,7 +36,8 @@ paths:
     get:
       tags:
         - Customer
-      description: Find customer by document number
+      summary: Find customer by document number
+      description: API responsible for finding customer by document number
       parameters:
         - $ref: '#/components/parameters/DocumentNumber'
       responses:
@@ -49,7 +51,8 @@ paths:
     post:
       tags:
         - Product
-      description: Create product
+      summary: Create product
+      description: API responsible for creating product
       requestBody:
         required: true
         content:
@@ -69,7 +72,8 @@ paths:
     put:
       tags:
         - Product
-      description: Update product
+      summary: Update product
+      description: API responsible for updating product
       parameters:
         - $ref: '#/components/parameters/Id'
       requestBody:
@@ -90,7 +94,8 @@ paths:
     delete:
       tags:
         - Product
-      description: Delete product
+      summary: Delete product
+      description: API responsible for deleting product
       parameters:
         - $ref: '#/components/parameters/Id'
       responses:
@@ -106,7 +111,8 @@ paths:
     get: 
       tags:
         - Product
-      description: Find products by category
+      summary: Find products by category
+      description: API responsible for finding products by category
       parameters:
         - $ref: '#/components/parameters/Category'
       responses:
@@ -118,7 +124,8 @@ paths:
     post:
       tags:
         - Order
-      description: Create order
+      summary: Create order
+      description: API responsible for creating order
       parameters:
         - $ref: '#/components/parameters/XIdentification'
       requestBody:
@@ -137,7 +144,8 @@ paths:
     get: 
       tags:
         - Order
-      description: List orders
+      summary: List orders
+      description: API responsible for listing orders
       parameters:
         - $ref: '#/components/parameters/PageSize'
         - $ref: '#/components/parameters/PageNumber'
@@ -153,7 +161,8 @@ paths:
     put:
       tags:
         - Order
-      description: Update order status
+      summary: Update order status
+      description: API responsible for updating order status
       parameters:
         - $ref: '#/components/parameters/Id'
       requestBody:
@@ -173,7 +182,8 @@ paths:
     get:
       tags:
         - Payment
-      description: Find payment by order id
+      summary: Find payment by order id
+      description: API responsible for finding payment by order id
       parameters:
         - $ref: '#/components/parameters/Id'
       responses:
@@ -181,6 +191,25 @@ paths:
           $ref: '#/components/responses/FindPaymentByOrderId'
         '404':
           $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /payment:
+    post:
+      tags:
+        - Payment
+      summary: Create payment
+      description: API responsible for creating payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreatePayment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
@@ -275,6 +304,12 @@ components:
       content:
         application/json:
           schema:
+            $ref: '#/components/schemas/FindPaymentResponse'
+    CreatePayment:
+      description: Payment created
+      content:
+        application/json:
+          schema:
             $ref: '#/components/schemas/PaymentResponse'
     NoContent:
       description: No Content
@@ -357,6 +392,10 @@ components:
         - CANCELED
       description: Payment status
       example: PAID
+    Emv:
+      type: string
+      description: Pix copia e cola
+      example: 00020101021243650016COM.MERCADOLIBRE0201306364a9e4780-d0a6-42e8-98d7-f6805209d83a5204000053039865802BR5909Test Test6009SAO PAULO62070503***63041A36
     ProductDescription:
       type: string
       example: Pão carne e queijo
@@ -385,9 +424,6 @@ components:
       type: number
       description: Product quantity
       example: 1
-    Date:
-      type: string
-      example: '2024-01-01 23:59:59'
     Reason:
       type: string
       example: Error reason
@@ -417,7 +453,6 @@ components:
           $ref: '#/components/schemas/Number'
         customer:
           $ref: '#/components/schemas/CustomerResponse'
-          required: false
         status:
           $ref: '#/components/schemas/OrderStatus'
         products:
@@ -469,10 +504,21 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/Id'
+        amount: 
+          $ref: '#/components/schemas/Amount'
         status:
           $ref: '#/components/schemas/PaymentStatus'
-        order_id:
+        orderId:
           $ref: '#/components/schemas/Id'
+        emv: 
+          $ref: '#/components/schemas/Emv'
+    FindPaymentResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        status:
+          $ref: '#/components/schemas/PaymentStatus'
     NotFoundErrorResponse:
       type: object
       properties:
@@ -515,13 +561,10 @@ components:
       properties:
         documentNumber:
           $ref: '#/components/schemas/DocumentNumber'
-          required: true
         name:
           $ref: '#/components/schemas/CustomerName'
-          required: true
         email:
           $ref: '#/components/schemas/CustomerEmail'
-          required: false
     CreateOrderRequest:
       type: object
       properties:
@@ -534,52 +577,43 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/Id'
-          required: true
         quantity:
           $ref: '#/components/schemas/ProductQuantity'
-          required: true
         notes: 
           $ref: '#/components/schemas/ProductNotes'
-          required: false
     UpdateOrderStatusRequest:
       type: object
       properties:
         status:
           $ref: '#/components/schemas/OrderStatus'
-          required: true
+    CreatePaymentRequest:
+      type: object
+      properties:
+        orderId:
+          $ref: '#/components/schemas/Id'
     CreateProductRequest:
       type: object
       properties:
         name:
           $ref: '#/components/schemas/ProductName'
-          required: true
         category:
           $ref: '#/components/schemas/ProductCategory'
-          required: true
         description:
           $ref: '#/components/schemas/ProductDescription'
-          required: true
         amount:
           $ref: '#/components/schemas/ProductAmount'
-          required: true
         image:
           $ref: '#/components/schemas/ProductImage'
-          required: false
     UpdateProductRequest:
       type: object
       properties:
         name:
           $ref: '#/components/schemas/ProductName'
-          required: true
         category:
           $ref: '#/components/schemas/ProductCategory'
-          required: true
         description:
           $ref: '#/components/schemas/ProductDescription'
-          required: true
         amount:
           $ref: '#/components/schemas/ProductAmount'
-          required: true
         image:
           $ref: '#/components/schemas/ProductImage'
-          required: false

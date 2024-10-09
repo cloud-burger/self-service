@@ -18,10 +18,9 @@
   "paths": {
     "/customer": {
       "post": {
-        "tags": [
-          "Customer"
-        ],
-        "description": "Create customer",
+        "tags": ["Customer"],
+        "summary": "Create customer",
+        "description": "API responsible for creating customers",
         "requestBody": {
           "required": true,
           "content": {
@@ -50,10 +49,9 @@
     },
     "/customer/{documentNumber}": {
       "get": {
-        "tags": [
-          "Customer"
-        ],
-        "description": "Find customer by document number",
+        "tags": ["Customer"],
+        "summary": "Find customer by document number",
+        "description": "API responsible for finding customer by document number",
         "parameters": [
           {
             "$ref": "#/components/parameters/DocumentNumber"
@@ -74,10 +72,9 @@
     },
     "/product": {
       "post": {
-        "tags": [
-          "Product"
-        ],
-        "description": "Create product",
+        "tags": ["Product"],
+        "summary": "Create product",
+        "description": "API responsible for creating product",
         "requestBody": {
           "required": true,
           "content": {
@@ -106,10 +103,9 @@
     },
     "/product/{id}": {
       "put": {
-        "tags": [
-          "Product"
-        ],
-        "description": "Update product",
+        "tags": ["Product"],
+        "summary": "Update product",
+        "description": "API responsible for updating product",
         "parameters": [
           {
             "$ref": "#/components/parameters/Id"
@@ -141,10 +137,9 @@
         }
       },
       "delete": {
-        "tags": [
-          "Product"
-        ],
-        "description": "Delete product",
+        "tags": ["Product"],
+        "summary": "Delete product",
+        "description": "API responsible for deleting product",
         "parameters": [
           {
             "$ref": "#/components/parameters/Id"
@@ -168,10 +163,9 @@
     },
     "/product/{category}": {
       "get": {
-        "tags": [
-          "Product"
-        ],
-        "description": "Find products by category",
+        "tags": ["Product"],
+        "summary": "Find products by category",
+        "description": "API responsible for finding products by category",
         "parameters": [
           {
             "$ref": "#/components/parameters/Category"
@@ -189,10 +183,9 @@
     },
     "/order": {
       "post": {
-        "tags": [
-          "Order"
-        ],
-        "description": "Create order",
+        "tags": ["Order"],
+        "summary": "Create order",
+        "description": "API responsible for creating order",
         "parameters": [
           {
             "$ref": "#/components/parameters/XIdentification"
@@ -221,10 +214,9 @@
         }
       },
       "get": {
-        "tags": [
-          "Order"
-        ],
-        "description": "List orders",
+        "tags": ["Order"],
+        "summary": "List orders",
+        "description": "API responsible for listing orders",
         "parameters": [
           {
             "$ref": "#/components/parameters/PageSize"
@@ -251,10 +243,9 @@
     },
     "/order/{id}": {
       "put": {
-        "tags": [
-          "Order"
-        ],
-        "description": "Update order status",
+        "tags": ["Order"],
+        "summary": "Update order status",
+        "description": "API responsible for updating order status",
         "parameters": [
           {
             "$ref": "#/components/parameters/Id"
@@ -285,10 +276,9 @@
     },
     "/payment/{id}": {
       "get": {
-        "tags": [
-          "Payment"
-        ],
-        "description": "Find payment by order id",
+        "tags": ["Payment"],
+        "summary": "Find payment by order id",
+        "description": "API responsible for finding payment by order id",
         "parameters": [
           {
             "$ref": "#/components/parameters/Id"
@@ -300,6 +290,34 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/payment": {
+      "post": {
+        "tags": ["Payment"],
+        "summary": "Create payment",
+        "description": "API responsible for creating payment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CreatePayment"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
           },
           "500": {
             "$ref": "#/components/responses/InternalServerError"
@@ -443,6 +461,16 @@
         "content": {
           "application/json": {
             "schema": {
+              "$ref": "#/components/schemas/FindPaymentResponse"
+            }
+          }
+        }
+      },
+      "CreatePayment": {
+        "description": "Payment created",
+        "content": {
+          "application/json": {
+            "schema": {
               "$ref": "#/components/schemas/PaymentResponse"
             }
           }
@@ -530,35 +558,26 @@
       },
       "ProductCategory": {
         "type": "string",
-        "enum": [
-          "BURGER",
-          "SIDE",
-          "DRINK",
-          "DESSERT"
-        ],
+        "enum": ["BURGER", "SIDE", "DRINK", "DESSERT"],
         "description": "Product category",
         "example": "BURGER"
       },
       "OrderStatus": {
         "type": "string",
-        "enum": [
-          "RECEIVED",
-          "PREPARING",
-          "DONE",
-          "FINISHED"
-        ],
+        "enum": ["RECEIVED", "PREPARING", "DONE", "FINISHED"],
         "description": "Order status",
         "example": "RECEIVED"
       },
       "PaymentStatus": {
         "type": "string",
-        "enum": [
-          "WAITING_PAYMENT",
-          "PAID",
-          "CANCELED"
-        ],
+        "enum": ["WAITING_PAYMENT", "PAID", "CANCELED"],
         "description": "Payment status",
         "example": "PAID"
+      },
+      "Emv": {
+        "type": "string",
+        "description": "Pix copia e cola",
+        "example": "00020101021243650016COM.MERCADOLIBRE0201306364a9e4780-d0a6-42e8-98d7-f6805209d83a5204000053039865802BR5909Test Test6009SAO PAULO62070503***63041A36"
       },
       "ProductDescription": {
         "type": "string",
@@ -594,10 +613,6 @@
         "type": "number",
         "description": "Product quantity",
         "example": 1
-      },
-      "Date": {
-        "type": "string",
-        "example": "2024-01-01 23:59:59"
       },
       "Reason": {
         "type": "string",
@@ -639,8 +654,7 @@
             "$ref": "#/components/schemas/Number"
           },
           "customer": {
-            "$ref": "#/components/schemas/CustomerResponse",
-            "required": false
+            "$ref": "#/components/schemas/CustomerResponse"
           },
           "status": {
             "$ref": "#/components/schemas/OrderStatus"
@@ -720,11 +734,28 @@
           "id": {
             "$ref": "#/components/schemas/Id"
           },
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
           "status": {
             "$ref": "#/components/schemas/PaymentStatus"
           },
-          "order_id": {
+          "orderId": {
             "$ref": "#/components/schemas/Id"
+          },
+          "emv": {
+            "$ref": "#/components/schemas/Emv"
+          }
+        }
+      },
+      "FindPaymentResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatus"
           }
         }
       },
@@ -787,16 +818,13 @@
         "type": "object",
         "properties": {
           "documentNumber": {
-            "$ref": "#/components/schemas/DocumentNumber",
-            "required": true
+            "$ref": "#/components/schemas/DocumentNumber"
           },
           "name": {
-            "$ref": "#/components/schemas/CustomerName",
-            "required": true
+            "$ref": "#/components/schemas/CustomerName"
           },
           "email": {
-            "$ref": "#/components/schemas/CustomerEmail",
-            "required": false
+            "$ref": "#/components/schemas/CustomerEmail"
           }
         }
       },
@@ -815,16 +843,13 @@
         "type": "object",
         "properties": {
           "id": {
-            "$ref": "#/components/schemas/Id",
-            "required": true
+            "$ref": "#/components/schemas/Id"
           },
           "quantity": {
-            "$ref": "#/components/schemas/ProductQuantity",
-            "required": true
+            "$ref": "#/components/schemas/ProductQuantity"
           },
           "notes": {
-            "$ref": "#/components/schemas/ProductNotes",
-            "required": false
+            "$ref": "#/components/schemas/ProductNotes"
           }
         }
       },
@@ -832,8 +857,15 @@
         "type": "object",
         "properties": {
           "status": {
-            "$ref": "#/components/schemas/OrderStatus",
-            "required": true
+            "$ref": "#/components/schemas/OrderStatus"
+          }
+        }
+      },
+      "CreatePaymentRequest": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "$ref": "#/components/schemas/Id"
           }
         }
       },
@@ -841,24 +873,19 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "#/components/schemas/ProductName",
-            "required": true
+            "$ref": "#/components/schemas/ProductName"
           },
           "category": {
-            "$ref": "#/components/schemas/ProductCategory",
-            "required": true
+            "$ref": "#/components/schemas/ProductCategory"
           },
           "description": {
-            "$ref": "#/components/schemas/ProductDescription",
-            "required": true
+            "$ref": "#/components/schemas/ProductDescription"
           },
           "amount": {
-            "$ref": "#/components/schemas/ProductAmount",
-            "required": true
+            "$ref": "#/components/schemas/ProductAmount"
           },
           "image": {
-            "$ref": "#/components/schemas/ProductImage",
-            "required": false
+            "$ref": "#/components/schemas/ProductImage"
           }
         }
       },
@@ -866,24 +893,19 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "#/components/schemas/ProductName",
-            "required": true
+            "$ref": "#/components/schemas/ProductName"
           },
           "category": {
-            "$ref": "#/components/schemas/ProductCategory",
-            "required": true
+            "$ref": "#/components/schemas/ProductCategory"
           },
           "description": {
-            "$ref": "#/components/schemas/ProductDescription",
-            "required": true
+            "$ref": "#/components/schemas/ProductDescription"
           },
           "amount": {
-            "$ref": "#/components/schemas/ProductAmount",
-            "required": true
+            "$ref": "#/components/schemas/ProductAmount"
           },
           "image": {
-            "$ref": "#/components/schemas/ProductImage",
-            "required": false
+            "$ref": "#/components/schemas/ProductImage"
           }
         }
       }
