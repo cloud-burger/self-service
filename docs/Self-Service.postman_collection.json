@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a3f8ed2e-2114-4ede-8edd-c51786dc0d62",
+		"_postman_id": "430a5fc5-7234-4c7e-9f58-8efb8a1dd857",
 		"name": "Self-Service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "17709552"
+		"_exporter_id": "15653232"
 	},
 	"item": [
 		{
@@ -252,43 +252,6 @@
 					"response": []
 				},
 				{
-					"name": "update-status-by-id",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							},
-							{
-								"key": "x-identification",
-								"value": "53523992060"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"status\": \"RECEIVED\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:8080/order/7aa7bc1a-5e31-420f-867c-72f5ba460e35",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"order",
-								"7aa7bc1a-5e31-420f-867c-72f5ba460e35"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "list",
 					"request": {
 						"method": "GET",
@@ -325,6 +288,41 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "update-status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"DONE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/order/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"order",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -332,17 +330,12 @@
 			"name": "payment",
 			"item": [
 				{
-					"name": "get-status-by-order-id",
+					"name": "find-by-order-id",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "accept",
-								"value": "application/json"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/payment/c53c89b6-2459-421d-9a91-9e9e89aee932",
+							"raw": "http://localhost:8080/payment/:orderId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -350,7 +343,41 @@
 							"port": "8080",
 							"path": [
 								"payment",
-								"c53c89b6-2459-421d-9a91-9e9e89aee932"
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "52541b29-b267-4ec7-a311-a4ed5cd087af"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderId\": \"1376c2b4-74bd-477c-8f44-7cc593e8c734\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/payment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"payment"
 							]
 						}
 					},
