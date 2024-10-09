@@ -384,6 +384,109 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "webhook",
+			"item": [
+				{
+					"name": "event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept-encoding",
+								"value": "gzip"
+							},
+							{
+								"key": "x-trace-digest-38",
+								"value": "64J94mX1n4nWAhLG2etThOplEKAxrUO88ZWvipoqHxDQsVZ4WmhjTW6RCq9Uzv1p3qadarsfJ4++d2S/pOcVq1kKcxLCwqWYmbJyUsaafugn7l5e0HbMkv6Et1nQPiZG"
+							},
+							{
+								"key": "x-socket-timeout",
+								"value": "25000"
+							},
+							{
+								"key": "x-signature",
+								"value": "ts=1728217010,v1=92bc8522423c2f1bb16fbe3ce43ec8fcbeebeed0b70ab81bc5aabff7cb147871"
+							},
+							{
+								"key": "x-rest-pool-name",
+								"value": "pool_unknown"
+							},
+							{
+								"key": "x-request-id",
+								"value": "3b45eeb7-4ee6-466e-b018-0847e940b954"
+							},
+							{
+								"key": "x-b3-traceid",
+								"value": "0000000000000000d657df8489d449ce"
+							},
+							{
+								"key": "x-b3-spanid",
+								"value": "8d258622f459646a"
+							},
+							{
+								"key": "x-b3-sampled",
+								"value": "0"
+							},
+							{
+								"key": "traceparent",
+								"value": "00-0000000000000000d657df8489d449ce-8d258622f459646a-00"
+							},
+							{
+								"key": "referer",
+								"value": "https://mercadopago.com.ar"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "content-length",
+								"value": "96"
+							},
+							{
+								"key": "user-agent",
+								"value": "MercadoPago Feed v2.0 merchant_order"
+							},
+							{
+								"key": "host",
+								"value": "webhook.site"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"resource\": \"https://api.mercadolibre.com/merchant_orders/23643375810\",\n    \"topic\": \"merchant_order\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/webhook?id=23643375810&topic=merchant_order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"webhook"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "23643375810"
+								},
+								{
+									"key": "topic",
+									"value": "merchant_order"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
