@@ -14,7 +14,7 @@ kubectl port-forward -n argocd svc/argocd-server 8080:80 > /dev/null 2>&1 &
 sleep 15
 argocd login localhost:8080 --insecure --username admin --password $(kubectl get secrets argocd-initial-admin-secret -n argocd --template="{{index .data.password | base64decode}}")
 echo "Deploying self-service workload!"
-argocd app create self-service --repo https://github.com/cloud-burger/self-service.git --revision feature/kubernetes --path infrastructure/gitops/argocd/self-service --dest-server https://kubernetes.default.svc --dest-namespace argocd --directory-recurse --sync-policy automated --sync-option ApplyOutOfSyncOnly=true
+argocd app create self-service --repo https://github.com/cloud-burger/self-service.git --revision main --path infrastructure/gitops/argocd/self-service --dest-server https://kubernetes.default.svc --dest-namespace argocd --directory-recurse --sync-policy automated --sync-option ApplyOutOfSyncOnly=true
 kubectl rollout restart deployment istio-ingress -n istio-ingress
 sleep 5
 echo "Deploy done!"
