@@ -86,3 +86,7 @@ O projeto utiliza um banco de dados PostgreSQL. Uma documentação completa das 
 
 Conecte-se à base de dados usando as configurações fornecidas no arquivo `.env`. Exemplo de configuração no DBeaver:
 ![image](https://github.com/user-attachments/assets/ca5a231e-4609-4f35-bbc4-c28fef4eba19)
+
+### Arquitetura de infraestrutura
+
+![image](img/kubernetes.jpg)

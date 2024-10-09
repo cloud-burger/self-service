@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: self-service
+
+---
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: self-service-gateway
+  namespace: self-service
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - "*"
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+  - hosts:
+    - "*"
+    port:
+      name: http-443
+      number: 443
+      protocol: HTTP
