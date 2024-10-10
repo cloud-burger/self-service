@@ -6,7 +6,7 @@ O projeto **Self-Service** é uma solução desenvolvida em TypeScript para a im
 
 ### Event Storming
 
-Para esclarecer as funcionalidades e os fluxos do projeto, consulte o Event Storming disponível no seguinte link: [Event Storming | Miro](https://miro.com/api/board/uXjVK5Nr1BA=/?share_link_id=973174946711).
+Para esclarecer as funcionalidades e os fluxos do projeto, consulte o Event Storming disponível no seguinte link: [Event Storming | Miro](https://miro.com/app/board/uXjVK5Nr1BA=/?share_link_id=973174946711).
 
 ### Glossário
 
