@@ -1,6 +1,6 @@
 import { Request } from '@cloud-burger/handlers';
 import { mock, MockProxy } from 'jest-mock-extended';
-import { DeleteProductUseCase } from '~/domain/order/use-cases/product/delete';
+import { DeleteProductUseCase } from '~/use-cases/product/delete';
 import { DeleteProductController } from './delete';
 
 describe('delete product controller', () => {

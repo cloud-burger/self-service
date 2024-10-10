@@ -1,7 +1,7 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeProduct } from 'tests/factories/make-product';
-import { ProductCategory } from '../../entities/value-objects/enums/product-category';
-import { ProductRepository } from '../../repositories/product';
+import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
+import { ProductRepository } from '~/domain/order/repositories/product';
 import { CreateProductUseCase } from './create';
 
 describe('create product use case', () => {

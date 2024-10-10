@@ -5,8 +5,8 @@ import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { GetStatusByOrderController } from '~/controllers/payment/get-status-by-order';
-import { GetStatusByOrderUseCase } from '~/domain/payment/use-cases/get-status-by-order';
 import { PaymentRepository } from '~/gateways/database/payment/payment-repository';
+import { GetStatusByOrderUseCase } from '~/use-cases/payment/get-status-by-order';
 
 let pool: Pool;
 let paymentRepository: PaymentRepository;

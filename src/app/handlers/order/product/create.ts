@@ -5,8 +5,8 @@ import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { CreateProductController } from '~/controllers/order/product/create';
-import { CreateProductUseCase } from '~/domain/order/use-cases/product/create';
 import { ProductRepository } from '~/gateways/database/product/product-repository';
+import { CreateProductUseCase } from '~/use-cases/product/create';
 
 let pool: Pool;
 let productRepository: ProductRepository;

@@ -1,10 +1,10 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { Customer } from '~/domain/customer/entities/customer';
-import { Order } from '../entities/order';
-import { Product } from '../entities/product';
-import { OrderStatus } from '../entities/value-objects/enums/order-status';
-import { ProductCategory } from '../entities/value-objects/enums/product-category';
-import { OrderRepository } from '../repositories/order';
+import { Order } from '~/domain/order/entities/order';
+import { Product } from '~/domain/order/entities/product';
+import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
+import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
+import { OrderRepository } from '~/domain/order/repositories/order';
 import { ListOrdersUseCase } from './list';
 
 describe('list orders use case', () => {

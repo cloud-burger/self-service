@@ -1,7 +1,7 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeOrder } from 'tests/factories/make-order';
-import { OrderStatus } from '../entities/value-objects/enums/order-status';
-import { OrderRepository } from '../repositories/order';
+import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
+import { OrderRepository } from '~/domain/order/repositories/order';
 import { UpdateOrderStatusUseCase } from './update-status';
 
 describe('update order status use case', () => {

@@ -1,6 +1,6 @@
 import { Controller, Request, Response } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { ProcessEventUseCase } from '~/domain/payment/use-cases/process-event';
+import { ProcessEventUseCase } from '~/use-cases/payment/process-event';
 
 const PAYMENT_ORDER_TOPIC = 'merchant_order';
 

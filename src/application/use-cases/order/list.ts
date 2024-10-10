@@ -1,5 +1,8 @@
-import { Order } from '../entities/order';
-import { OrderPaginationParams, OrderRepository } from '../repositories/order';
+import { Order } from '~/domain/order/entities/order';
+import {
+  OrderPaginationParams,
+  OrderRepository,
+} from '~/domain/order/repositories/order';
 
 export class ListOrdersUseCase {
   constructor(private orderRepository: OrderRepository) {}

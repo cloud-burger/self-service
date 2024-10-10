@@ -1,6 +1,6 @@
 import { Controller, Request, Response } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { DeleteProductUseCase } from '~/domain/order/use-cases/product/delete';
+import { DeleteProductUseCase } from '~/use-cases/product/delete';
 
 export class DeleteProductController {
   constructor(private deleteProductUseCase: DeleteProductUseCase) {}

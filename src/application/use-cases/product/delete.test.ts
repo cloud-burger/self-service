@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeProduct } from 'tests/factories/make-product';
-import { ProductRepository } from '../../repositories/product';
+import { ProductRepository } from '~/domain/order/repositories/product';
 import { DeleteProductUseCase } from './delete';
 
 describe('delete product use case', () => {

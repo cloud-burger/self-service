@@ -22,6 +22,7 @@ export default {
     '~/gateways/(.*)': '<rootDir>/src/adapters/gateways/$1',
     '~/presenters/(.*)': '<rootDir>/src/adapters/presenters/$1',
     '~/domain/(.*)': '<rootDir>/src/domain/$1',
+    '~/use-cases/(.*)': '<rootDir>/src/application/use-cases/$1',
   },
   modulePathIgnorePatterns: ['<rootDir>/.build/', '<rootDir>/node_modules/'],
   testMatch: ['**/?(*.)+(test).+(ts|js)'],

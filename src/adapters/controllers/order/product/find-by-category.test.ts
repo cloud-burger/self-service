@@ -1,7 +1,7 @@
 import { Request } from '@cloud-burger/handlers';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeProduct } from 'tests/factories/make-product';
-import { FindProductsByCategoryUseCase } from '~/domain/order/use-cases/product/find-by-category';
+import { FindProductsByCategoryUseCase } from '~/use-cases/product/find-by-category';
 import { FindProductsByCategoryController } from './find-by-category';
 
 describe('find product by category controller', () => {

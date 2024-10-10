@@ -6,9 +6,9 @@ import {
 } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
-import { UpdateProductUseCase } from '~/domain/order/use-cases/product/update';
 import { ProductResponse } from '~/presenters/order/dtos/product-response';
 import { ProductPresenter } from '~/presenters/order/product';
+import { UpdateProductUseCase } from '~/use-cases/product/update';
 import { productSchema } from '../validations/product-schema';
 
 export class UpdateProductController {

@@ -5,11 +5,11 @@ import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { CreateOrderController } from '~/controllers/order/create';
-import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases/find-by-document-number';
-import { CreateOrderUseCase } from '~/domain/order/use-cases/create';
 import { CustomerRepository } from '~/gateways/database/customer/customer-repository';
 import { OrderRepository } from '~/gateways/database/order/order-repository';
 import { ProductRepository } from '~/gateways/database/product/product-repository';
+import { FindCustomerByDocumentNumberUseCase } from '~/use-cases/customer/find-by-document-number';
+import { CreateOrderUseCase } from '~/use-cases/order/create';
 
 let pool: Pool;
 let orderRepository: OrderRepository;

@@ -9,7 +9,6 @@ jest.mock('~/app/postgres/connection');
 jest.mock('~/app/postgres/pool');
 jest.mock('~/app/postgres/pool-factory');
 jest.mock('~/controllers/customer/find-by-document-number');
-jest.mock('~/domain/customer/use-cases/find-by-document-number');
 jest.mock('~/gateways/database/customer/customer-repository');
 
 describe('find customer by document number handler', () => {

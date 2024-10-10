@@ -5,8 +5,8 @@ import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { UpdateOrderStatusController } from '~/controllers/order/update-status';
-import { UpdateOrderStatusUseCase } from '~/domain/order/use-cases/update-status';
 import { OrderRepository } from '~/gateways/database/order/order-repository';
+import { UpdateOrderStatusUseCase } from '~/use-cases/order/update-status';
 
 let pool: Pool;
 let orderRepository: OrderRepository;

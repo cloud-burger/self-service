@@ -1,6 +1,6 @@
 import { NotFoundError } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { ProductRepository } from '../../repositories/product';
+import { ProductRepository } from '~/domain/order/repositories/product';
 
 interface Input {
   id: string;

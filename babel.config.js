@@ -17,9 +17,9 @@ module.exports = {
         alias: {
           '~/app': './src/app',
           '~/controllers': './src/adapters/controllers',
-          '~/gateways': './src/adapters/gateways',
           '~/presenters': './src/adapters/presenters',
           '~/domain': './src/domain',
+          '~/use-cases': './src/application/use-cases',
         },
       },
     ],

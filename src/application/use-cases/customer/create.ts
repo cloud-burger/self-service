@@ -1,7 +1,7 @@
 import { ConflictError } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { Customer } from '../entities/customer';
-import { CustomerRepository } from '../repositories/customer';
+import { Customer } from '~/domain/customer/entities/customer';
+import { CustomerRepository } from '~/domain/customer/repositories/customer';
 
 interface Input {
   documentNumber: string;

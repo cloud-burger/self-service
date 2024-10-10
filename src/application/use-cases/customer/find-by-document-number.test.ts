@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeCustomer } from 'tests/factories/make-customer';
-import { CustomerRepository } from '../repositories/customer';
+import { CustomerRepository } from '~/domain/customer/repositories/customer';
 import { FindCustomerByDocumentNumberUseCase } from './find-by-document-number';
 
 describe('find customer by document number use case', () => {

@@ -1,6 +1,6 @@
-import { Product } from '../../entities/product';
-import { ProductCategory } from '../../entities/value-objects/enums/product-category';
-import { ProductRepository } from '../../repositories/product';
+import { Product } from '~/domain/order/entities/product';
+import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
+import { ProductRepository } from '~/domain/order/repositories/product';
 
 interface Input {
   category: ProductCategory;

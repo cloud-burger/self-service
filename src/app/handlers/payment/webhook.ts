@@ -6,12 +6,12 @@ import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { EventController } from '~/controllers/payment/event';
-import { UpdateOrderStatusUseCase } from '~/domain/order/use-cases/update-status';
 import { PaymentService } from '~/domain/payment/services/payment';
-import { ProcessEventUseCase } from '~/domain/payment/use-cases/process-event';
 import { OrderRepository } from '~/gateways/database/order/order-repository';
 import { PaymentRepository } from '~/gateways/database/payment/payment-repository';
 import { MercadoPagoService } from '~/gateways/http/mercado-pago/mercado-pago-service';
+import { UpdateOrderStatusUseCase } from '~/use-cases/order/update-status';
+import { ProcessEventUseCase } from '~/use-cases/payment/process-event';
 
 let pool: Pool;
 let paymentService: PaymentService;

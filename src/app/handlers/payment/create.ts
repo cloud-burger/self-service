@@ -7,10 +7,10 @@ import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { CreatePaymentController } from '~/controllers/payment/create';
 import { PaymentService } from '~/domain/payment/services/payment';
-import { CreatePaymentUseCase } from '~/domain/payment/use-cases/create';
 import { OrderRepository } from '~/gateways/database/order/order-repository';
 import { PaymentRepository } from '~/gateways/database/payment/payment-repository';
 import { MercadoPagoService } from '~/gateways/http/mercado-pago/mercado-pago-service';
+import { CreatePaymentUseCase } from '~/use-cases/payment/create';
 
 let pool: Pool;
 let orderRepository: OrderRepository;

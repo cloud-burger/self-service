@@ -1,6 +1,6 @@
 import { Request } from '@cloud-burger/handlers';
 import { mock, MockProxy } from 'jest-mock-extended';
-import { ProcessEventUseCase } from '~/domain/payment/use-cases/process-event';
+import { ProcessEventUseCase } from '~/use-cases/payment/process-event';
 import { EventController } from './event';
 
 describe('event controller', () => {

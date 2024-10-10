@@ -1,9 +1,9 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeCustomer } from 'tests/factories/make-customer';
 import { makeProduct } from 'tests/factories/make-product';
-import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases/find-by-document-number';
-import { OrderRepository } from '../repositories/order';
-import { ProductRepository } from '../repositories/product';
+import { OrderRepository } from '~/domain/order/repositories/order';
+import { ProductRepository } from '~/domain/order/repositories/product';
+import { FindCustomerByDocumentNumberUseCase } from '../customer/find-by-document-number';
 import { CreateOrderUseCase } from './create';
 
 describe('create order use case', () => {

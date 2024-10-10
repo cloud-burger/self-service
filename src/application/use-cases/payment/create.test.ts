@@ -2,9 +2,9 @@ import { mock, MockProxy } from 'jest-mock-extended';
 import { makeOrder } from 'tests/factories/make-order';
 import { makePayment } from 'tests/factories/make-payment';
 import { OrderRepository } from '~/domain/order/repositories/order';
-import { PaymentStatus } from '../entities/value-objects/payment-status';
-import { PaymentRepository } from '../repositories/payment';
-import { PaymentService } from '../services/payment';
+import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
+import { PaymentRepository } from '~/domain/payment/repositories/payment';
+import { PaymentService } from '~/domain/payment/services/payment';
 import { CreatePaymentUseCase } from './create';
 
 describe('create payment use case', () => {

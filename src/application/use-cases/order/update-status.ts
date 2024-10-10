@@ -1,8 +1,8 @@
 import { ConflictError, NotFoundError } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { Order } from '../entities/order';
-import { OrderStatus } from '../entities/value-objects/enums/order-status';
-import { OrderRepository } from '../repositories/order';
+import { Order } from '~/domain/order/entities/order';
+import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
+import { OrderRepository } from '~/domain/order/repositories/order';
 
 interface Input {
   id: string;

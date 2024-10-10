@@ -1,8 +1,8 @@
 import { mock, MockProxy } from 'jest-mock-extended';
-import { PaymentRepository } from '../repositories/payment';
-import { GetStatusByOrderUseCase } from './get-status-by-order';
 import { makePayment } from 'tests/factories/make-payment';
-import { PaymentStatus } from '../entities/value-objects/payment-status';
+import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
+import { PaymentRepository } from '~/domain/payment/repositories/payment';
+import { GetStatusByOrderUseCase } from './get-status-by-order';
 
 describe('get payment status by order use case', () => {
   let paymentRepository: MockProxy<PaymentRepository>;
@@ -10,8 +10,7 @@ describe('get payment status by order use case', () => {
 
   beforeAll(() => {
     paymentRepository = mock();
-    getStatusByOrderUseCase =
-      new GetStatusByOrderUseCase(paymentRepository);
+    getStatusByOrderUseCase = new GetStatusByOrderUseCase(paymentRepository);
   });
 
   it('should throw not found error when payment does not exists', async () => {
@@ -21,10 +20,7 @@ describe('get payment status by order use case', () => {
       getStatusByOrderUseCase.execute({ orderId: '1234' }),
     ).rejects.toThrow('Payment not found');
 
-    expect(paymentRepository.findByOrderId).toHaveBeenNthCalledWith(
-      1,
-      '1234',
-    );
+    expect(paymentRepository.findByOrderId).toHaveBeenNthCalledWith(1, '1234');
   });
 
   it('should find payment by order id successfully', async () => {
@@ -41,7 +37,7 @@ describe('get payment status by order use case', () => {
       amount: 20.99,
       status: PaymentStatus.WAITING_PAYMENT,
       order: expect.objectContaining({
-        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e'
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
       }),
     });
     expect(paymentRepository.findByOrderId).toHaveBeenNthCalledWith(

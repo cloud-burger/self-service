@@ -1,9 +1,9 @@
 import logger from '@cloud-burger/logger';
 import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
-import { UpdateOrderStatusUseCase } from '~/domain/order/use-cases/update-status';
-import { PaymentStatus } from '../entities/value-objects/payment-status';
-import { PaymentRepository } from '../repositories/payment';
-import { PaymentService } from '../services/payment';
+import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
+import { PaymentRepository } from '~/domain/payment/repositories/payment';
+import { PaymentService } from '~/domain/payment/services/payment';
+import { UpdateOrderStatusUseCase } from '../order/update-status';
 
 interface Input {
   externalId: string;

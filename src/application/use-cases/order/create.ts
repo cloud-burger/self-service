@@ -1,9 +1,9 @@
 import { NotFoundError } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases/find-by-document-number';
-import { Order } from '../entities/order';
-import { OrderRepository } from '../repositories/order';
-import { ProductRepository } from '../repositories/product';
+import { Order } from '~/domain/order/entities/order';
+import { OrderRepository } from '~/domain/order/repositories/order';
+import { ProductRepository } from '~/domain/order/repositories/product';
+import { FindCustomerByDocumentNumberUseCase } from '../customer/find-by-document-number';
 
 interface Input {
   customerTaxId?: string;
