@@ -4,8 +4,8 @@ import { Request, Response } from 'express';
 import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
-import { UpdateProductController } from '~/controllers/order/product/update';
-import { ProductRepository } from '~/gateways/database/product/product-repository';
+import { UpdateProductController } from '~/controllers/product/update';
+import { ProductRepository } from '~/database/product/product-repository';
 import { UpdateProductUseCase } from '~/use-cases/product/update';
 
 let pool: Pool;

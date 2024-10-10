@@ -5,9 +5,9 @@ import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { CreateOrderController } from '~/controllers/order/create';
-import { CustomerRepository } from '~/gateways/database/customer/customer-repository';
-import { OrderRepository } from '~/gateways/database/order/order-repository';
-import { ProductRepository } from '~/gateways/database/product/product-repository';
+import { CustomerRepository } from '~/database/customer/customer-repository';
+import { OrderRepository } from '~/database/order/order-repository';
+import { ProductRepository } from '~/database/product/product-repository';
 import { FindCustomerByDocumentNumberUseCase } from '~/use-cases/customer/find-by-document-number';
 import { CreateOrderUseCase } from '~/use-cases/order/create';
 

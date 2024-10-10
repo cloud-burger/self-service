@@ -19,9 +19,10 @@ export default {
   moduleNameMapper: {
     '~/app/(.*)': '<rootDir>/src/app/$1',
     '~/controllers/(.*)': '<rootDir>/src/adapters/controllers/$1',
-    '~/gateways/(.*)': '<rootDir>/src/adapters/gateways/$1',
     '~/presenters/(.*)': '<rootDir>/src/adapters/presenters/$1',
     '~/domain/(.*)': '<rootDir>/src/domain/$1',
+    '~/service/(.*)': '<rootDir>/src/infrastructure/service/$1',
+    '~/database/(.*)': '<rootDir>/src/infrastructure/database/$1',
     '~/use-cases/(.*)': '<rootDir>/src/application/use-cases/$1',
   },
   modulePathIgnorePatterns: ['<rootDir>/.build/', '<rootDir>/node_modules/'],

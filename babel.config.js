@@ -19,6 +19,8 @@ module.exports = {
           '~/controllers': './src/adapters/controllers',
           '~/presenters': './src/adapters/presenters',
           '~/domain': './src/domain',
+          '~/database': './src/infrastructure/database',
+          '~/service': './src/infrastructure/service',
           '~/use-cases': './src/application/use-cases',
         },
       },

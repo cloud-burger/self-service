@@ -8,7 +8,7 @@ import { createProduct } from './create';
 jest.mock('~/app/postgres/connection');
 jest.mock('~/app/postgres/pool');
 jest.mock('~/app/postgres/pool-factory');
-jest.mock('~/controllers/order/product/create');
+jest.mock('~/controllers/product/create');
 
 describe('create product handler', () => {
   const poolFactoryMock = jest.mocked(PoolFactory);

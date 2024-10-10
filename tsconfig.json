@@ -22,9 +22,10 @@
     "paths": {
       "~/app/*": ["./app/*"],
       "~/controllers/*": ["./adapters/controllers/*"],
-      "~/gateways/*": ["./adapters/gateways/*"],
       "~/presenters/*": ["./adapters/presenters/*"],
       "~/domain/*": ["./domain/*"],
+      "~/service/*": ["./infrastructure/service/*"],
+      "~/database/*": ["./infrastructure/database/*"],
       "~/use-cases/*": ["./application/use-cases/*"]
     },
     "types": ["jest", "node", "express"],

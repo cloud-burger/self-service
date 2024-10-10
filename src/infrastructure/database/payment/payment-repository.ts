@@ -2,11 +2,11 @@ import logger from '@cloud-burger/logger';
 import Connection from '~/app/postgres/connection';
 import { Payment } from '~/domain/payment/entities/payment';
 import { PaymentRepository as IPaymentRepository } from '~/domain/payment/repositories/payment';
-import { INSERT_PAYMENT } from '~/gateways/database/payment/queries/insert';
 import { PaymentsDbSchema } from './dtos/payment-db-schema';
 import { DatabasePaymentMapper } from './mappers/database-payment';
 import { FIND_BY_ID } from './queries/find-by-id';
 import { FIND_BY_ORDER_ID } from './queries/find-by-order-id';
+import { INSERT_PAYMENT } from './queries/insert';
 import { UPDATE_PAYMENT } from './queries/update';
 
 export class PaymentRepository implements IPaymentRepository {

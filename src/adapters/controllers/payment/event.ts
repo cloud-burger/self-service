@@ -19,6 +19,8 @@ export class EventController {
       await this.processEventUseCase.execute({ externalId: id });
     }
 
+    logger.info('Process event response');
+
     return {
       statusCode: 202,
     };

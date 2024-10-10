@@ -23,6 +23,11 @@ export class FindCustomerByDocumentNumberController {
       documentNumber,
     });
 
+    logger.info({
+      message: 'Find customer by document number response',
+      data: customer,
+    });
+
     return {
       statusCode: 200,
       body: CustomerPresenter.toHttp(customer),

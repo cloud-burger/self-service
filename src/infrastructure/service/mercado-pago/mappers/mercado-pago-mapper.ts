@@ -1,8 +1,8 @@
 import { env } from '~/app/env';
 import { Payment } from '~/domain/payment/entities/payment';
 import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
-import { GetPaymentByIdResponse } from '~/gateways/http/mercado-pago/dtos/get-payment-by-id-response';
 import { CreatePaymentRequest } from '../dtos/create-payment-request';
+import { GetPaymentByIdResponse } from '../dtos/get-payment-by-id-response';
 
 export class MercadoPagoMapper {
   static toHttp(payment: Payment): CreatePaymentRequest {

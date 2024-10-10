@@ -6,10 +6,10 @@ import Connection from '~/app/postgres/connection';
 import Pool from '~/app/postgres/pool';
 import { PoolFactory } from '~/app/postgres/pool-factory';
 import { EventController } from '~/controllers/payment/event';
+import { OrderRepository } from '~/database/order/order-repository';
+import { PaymentRepository } from '~/database/payment/payment-repository';
 import { PaymentService } from '~/domain/payment/services/payment';
-import { OrderRepository } from '~/gateways/database/order/order-repository';
-import { PaymentRepository } from '~/gateways/database/payment/payment-repository';
-import { MercadoPagoService } from '~/gateways/http/mercado-pago/mercado-pago-service';
+import { MercadoPagoService } from '~/service/mercado-pago/mercado-pago-service';
 import { UpdateOrderStatusUseCase } from '~/use-cases/order/update-status';
 import { ProcessEventUseCase } from '~/use-cases/payment/process-event';
 

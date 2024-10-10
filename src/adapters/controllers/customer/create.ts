@@ -39,6 +39,11 @@ export class CreateCustomerController {
 
     const customer = await this.createCustomerUseCase.execute(data);
 
+    logger.info({
+      message: 'Create customer response',
+      data: customer,
+    });
+
     return {
       statusCode: 201,
       body: CustomerPresenter.toHttp(customer),

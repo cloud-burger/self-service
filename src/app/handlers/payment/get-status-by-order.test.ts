@@ -9,7 +9,6 @@ jest.mock('~/app/postgres/connection');
 jest.mock('~/app/postgres/pool');
 jest.mock('~/app/postgres/pool-factory');
 jest.mock('~/controllers/payment/get-status-by-order');
-jest.mock('~/gateways/database/payment/payment-repository');
 
 describe('get payment status by order id handler', () => {
   const poolFactoryMock = jest.mocked(PoolFactory);
