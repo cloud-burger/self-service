@@ -1,0 +1,114 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: self-service-backend
+  name: self-service-backend
+  namespace: self-service
+spec:
+  selector:
+    matchLabels:
+      app: self-service-backend
+  template:
+    metadata:
+      labels:
+        app: self-service-backend
+    spec:
+      containers:
+      - image: gabrielmadrid/self-service-backend:latest
+        name: self-service-backend
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            memory: 256Mi
+        env:
+          - name: PORT
+            value: "8080"
+          - name: DATABASE_HOST
+            value: self-service-postgres
+          - name: DATABASE_USERNAME
+            value: superuser
+          - name: DATABASE_PASSWORD
+            value: supersecret
+          - name: DATABASE_PORT
+            value: "5432"
+          - name: DATABASE_NAME
+            value: self_service
+          - name: DATABASE_CONNECTION_TIMEOUT
+            value: "120000"
+          - name: NOTIFICATION_WEBHOOK_URL
+            value: "http://api.cloudburger.com.br/webhook"
+          - name: MERCADO_PAGO_API_URL
+            value: "https://api.mercadopago.com//instore/orders/qr/seller/collectors/1995444195/pos/SELFSERVICE2024/qrs"
+          - name: MERCADO_PAGO_CREATE_QR_API_URL
+            value: "https://api.mercadopago.com//instore/orders/qr/seller/collectors/1995444195/pos/SELFSERVICE2024/qrs"
+          - name: MERCADO_PAGO_GET_QR_INFO_API_URL
+            value: "https://api.mercadolibre.com/merchant_orders/"
+          - name: MERCADO_PAGO_API_TOKEN
+            value: "APP_USR-7785106356073680-091816-d1c29245fbb399a70031428b1c22463c-1995444195"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: self-service-backend
+  name: self-service-backend
+  namespace: self-service
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: self-service-backend
+  type: ClusterIP
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: self-service-backend
+  namespace: self-service
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: self-service-backend
+  minReplicas: 2
+  maxReplicas: 30
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 20
+
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: self-service-backend
+  namespace: self-service
+spec:
+  gateways:
+    - self-service-gateway
+  hosts:
+  - api.cloudburger.com.br
+  http:
+  - name: self-service-backend
+    match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: self-service-backend

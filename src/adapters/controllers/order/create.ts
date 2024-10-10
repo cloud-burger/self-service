@@ -6,9 +6,9 @@ import {
 } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
-import { CreateOrderUseCase } from '~/domain/order/use-cases/create';
 import { OrderResponse } from '~/presenters/order/dtos/order-response';
 import { OrderPresenter } from '~/presenters/order/order';
+import { CreateOrderUseCase } from '~/use-cases/order/create';
 import { orderSchema } from './validations/order-schema';
 
 export class CreateOrderController {

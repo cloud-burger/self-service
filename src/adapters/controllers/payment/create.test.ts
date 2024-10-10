@@ -1,7 +1,7 @@
 import { Request } from '@cloud-burger/handlers';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makePayment } from 'tests/factories/make-payment';
-import { CreatePaymentUseCase } from '~/domain/payment/use-cases/create';
+import { CreatePaymentUseCase } from '~/use-cases/payment/create';
 import { CreatePaymentController } from './create';
 
 describe('create payment handler', () => {

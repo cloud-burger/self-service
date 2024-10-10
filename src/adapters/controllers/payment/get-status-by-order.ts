@@ -1,8 +1,8 @@
 import { Controller, Request, Response } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { GetStatusByOrderUseCase } from '~/domain/payment/use-cases/get-status-by-order';
 import { PaymentStatusResponse } from '~/presenters/payment/dtos/payment-status-response';
 import { GetPaymentStatusByOrderPresenter } from '~/presenters/payment/get-payment-status-by-order';
+import { GetStatusByOrderUseCase } from '~/use-cases/payment/get-status-by-order';
 
 export class GetStatusByOrderController {
   constructor(private getStatusByOrderUseCase: GetStatusByOrderUseCase) {}

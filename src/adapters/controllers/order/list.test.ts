@@ -5,7 +5,7 @@ import { Order } from '~/domain/order/entities/order';
 import { Product } from '~/domain/order/entities/product';
 import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
 import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
-import { ListOrdersUseCase } from '~/domain/order/use-cases/list';
+import { ListOrdersUseCase } from '~/use-cases/order/list';
 import { ListOrdersController } from './list';
 
 describe('list orders controller', () => {

@@ -1,8 +1,8 @@
 import { Controller, Request, Response } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases/find-by-document-number';
 import { CustomerPresenter } from '~/presenters/customer/customer';
 import { CustomerResponse } from '~/presenters/customer/dtos/customer-response';
+import { FindCustomerByDocumentNumberUseCase } from '~/use-cases/customer/find-by-document-number';
 
 export class FindCustomerByDocumentNumberController {
   constructor(
@@ -21,6 +21,11 @@ export class FindCustomerByDocumentNumberController {
 
     const customer = await this.findCustomerByDocumentNumberUseCase.execute({
       documentNumber,
+    });
+
+    logger.info({
+      message: 'Find customer by document number response',
+      data: customer,
     });
 
     return {
