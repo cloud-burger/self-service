@@ -1,5 +1,5 @@
 import logger from '@cloud-burger/logger';
-import Connection from '~/app/postgres/connection';
+import Connection from '~/api/postgres/connection';
 import { Payment } from '~/domain/payment/entities/payment';
 import { PaymentRepository as IPaymentRepository } from '~/domain/payment/repositories/payment';
 import { PaymentsDbSchema } from './dtos/payment-db-schema';

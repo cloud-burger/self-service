@@ -20,12 +20,11 @@
     "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
     "resolveJsonModule": true,
     "paths": {
-      "~/app/*": ["./app/*"],
+      "~/api/*": ["./api/*"],
       "~/controllers/*": ["./adapters/controllers/*"],
       "~/presenters/*": ["./adapters/presenters/*"],
       "~/domain/*": ["./domain/*"],
-      "~/service/*": ["./infrastructure/service/*"],
-      "~/database/*": ["./infrastructure/database/*"],
+      "~/infrastructure/*": ["./infrastructure/*"],
       "~/use-cases/*": ["./application/use-cases/*"]
     },
     "types": ["jest", "node", "express"],

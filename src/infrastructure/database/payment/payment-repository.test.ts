@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makePayment } from 'tests/factories/make-payment';
-import Connection from '~/app/postgres/connection';
+import Connection from '~/api/postgres/connection';
 import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
 import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
 import { PaymentRepository } from './payment-repository';

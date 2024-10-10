@@ -1,6 +1,6 @@
 import { InternalServerError } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
-import Connection from '~/app/postgres/connection';
+import Connection from '~/api/postgres/connection';
 import { Order } from '~/domain/order/entities/order';
 import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
 import {

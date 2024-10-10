@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeCustomer } from 'tests/factories/make-customer';
-import Connection from '~/app/postgres/connection';
+import Connection from '~/api/postgres/connection';
 import { CustomerRepository } from './customer-repository';
 
 describe('customer repository', () => {

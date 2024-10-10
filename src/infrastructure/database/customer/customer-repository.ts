@@ -1,5 +1,5 @@
 import logger from '@cloud-burger/logger';
-import Connection from '~/app/postgres/connection';
+import Connection from '~/api/postgres/connection';
 import { Customer } from '~/domain/customer/entities/customer';
 import { CustomerRepository as ICustomerRepository } from '~/domain/customer/repositories/customer';
 import { CustomerDbSchema } from './dtos/customer-db-schema';

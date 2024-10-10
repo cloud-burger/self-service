@@ -1,7 +1,7 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeOrder } from 'tests/factories/make-order';
 import { makeProduct } from 'tests/factories/make-product';
-import Connection from '~/app/postgres/connection';
+import Connection from '~/api/postgres/connection';
 import { OrderStatus } from '~/domain/order/entities/value-objects/enums/order-status';
 import { OrderRepository } from './order-repository';
 import { FIND_BY_ID } from './queries/find-by-id';

@@ -1,4 +1,4 @@
-import { env } from '~/app/env';
+import { env } from '~/api/env';
 import { Payment } from '~/domain/payment/entities/payment';
 import { PaymentStatus } from '~/domain/payment/entities/value-objects/payment-status';
 import { CreatePaymentRequest } from '../dtos/create-payment-request';

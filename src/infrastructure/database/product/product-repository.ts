@@ -1,5 +1,5 @@
 import logger from '@cloud-burger/logger';
-import Connection from '~/app/postgres/connection';
+import Connection from '~/api/postgres/connection';
 import { Product } from '~/domain/order/entities/product';
 import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
 import { ProductRepository as IProductRepository } from '~/domain/order/repositories/product';

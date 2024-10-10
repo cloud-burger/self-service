@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeProduct } from 'tests/factories/make-product';
-import Connection from '~/app/postgres/connection';
+import Connection from '~/api/postgres/connection';
 import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
 import { ProductRepository } from './product-repository';
 

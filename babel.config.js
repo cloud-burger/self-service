@@ -15,12 +15,11 @@ module.exports = {
       'module-resolver',
       {
         alias: {
-          '~/app': './src/app',
+          '~/api': './src/api',
           '~/controllers': './src/adapters/controllers',
           '~/presenters': './src/adapters/presenters',
           '~/domain': './src/domain',
-          '~/database': './src/infrastructure/database',
-          '~/service': './src/infrastructure/service',
+          '~/infrastructure': './src/infrastructure',
           '~/use-cases': './src/application/use-cases',
         },
       },
