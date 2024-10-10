@@ -19,7 +19,7 @@ export class MercadoPagoMapper {
         unit_price: product.amount,
         unit_measure: 'unit',
       })),
-      notification_url: env.NOTIFICATION_WEBHOOK,
+      notification_url: env.NOTIFICATION_WEBHOOK_URL,
       total_amount: +order.amount,
     };
   }

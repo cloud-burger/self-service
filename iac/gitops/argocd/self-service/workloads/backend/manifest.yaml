@@ -43,8 +43,8 @@ spec:
             value: self_service
           - name: DATABASE_CONNECTION_TIMEOUT
             value: "120000"
-          - name: NOTIFICATION_WEBHOOK
-            value: "https://webhook.site/357faa67-86d4-45da-b86e-eb1b085a44cc"
+          - name: NOTIFICATION_WEBHOOK_URL
+            value: "http://api.cloudburger.com.br/webhook"
           - name: MERCADO_PAGO_API_URL
             value: "https://api.mercadopago.com//instore/orders/qr/seller/collectors/1995444195/pos/SELFSERVICE2024/qrs"
           - name: MERCADO_PAGO_CREATE_QR_API_URL
