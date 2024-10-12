@@ -1,7 +1,7 @@
 import { Request } from '@cloud-burger/handlers';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeOrder } from 'tests/factories/make-order';
-import { UpdateOrderStatusUseCase } from '~/domain/order/use-cases/update-status';
+import { UpdateOrderStatusUseCase } from '~/use-cases/order/update-status';
 import { UpdateOrderStatusController } from './update-status';
 
 describe('update order status controller', () => {

@@ -1,7 +1,7 @@
 import { Request } from '@cloud-burger/handlers';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeCustomer } from 'tests/factories/make-customer';
-import { CreateCustomerUseCase } from '~/domain/customer/use-cases/create';
+import { CreateCustomerUseCase } from '~/use-cases/customer/create';
 import { CreateCustomerController } from './create';
 
 describe('create customer controller', () => {

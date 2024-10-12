@@ -6,9 +6,9 @@ import {
 } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
-import { CreateCustomerUseCase } from '~/domain/customer/use-cases/create';
 import { CustomerPresenter } from '~/presenters/customer/customer';
 import { CustomerResponse } from '~/presenters/customer/dtos/customer-response';
+import { CreateCustomerUseCase } from '~/use-cases/customer/create';
 import { createCustomerSchema } from './validations/create-schema';
 
 export class CreateCustomerController {
@@ -38,6 +38,11 @@ export class CreateCustomerController {
     }
 
     const customer = await this.createCustomerUseCase.execute(data);
+
+    logger.info({
+      message: 'Create customer response',
+      data: customer,
+    });
 
     return {
       statusCode: 201,

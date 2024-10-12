@@ -1,7 +1,7 @@
 import { Request } from '@cloud-burger/handlers';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeCustomer } from 'tests/factories/make-customer';
-import { FindCustomerByDocumentNumberUseCase } from '~/domain/customer/use-cases/find-by-document-number';
+import { FindCustomerByDocumentNumberUseCase } from '~/use-cases/customer/find-by-document-number';
 import { FindCustomerByDocumentNumberController } from './find-by-document-number';
 
 describe('find customer by document number controller', () => {

@@ -6,9 +6,9 @@ import {
 } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { validateSchema } from '@cloud-burger/utils';
-import { CreatePaymentUseCase } from '~/domain/payment/use-cases/create';
 import { PaymentResponse } from '~/presenters/payment/dtos/payment-response';
 import { PaymentPresenter } from '~/presenters/payment/payment';
+import { CreatePaymentUseCase } from '~/use-cases/payment/create';
 import { createPaymentSchema } from './validations/create-schema';
 
 export class CreatePaymentController {
