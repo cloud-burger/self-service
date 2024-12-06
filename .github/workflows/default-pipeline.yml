@@ -1,0 +1,15 @@
+name: Default Pipeline with Block Master Branch
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  block-master:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prevent push to master
+        run: |
+          echo "Push to master branch is not allowed."
+          exit 1
