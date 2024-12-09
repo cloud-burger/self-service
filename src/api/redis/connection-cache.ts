@@ -13,6 +13,15 @@ class ConnectionCache {
         return this.instance;
     }
 
+    public async isConnected(): Promise<boolean> {
+        try {
+          await this.instance.ping();
+          return true;
+        } catch (error) {
+          return false;
+        }
+    }
+
     public async get(key): Promise<any> {
         var cachedObject = await this.getInstance().get(key);
 
