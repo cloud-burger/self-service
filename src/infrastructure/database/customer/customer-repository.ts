@@ -9,12 +9,15 @@ import { FIND_CUSTOMER_BY_DOCUMENT_NUMBER } from './queries/find-by-document-num
 import { INSERT_CUSTOMER } from './queries/insert';
 
 export class CustomerRepository implements ICustomerRepository {
-  constructor(private connection: Connection) {}
+  constructor(
+    private connection: Connection,
+    private connectionCache: ConnectionCache
+  ) {}
 
   async findByDocumentNumber(documentNumber: string): Promise<Customer | null> {
     var result = [];
 
-    var recordsCache = await ConnectionCache.get('customer:' + documentNumber);
+    var recordsCache = await this.connectionCache.get('customer:' + documentNumber);
     if (Object.keys(recordsCache).length != 0) {
       result = recordsCache;
     } else {
@@ -37,7 +40,7 @@ export class CustomerRepository implements ICustomerRepository {
         return null;
       }
 
-      ConnectionCache.set('customer:' + documentNumber, records);
+      this.connectionCache.set('customer:' + documentNumber, records);
 
       result = records;
     }

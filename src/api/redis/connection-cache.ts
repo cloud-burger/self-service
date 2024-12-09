@@ -3,20 +3,18 @@ import { env } from '~/api/env';
 
 class ConnectionCache {
 
-    private static instance: Redis;
+    private instance: Redis;
 
-    private static getInstance(): Redis {
-        if (!ConnectionCache.instance) {
-            ConnectionCache.instance = new Redis({
-                host: env.REDIS_HOST,
-                port: env.REDIS_PORT
-            });
-        }
-        return ConnectionCache.instance;
+    constructor() {
+        this.instance = new Redis(env.REDIS_PORT, env.REDIS_HOST);
     }
 
-    public static async get(key): Promise<any> {
-        var cachedObject = await ConnectionCache.getInstance().get(key);
+    private getInstance() {
+        return this.instance;
+    }
+
+    public async get(key): Promise<any> {
+        var cachedObject = await this.getInstance().get(key);
 
         if (cachedObject != null) {
             return JSON.parse(cachedObject);
@@ -25,8 +23,8 @@ class ConnectionCache {
         }
     }
 
-    public static async set(key, value) {
-        await ConnectionCache.getInstance().set(key, JSON.stringify(value));
+    public async set(key, value) {
+        await this.getInstance().set(key, JSON.stringify(value));
     }
 }
 

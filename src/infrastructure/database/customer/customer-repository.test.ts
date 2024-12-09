@@ -1,21 +1,25 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeCustomer } from 'tests/factories/make-customer';
 import Connection from '~/api/postgres/connection';
+import ConnectionCache from '~/api/redis/connection-cache';
 import { CustomerRepository } from './customer-repository';
 
 describe('customer repository', () => {
   let connection: MockProxy<Connection>;
+  let connectionCache: MockProxy<ConnectionCache>;
   let customerRepository: CustomerRepository;
 
   beforeAll(() => {
     connection = mock();
-    customerRepository = new CustomerRepository(connection);
+    connectionCache = mock();
+    customerRepository = new CustomerRepository(connection, connectionCache);
   });
 
   it('should return null while find customer by document number and customer not found', async () => {
     connection.query.mockResolvedValue({
       records: [],
     });
+    connectionCache.get.mockResolvedValue({});
 
     const customer =
       await customerRepository.findByDocumentNumber('53523992060');
@@ -75,6 +79,29 @@ describe('customer repository', () => {
         updated_at: '2024-07-12T22:18:26.351Z',
       },
       sql: 'INSERT INTO public.customers (id,name,document_number,email,created_at,updated_at) VALUES (:id,:name,:document_number,:email,:created_at,:updated_at)',
+    });
+  });
+
+  it('should return cached customer while find customer by document number', async () => {
+    connectionCache.get.mockResolvedValue([{
+      created_at: '2023-01-01',
+      updated_at: '2023-01-01',
+      document_number: '1234567890',
+      id: '123',
+      name: 'John',
+      email: 'john@gmail.com',
+    }]);
+
+    const customer =
+      await customerRepository.findByDocumentNumber('1234567890');
+
+    expect(customer).toEqual({
+      createdAt: new Date('2023-01-01T00:00:00.000Z'),
+      documentNumber: '1234567890',
+      email: 'john@gmail.com',
+      id: '123',
+      name: 'John',
+      updatedAt: new Date('2023-01-01T00:00:00.000Z'),
     });
   });
 });
