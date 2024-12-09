@@ -9,3 +9,5 @@ coverage/
 *.tfstate*
 *.lock.hcl*
 .terraform*
+
+/src/api/redis/data

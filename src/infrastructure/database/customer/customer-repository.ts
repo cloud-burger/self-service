@@ -1,5 +1,6 @@
 import logger from '@cloud-burger/logger';
 import Connection from '~/api/postgres/connection';
+import ConnectionCache from '~/api/redis/connection-cache';
 import { Customer } from '~/domain/customer/entities/customer';
 import { CustomerRepository as ICustomerRepository } from '~/domain/customer/repositories/customer';
 import { CustomerDbSchema } from './dtos/customer-db-schema';
@@ -8,29 +9,43 @@ import { FIND_CUSTOMER_BY_DOCUMENT_NUMBER } from './queries/find-by-document-num
 import { INSERT_CUSTOMER } from './queries/insert';
 
 export class CustomerRepository implements ICustomerRepository {
-  constructor(private connection: Connection) {}
+  constructor(
+    private connection: Connection,
+    private connectionCache: ConnectionCache
+  ) {}
 
   async findByDocumentNumber(documentNumber: string): Promise<Customer | null> {
-    const { records } = await this.connection.query({
-      sql: FIND_CUSTOMER_BY_DOCUMENT_NUMBER,
-      parameters: {
-        document_number: documentNumber,
-      },
-    });
+    var result = [];
 
-    if (!records.length) {
-      logger.debug({
-        message: 'Customer not found',
-        data: {
-          documentNumber,
-          records,
+    var recordsCache = await this.connectionCache.get('customer:' + documentNumber);
+    if (Object.keys(recordsCache).length != 0) {
+      result = recordsCache;
+    } else {
+      const { records } = await this.connection.query({
+        sql: FIND_CUSTOMER_BY_DOCUMENT_NUMBER,
+        parameters: {
+          document_number: documentNumber,
         },
       });
 
-      return null;
+      if (!records.length) {
+        logger.debug({
+          message: 'Customer not found',
+          data: {
+            documentNumber,
+            records,
+          },
+        });
+
+        return null;
+      }
+
+      this.connectionCache.set('customer:' + documentNumber, records);
+
+      result = records;
     }
 
-    const [customer] = records;
+    const [customer] = result;
 
     return DatabaseCustomerMapper.toDomain(customer as CustomerDbSchema);
   }
