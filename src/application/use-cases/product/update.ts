@@ -39,7 +39,7 @@ export class UpdateProductUseCase {
       data: product,
     });
 
-    await this.productRepository.update(newProduct);
+    await this.productRepository.update(newProduct, product.category);
 
     return newProduct;
   }

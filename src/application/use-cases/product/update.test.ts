@@ -60,15 +60,19 @@ describe('update product use case', () => {
       1,
       'eba521ba-f6b7-46b5-ab5f-dd582495705e',
     );
-    expect(productRepository.update).toHaveBeenNthCalledWith(1, {
-      amount: 21.99,
-      category: 'BURGER',
-      createdAt: expect.any(Date),
-      description: 'Hambúrguer com bacon.',
-      id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-      image: null,
-      name: 'X-Bacon',
-      updatedAt: expect.any(Date),
-    });
+    expect(productRepository.update).toHaveBeenNthCalledWith(
+      1, 
+      {
+        amount: 21.99,
+        category: 'BURGER',
+        createdAt: expect.any(Date),
+        description: 'Hambúrguer com bacon.',
+        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+        image: null,
+        name: 'X-Bacon',
+        updatedAt: expect.any(Date),
+      },
+      'BURGER'
+    );
   });
 });
