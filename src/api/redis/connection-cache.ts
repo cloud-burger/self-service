@@ -35,6 +35,10 @@ class ConnectionCache {
     public async set(key, value) {
         await this.getInstance().set(key, JSON.stringify(value));
     }
+
+    public async del(key) {
+        await this.getInstance().del(key);
+    }
 }
 
 export default ConnectionCache;

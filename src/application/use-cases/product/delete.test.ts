@@ -26,6 +26,7 @@ describe('delete product use case', () => {
     expect(productRepository.deleteById).toHaveBeenNthCalledWith(
       1,
       'eba521ba-f6b7-46b5-ab5f-dd582495705e',
+      'BURGER'
     );
   });
 

@@ -75,4 +75,13 @@ describe('ConnectionCache', () => {
     expect(MockedRedis.prototype.get).toHaveBeenCalledWith(key);
     expect(MockedRedis.prototype.get).toHaveBeenCalledTimes(1);
   });
+
+  it('should delete a value in Redis', async () => {
+    const key = '12345678900';
+
+    const result = await connectionCache.del(key);
+    expect(result).toBeUndefined();
+    expect(MockedRedis.prototype.del).toHaveBeenCalledWith(key);
+    expect(MockedRedis.prototype.del).toHaveBeenCalledTimes(1);
+  });
 });

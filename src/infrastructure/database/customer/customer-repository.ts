@@ -11,13 +11,13 @@ import { INSERT_CUSTOMER } from './queries/insert';
 export class CustomerRepository implements ICustomerRepository {
   constructor(
     private connection: Connection,
-    private connectionCache: ConnectionCache
+    private connectionCache?: ConnectionCache
   ) {}
 
   async findByDocumentNumber(documentNumber: string): Promise<Customer | null> {
     var result = [];
 
-    var recordsCache = await this.connectionCache.get('customer:' + documentNumber);
+    var recordsCache = await this.connectionCache.get('customer:document_number:' + documentNumber);
     if (Object.keys(recordsCache).length != 0) {
       result = recordsCache;
     } else {
@@ -40,7 +40,7 @@ export class CustomerRepository implements ICustomerRepository {
         return null;
       }
 
-      this.connectionCache.set('customer:' + documentNumber, records);
+      await this.connectionCache.set('customer:document_number:' + documentNumber, records);
 
       result = records;
     }
