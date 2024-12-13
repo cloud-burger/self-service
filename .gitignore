@@ -9,3 +9,5 @@ coverage/
 *.tfstate*
 *.lock.hcl*
 .terraform*
+
+/terraform-aws-kubernets
