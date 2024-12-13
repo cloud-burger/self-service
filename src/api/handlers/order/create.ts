@@ -2,7 +2,6 @@ import { ApiHandler } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { Request, Response } from 'express';
 import Connection from '~/api/postgres/connection';
-import ConnectionCache from '~/api/redis/connection-cache';
 import Pool from '~/api/postgres/pool';
 import { PoolFactory } from '~/api/postgres/pool-factory';
 import { CreateOrderController } from '~/controllers/order/create';
@@ -21,10 +20,10 @@ let createOrderUseCase: CreateOrderUseCase;
 let createOrderController: CreateOrderController;
 let apiHandler: ApiHandler;
 
-const setDependencies = (connection: Connection, connectionCache: ConnectionCache) => {
+const setDependencies = (connection: Connection) => {
   orderRepository = new OrderRepository(connection);
   productRepository = new ProductRepository(connection);
-  customerRepository = new CustomerRepository(connection, connectionCache);
+  customerRepository = new CustomerRepository(connection);
   findCustomerByDocumentNumberUseCase = new FindCustomerByDocumentNumberUseCase(
     customerRepository,
   );
@@ -49,9 +48,8 @@ export const createOrder = async (
 
   pool = await PoolFactory.getPool();
   const connection = await pool.getConnection();
-  const connectionCache = new ConnectionCache();
 
-  setDependencies(connection, connectionCache);
+  setDependencies(connection);
 
   try {
     return await apiHandler.handler(request, response);
