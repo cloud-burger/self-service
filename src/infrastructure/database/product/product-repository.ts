@@ -1,6 +1,5 @@
 import logger from '@cloud-burger/logger';
 import Connection from '~/api/postgres/connection';
-import ConnectionCache from '~/api/redis/connection-cache';
 import { Product } from '~/domain/order/entities/product';
 import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
 import { ProductRepository as IProductRepository } from '~/domain/order/repositories/product';
@@ -14,10 +13,7 @@ import { INSERT_PRODUCT } from './queries/insert-product';
 import { UPDATE_PRODUCT } from './queries/update-product';
 
 export class ProductRepository implements IProductRepository {
-  constructor(
-    private connection: Connection,
-    private connectionCache?: ConnectionCache
-  ) {}
+  constructor(private connection: Connection) {}
 
   async create(product: Product): Promise<void> {
     const recordToSave = DatabaseProductMapper.toDatabase(product);
@@ -40,39 +36,24 @@ export class ProductRepository implements IProductRepository {
     });
   }
 
-  async update(product: Product, oldCategory?: string): Promise<void> {
+  async update(product: Product): Promise<void> {
     const recordToSave = DatabaseProductMapper.toDatabase(product);
 
     await this.connection.query({
       sql: UPDATE_PRODUCT,
       parameters: recordToSave,
     });
-
-    await this.connectionCache.del('products:category:' + oldCategory);
   }
 
   async findByCategory(category: ProductCategory): Promise<Product[]> {
-    var result = [];
+    const { records } = await this.connection.query({
+      sql: FIND_PRODUCT_BY_CATEGORY,
+      parameters: {
+        category,
+      },
+    });
 
-    var recordsCache = await this.connectionCache.get('products:category:' + category);
-    if (Object.keys(recordsCache).length != 0) {
-      result = recordsCache;
-    } else {
-      const { records } = await this.connection.query({
-        sql: FIND_PRODUCT_BY_CATEGORY,
-        parameters: {
-          category,
-        },
-      });
-
-      if (records.length > 0) {
-        await this.connectionCache.set('products:category:' + category, records);
-      }
-
-      result = records;
-    }
-
-    return result.map((record) =>
+    return records.map((record) =>
       DatabaseProductMapper.toDomain(record as ProductDbSchema),
     );
   }
@@ -132,14 +113,12 @@ export class ProductRepository implements IProductRepository {
     return DatabaseProductMapper.toDomain(product as ProductDbSchema);
   }
 
-  async deleteById(id: string, category?: string): Promise<void> {
+  async deleteById(id: string): Promise<void> {
     await this.connection.query({
       sql: DELETE_PRODUCT_BY_ID,
       parameters: {
         id,
       },
     });
-
-    await this.connectionCache.del('products:category:' + category);
   }
 }

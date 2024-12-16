@@ -1,6 +1,5 @@
 import logger from '@cloud-burger/logger';
 import Connection from '~/api/postgres/connection';
-import ConnectionCache from '~/api/redis/connection-cache';
 import { Customer } from '~/domain/customer/entities/customer';
 import { CustomerRepository as ICustomerRepository } from '~/domain/customer/repositories/customer';
 import { CustomerDbSchema } from './dtos/customer-db-schema';
@@ -9,43 +8,29 @@ import { FIND_CUSTOMER_BY_DOCUMENT_NUMBER } from './queries/find-by-document-num
 import { INSERT_CUSTOMER } from './queries/insert';
 
 export class CustomerRepository implements ICustomerRepository {
-  constructor(
-    private connection: Connection,
-    private connectionCache?: ConnectionCache
-  ) {}
+  constructor(private connection: Connection) {}
 
   async findByDocumentNumber(documentNumber: string): Promise<Customer | null> {
-    var result = [];
+    const { records } = await this.connection.query({
+      sql: FIND_CUSTOMER_BY_DOCUMENT_NUMBER,
+      parameters: {
+        document_number: documentNumber,
+      },
+    });
 
-    var recordsCache = await this.connectionCache.get('customer:document_number:' + documentNumber);
-    if (Object.keys(recordsCache).length != 0) {
-      result = recordsCache;
-    } else {
-      const { records } = await this.connection.query({
-        sql: FIND_CUSTOMER_BY_DOCUMENT_NUMBER,
-        parameters: {
-          document_number: documentNumber,
+    if (!records.length) {
+      logger.debug({
+        message: 'Customer not found',
+        data: {
+          documentNumber,
+          records,
         },
       });
 
-      if (!records.length) {
-        logger.debug({
-          message: 'Customer not found',
-          data: {
-            documentNumber,
-            records,
-          },
-        });
-
-        return null;
-      }
-
-      await this.connectionCache.set('customer:document_number:' + documentNumber, records);
-
-      result = records;
+      return null;
     }
 
-    const [customer] = result;
+    const [customer] = records;
 
     return DatabaseCustomerMapper.toDomain(customer as CustomerDbSchema);
   }
