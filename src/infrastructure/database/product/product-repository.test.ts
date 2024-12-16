@@ -1,26 +1,22 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 import { makeProduct } from 'tests/factories/make-product';
 import Connection from '~/api/postgres/connection';
-import ConnectionCache from '~/api/redis/connection-cache';
 import { ProductCategory } from '~/domain/order/entities/value-objects/enums/product-category';
 import { ProductRepository } from './product-repository';
 
 describe('product repository', () => {
   let connection: MockProxy<Connection>;
-  let connectionCache: MockProxy<ConnectionCache>;
   let productRepository: ProductRepository;
 
   beforeAll(() => {
     connection = mock();
-    connectionCache = mock();
-    productRepository = new ProductRepository(connection, connectionCache);
+    productRepository = new ProductRepository(connection);
   });
 
   it('should create product successfully', async () => {
     connection.query.mockResolvedValue({
       records: [],
     });
-    connectionCache.get.mockResolvedValue({});
 
     await productRepository.create(makeProduct());
 
@@ -67,7 +63,6 @@ describe('product repository', () => {
     connection.query.mockResolvedValue({
       records: [],
     });
-    connectionCache.get.mockResolvedValue({});
 
     const product = await productRepository.findByCategoryAndName(
       ProductCategory.BURGER,
@@ -223,35 +218,5 @@ describe('product repository', () => {
       parameters: { id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e' },
       sql: 'DELETE FROM public.products WHERE id=:id;',
     });
-  });
-
-  it('should find cached products by category successfully', async () => {
-    connectionCache.get.mockResolvedValue([{
-        amount: '20.99',
-        category: 'BURGER',
-        created_at: '2024-07-12T22:18:26.351Z',
-        description:
-          'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
-        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-        image: null,
-        name: 'Bacon Burger',
-        updated_at: '2024-07-12T22:18:26.351Z',
-    }]);
-
-    const products = await productRepository.findByCategory(
-      ProductCategory.BURGER,
-    );
-
-    expect(products).toEqual([{
-        amount: 20.99,
-        category: 'BURGER',
-        createdAt: new Date('2024-07-12T22:18:26.351Z'),
-        description:
-          'Hambúrguer com bacon crocante, queijo cheddar e molho barbecue.',
-        id: 'eba521ba-f6b7-46b5-ab5f-dd582495705e',
-        image: null,
-        name: 'Bacon Burger',
-        updatedAt: new Date('2024-07-12T22:18:26.351Z'),
-    }]);
   });
 });

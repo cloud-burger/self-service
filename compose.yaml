@@ -4,7 +4,6 @@ services:
     build: .
     depends_on:
       - db
-      - db-cache
     ports:
       - '${PORT}:${PORT}'
     restart: always
@@ -20,8 +19,6 @@ services:
       MERCADO_PAGO_GET_QR_INFO_API_URL: ${MERCADO_PAGO_GET_QR_INFO_API_URL}
       MERCADO_PAGO_API_TOKEN: ${MERCADO_PAGO_API_TOKEN}
       NOTIFICATION_WEBHOOK_URL: ${NOTIFICATION_WEBHOOK_URL}
-      REDIS_HOST: ${REDIS_HOST}
-      REDIS_PORT: ${REDIS_PORT}
 
   db:
     container_name: postgres
@@ -38,12 +35,3 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-
-  db-cache:
-    image: redis:latest
-    container_name: redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./src/api/redis/data:/data
-    command: ["redis-server", "--appendonly", "yes"]

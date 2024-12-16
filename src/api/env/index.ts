@@ -13,8 +13,6 @@ interface EnvSchemaProps {
   MERCADO_PAGO_CREATE_QR_API_URL: string;
   MERCADO_PAGO_GET_QR_INFO_API_URL: string;
   MERCADO_PAGO_API_TOKEN: string;
-  REDIS_HOST: string;
-  REDIS_PORT: number;
 }
 
 export const envSchema = Joi.object({
@@ -29,8 +27,6 @@ export const envSchema = Joi.object({
   MERCADO_PAGO_CREATE_QR_API_URL: Joi.string().required(),
   MERCADO_PAGO_GET_QR_INFO_API_URL: Joi.string().required(),
   MERCADO_PAGO_API_TOKEN: Joi.string().required(),
-  REDIS_HOST: Joi.string().required(),
-  REDIS_PORT: Joi.string().required()
 });
 
 const { value } = envSchema.validate(process.env);

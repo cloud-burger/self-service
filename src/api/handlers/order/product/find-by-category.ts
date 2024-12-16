@@ -2,7 +2,6 @@ import { ApiHandler } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { Request, Response } from 'express';
 import Connection from '~/api/postgres/connection';
-import ConnectionCache from '~/api/redis/connection-cache';
 import Pool from '~/api/postgres/pool';
 import { PoolFactory } from '~/api/postgres/pool-factory';
 import { FindProductsByCategoryController } from '~/controllers/product/find-by-category';
@@ -15,8 +14,8 @@ let findProductsByCategoryUseCase: FindProductsByCategoryUseCase;
 let findProductsByCategoryController: FindProductsByCategoryController;
 let apiHandler: ApiHandler;
 
-const setDependencies = (connection: Connection, connectionCache: ConnectionCache) => {
-  productRepository = new ProductRepository(connection, connectionCache);
+const setDependencies = (connection: Connection) => {
+  productRepository = new ProductRepository(connection);
   findProductsByCategoryUseCase = new FindProductsByCategoryUseCase(
     productRepository,
   );
@@ -38,9 +37,8 @@ export const findProductsByCategory = async (
 
   pool = await PoolFactory.getPool();
   const connection = await pool.getConnection();
-  const connectionCache = new ConnectionCache();
 
-  setDependencies(connection, connectionCache);
+  setDependencies(connection);
 
   try {
     return await apiHandler.handler(request, response);
