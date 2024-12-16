@@ -10,4 +10,4 @@ coverage/
 *.lock.hcl*
 .terraform*
 
-/terraform-aws-kubernets
+/src/api/redis/data

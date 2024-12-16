@@ -2,6 +2,7 @@ import { ApiHandler } from '@cloud-burger/handlers';
 import logger from '@cloud-burger/logger';
 import { Request, Response } from 'express';
 import Connection from '~/api/postgres/connection';
+import ConnectionCache from '~/api/redis/connection-cache';
 import Pool from '~/api/postgres/pool';
 import { PoolFactory } from '~/api/postgres/pool-factory';
 import { DeleteProductController } from '~/controllers/product/delete';
@@ -14,8 +15,8 @@ let deleteProductUseCase: DeleteProductUseCase;
 let deleteProductController: DeleteProductController;
 let apiHandler: ApiHandler;
 
-const setDependencies = (connection: Connection) => {
-  productRepository = new ProductRepository(connection);
+const setDependencies = (connection: Connection, connectionCache: ConnectionCache) => {
+  productRepository = new ProductRepository(connection, connectionCache);
   deleteProductUseCase = new DeleteProductUseCase(productRepository);
   deleteProductController = new DeleteProductController(deleteProductUseCase);
   apiHandler = new ApiHandler(deleteProductController.handler);
@@ -33,8 +34,9 @@ export const deleteProduct = async (
 
   pool = await PoolFactory.getPool();
   const connection = await pool.getConnection();
+  const connectionCache = new ConnectionCache();
 
-  setDependencies(connection);
+  setDependencies(connection, connectionCache);
 
   try {
     return await apiHandler.handler(request, response);

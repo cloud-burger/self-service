@@ -26,6 +26,6 @@ export class DeleteProductUseCase {
       data: product,
     });
 
-    await this.productRepository.deleteById(product.id);
+    await this.productRepository.deleteById(product.id, product.category);
   }
 }
