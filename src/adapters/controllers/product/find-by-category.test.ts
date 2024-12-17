@@ -18,7 +18,7 @@ describe('find product by category controller', () => {
     findProductsByCategoryUseCase.execute.mockResolvedValue([makeProduct()]);
 
     const response = await findProductsByCategoryController.handler({
-      pathParameters: {
+      query: {
         category: 'BURGER',
       },
     } as unknown as Request);

@@ -13,7 +13,7 @@ export class FindProductsByCategoryController {
   handler: Controller = async (
     request: Request,
   ): Promise<Response<ProductResponse[]>> => {
-    const { category } = request.pathParameters;
+    const { category } = request.query;
 
     logger.info({
       message: 'Find product by category request',
