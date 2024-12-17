@@ -79,3 +79,15 @@ jobs:
           docker build -t $IMAGE_URI .
           docker push $IMAGE_URI
           echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -sSL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name infra-kubernetes-prd --region us-east-1
+
+      - name: Update kube deployment
+        run: kubectl set image deployment/self-service-backend $IMAGE_URI
