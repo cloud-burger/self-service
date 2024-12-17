@@ -90,4 +90,4 @@ jobs:
         run: aws eks update-kubeconfig --name infra-kubernetes-prd --region us-east-1
 
       - name: Update kube deployment
-        run: kubectl set image deployment/self-service-backend $IMAGE_URI -n self-service
+        run: kubectl set image deployment/self-service-backend self-service-backend=$IMAGE_URI -n self-service
