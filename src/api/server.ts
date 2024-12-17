@@ -29,7 +29,7 @@ router.post('/customer', createCustomer);
 router.get('/customer/:documentNumber', findCustomerByDocumentNumber);
 
 // Product
-router.get('/product/:category', findProductsByCategory);
+router.get('/product', findProductsByCategory);
 router.post('/product', createProduct);
 router.put('/product/:id', updateProduct);
 router.delete('/product/:id', deleteProduct);
