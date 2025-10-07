@@ -52,7 +52,7 @@
     "@cloud-burger/http-wrappers": "^0.0.1",
     "@cloud-burger/logger": "^1.0.0",
     "@cloud-burger/utils": "^1.0.0",
-    "axios": "^1.7.2",
+    "axios": "^1.12.2",
     "brazilian-values": "^0.13.0",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
